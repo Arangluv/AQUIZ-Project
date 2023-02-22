@@ -1,0 +1,102 @@
+import { useState } from "react";
+import styled from "styled-components";
+const TypeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1vw;
+`;
+const UserInputPart = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  span {
+    color: rgba(103, 106, 108, 1);
+    margin-bottom: 0.4vw;
+    margin-top: 0.2vw;
+    font-size: 1.1vw;
+  }
+  input {
+    margin-bottom: 1vw;
+    padding: 0.6vw 0.4vw;
+    color: rgba(0, 0, 0, 0.8);
+    font-family: "Gowun Batang", serif;
+    border: 0.1vw solid rgba(103, 106, 108, 1);
+    border-radius: 3px;
+    font-size: 1.2vw;
+  }
+  input:focus {
+    outline: 0.1vw solid rgba(103, 106, 108, 1);
+  }
+`;
+const NextQuizButton = styled.button`
+  padding: 1vw 0;
+  background-color: white;
+  border: 0.1vw solid rgba(103, 106, 108, 0.5);
+  color: #aacb73;
+  border-radius: 5px;
+  font-size: 1.3vw;
+  transition: 0.1s ease-in-out;
+  &:hover {
+    background-color: #aacb73;
+    color: white;
+    border: 0.1vw solid #aacb73;
+  }
+`;
+const QuizSubmitForm = styled.form`
+  width: 100%;
+  input[type="submit"] {
+    width: 100%;
+    padding: 1vw 0;
+    background-color: white;
+    border: 0.1vw solid rgba(103, 106, 108, 0.5);
+    color: #aacb73;
+    border-radius: 5px;
+    font-size: 1.3vw;
+    transition: 0.1s ease-in-out;
+    @media screen and (max-width: 767px) {
+      padding: 1vh 0;
+      font-size: 1.3vh;
+    }
+  }
+  input[type="submit"]:hover {
+    background-color: #aacb73;
+    color: white;
+    border: 0.1vw solid #aacb73;
+  }
+`;
+function SolveTypeWord({ questions, quizNum, onClick, quizLenth }) {
+  const [answer, setAnswer] = useState();
+  const handleChangeInput = (event) => {
+    const newAnswer = {
+      num: quizNum,
+      answers: event.target.value,
+    };
+    setAnswer(newAnswer);
+  };
+  const handleClick = (event) => {
+    console.log(answer);
+    onClick(answer, event);
+  };
+  return (
+    <TypeContainer>
+      <UserInputPart>
+        <span>(띄어쓰기 힌트 : {questions[0].spacingHint})</span>
+        <input
+          id="word-quiz"
+          type="text"
+          placeholder="정답을 입력해주세요"
+          onChange={handleChangeInput}
+          required
+        />
+      </UserInputPart>
+      {quizNum + 1 === quizLenth ? (
+        <QuizSubmitForm action="POST" onSubmit={handleClick}>
+          <input type="submit" value="제출하기" />
+        </QuizSubmitForm>
+      ) : (
+        <NextQuizButton onClick={handleClick}>다음 퀴즈 보기</NextQuizButton>
+      )}
+    </TypeContainer>
+  );
+}
+
+export default SolveTypeWord;
