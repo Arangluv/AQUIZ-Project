@@ -192,6 +192,12 @@ function EditQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
+
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -222,7 +228,7 @@ function EditQuiz() {
   }, []);
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:4001/quizzes/edit/${quizId}`)
+    fetch(`${URL}quizzes/edit/${quizId}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -487,7 +493,7 @@ function EditQuiz() {
         deletedQuizUrl.forEach((url) => {
           formData.append("imgUrlToRemove", url);
         });
-        fetch(`http://localhost:4001/quizzes/edit/${quizId}`, {
+        fetch(`${URL}quizzes/edit/${quizId}`, {
           method: "POST",
           // headers: {
           //   "Content-Type": "application/json",
@@ -564,7 +570,7 @@ function EditQuiz() {
           deletedQuizUrl.forEach((url) => {
             formData.append("imgUrlToRemove", url);
           });
-          fetch(`http://localhost:4001/quizzes/edit/${quizId}`, {
+          fetch(`${URL}quizzes/edit/${quizId}`, {
             method: "POST",
             // headers: {
             //   "Content-Type": "application/json",

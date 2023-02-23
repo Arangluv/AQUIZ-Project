@@ -96,7 +96,11 @@ function MyPage() {
   const navigate = useNavigate();
   // Check Admin
   const [isAdmin, setIsAdmin] = useState(false);
-
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   // Url Params Check
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
@@ -112,10 +116,8 @@ function MyPage() {
       navigate("/login");
     }
     const getToken = cookies.token.token;
-    console.log("query");
-    console.log(query);
     fetch(
-      `http://localhost:4001/quizzes/maked/${userId}${
+      `${URL}quizzes/maked/${userId}${
         query ? query : "?opt=maked"
       }`,
       {
@@ -200,7 +202,7 @@ function MyPage() {
     if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
       const getToken = cookies.token.token;
       const quizIdForDelete = event.target.dataset.quizid;
-      fetch(`http://localhost:4001/quizzes/delete/${quizIdForDelete}`, {
+      fetch(`${URL}quizzes/delete/${quizIdForDelete}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

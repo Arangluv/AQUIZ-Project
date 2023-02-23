@@ -267,13 +267,17 @@ function AfterSolved() {
   const [page, setPage] = useState(0);
   const [nextPage, setNextPage] = useState(true);
   const LIMIT = 10;
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
       navigate("/not");
     }
   }, []);
-
   useEffect(() => {
     setLoading(true);
     let getToken = null;
@@ -281,17 +285,14 @@ function AfterSolved() {
       getToken = cookies.token.token;
     }
     if (inputAnswerToUser) {
-      fetch(
-        `http://localhost:4001/quizzes/solve/${selectedQuizId}/?page=0&limit=10`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken}`,
-          },
-          credentials: "include",
-        }
-      )
+      fetch(`${URL}quizzes/solve/${selectedQuizId}/?page=0&limit=10`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken}`,
+        },
+        credentials: "include",
+      })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -336,7 +337,7 @@ function AfterSolved() {
           setIsError(error);
         });
       // 문제를 풀지 않은 경우만 fetch -> add-quiz
-      fetch("http://localhost:4001/users/add-quiz", {
+      fetch(`${URL}users/add-quiz`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -351,17 +352,14 @@ function AfterSolved() {
         .then((result) => console.log(result));
     } else {
       // inputAnswerToUser에 답이 없는 경우 -> 사용자가 이미 풀었다.
-      fetch(
-        `http://localhost:4001/quizzes/solve/${selectedQuizId}?page=0&limit=10`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken}`,
-          },
-          credentials: "include",
-        }
-      )
+      fetch(`${URL}quizzes/solve/${selectedQuizId}?page=0&limit=10`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken}`,
+        },
+        credentials: "include",
+      })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -440,7 +438,7 @@ function AfterSolved() {
     event.preventDefault();
     console.log("클릭");
     const response = await fetch(
-      `http://localhost:4001/quizzes/add-comment/${selectedQuizId}`,
+      `${URL}quizzes/add-comment/${selectedQuizId}`,
       {
         method: "POST",
         headers: {
@@ -468,7 +466,7 @@ function AfterSolved() {
   };
   const handleMoreComment = () => {
     fetch(
-      `http://localhost:4001/quizzes/getComment/${selectedQuizId}/?page=${page}&limit=${LIMIT}`
+      `${URL}quizzes/getComment/${selectedQuizId}/?page=${page}&limit=${LIMIT}`
     )
       .then((response) => {
         if (response.ok) {

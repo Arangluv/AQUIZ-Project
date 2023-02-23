@@ -80,6 +80,7 @@ function QuizScreens() {
   const [ref, inView] = useInView();
   // Search State
   const [quizSearchInput, setQuizSearchInput] = useState("");
+  
   const handleLoad = async () => {
     setLoading(true);
     try {

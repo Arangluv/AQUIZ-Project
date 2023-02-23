@@ -238,7 +238,12 @@ function JoinPage() {
     const username = event.target.username.value;
     const passward1 = event.target.password1.value;
     const passward2 = event.target.password2.value;
-    fetch("http://localhost:4001/join", {
+    const URL =
+      process.env.NODE_ENV === "production"
+        ? "http://3.36.122.107:4001/"
+        : "http://localhost:4001/";
+
+    fetch(`${URL}join`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

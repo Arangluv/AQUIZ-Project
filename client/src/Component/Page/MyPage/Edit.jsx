@@ -108,12 +108,16 @@ function Edit() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
   // user Token
   const [cookies, setCookies] = useCookies(["token"]);
-
   // Navigate
   const navigate = useNavigate();
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
+
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(userId)) {
@@ -127,7 +131,7 @@ function Edit() {
       navigate("/login");
     }
     const getToken = cookies.token.token;
-    fetch("http://localhost:4001/api/userInfo", {
+    fetch(`${URL}api/userInfo`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -162,7 +166,7 @@ function Edit() {
   };
   const handlePost = (event) => {
     event.preventDefault();
-    fetch("http://localhost:4001/users/edit", {
+    fetch(`${URL}users/edit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

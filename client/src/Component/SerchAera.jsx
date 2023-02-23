@@ -116,7 +116,6 @@ const StyledForm = styled.form`
     }
   }
   input:nth-child(1):focus {
-    /* outline: 0.1vw solid rgba(0, 0, 0, 0.7); */
     outline: none;
     border-color: #ff8b13;
   }

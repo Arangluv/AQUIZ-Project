@@ -136,8 +136,6 @@ function SolveQuizDetail({
   } else {
     questionType = null;
   }
-  console.log("Image Url : ");
-  console.log(imgUrl);
   return (
     <QuizDetailContainer>
       <BannerAd>세부 배너광고 다음퀴즈 클릭시 바뀌어야함</BannerAd>

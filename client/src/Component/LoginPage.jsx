@@ -230,7 +230,12 @@ function LoginForm() {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    fetch("http://localhost:4001/login", {
+    const URL =
+      process.env.NODE_ENV === "production"
+        ? "http://3.36.122.107:4001/"
+        : "http://localhost:4001/";
+        
+    fetch(`${URL}login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

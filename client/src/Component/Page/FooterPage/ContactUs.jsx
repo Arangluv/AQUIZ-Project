@@ -100,6 +100,11 @@ function ContactUs() {
   const [requestContent, setRequestContent] = useState(null);
   // Navigate
   const navigater = useNavigate();
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   const handleChange = (event, handleFunction) => {
     handleFunction(event.target.value);
   };
@@ -114,7 +119,7 @@ function ContactUs() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:4001/admins/contacts", {
+    fetch(`${URL}admins/contacts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

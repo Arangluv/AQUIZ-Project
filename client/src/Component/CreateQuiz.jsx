@@ -186,6 +186,11 @@ function CreateQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
+
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(userId)) {
@@ -409,7 +414,7 @@ function CreateQuiz() {
           }
         }
 
-        fetch("http://localhost:4001/quizzes/create-quiz", {
+        fetch(`${URL}quizzes/create-quiz`, {
           method: "POST",
           // headers: {
           //   "Content-Type": "application/json",
@@ -470,7 +475,7 @@ function CreateQuiz() {
             }
           }
 
-          fetch("http://localhost:4001/quizzes/create-quiz", {
+          fetch(`${URL}quizzes/create-quiz`, {
             method: "POST",
             // headers: {
             //   "Content-Type": "application/json",

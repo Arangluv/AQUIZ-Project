@@ -26,6 +26,11 @@ function SolveQuiz() {
   const selectedQuizId = useParams().id;
   const history = useNavigate();
   const [cookies] = useCookies(["token"]);
+  // URL
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
 
   let findQuizzes;
   useEffect(() => {
@@ -40,7 +45,7 @@ function SolveQuiz() {
     if (cookies?.token) {
       getToken = cookies.token.token;
     }
-    fetch(`http://localhost:4001/quizzes/solve/${selectedQuizId}`, {
+    fetch(`${URL}quizzes/solve/${selectedQuizId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +62,6 @@ function SolveQuiz() {
       })
       .then((result) => {
         if (result.inputAnswersToUser) {
-          console.log("실행");
           history(`/result/${selectedQuizId}`, {
             state: {
               inputAnswerToUser: null,

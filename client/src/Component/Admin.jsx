@@ -58,6 +58,10 @@ function Admin() {
   const [loading, setLoading] = useState(true);
   const navigater = useNavigate();
   const [reqList, setReqList] = useState([]);
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   useEffect(() => {
     setLoading(true);
     if (!cookies) {
@@ -67,7 +71,7 @@ function Admin() {
     if (cookies.token) {
       const getToken = cookies.token.token;
       if (cookies.token) {
-        fetch("http://localhost:4001/api/login", {
+        fetch(`${URL}api/login`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -88,7 +92,6 @@ function Admin() {
               email === process.env.REACT_APP_ADMIN_EMAIL &&
               username === process.env.REACT_APP_ADMIN_NAME
             ) {
-              console.log("ADMIN 로그인이 맞습니다.");
               setLoading(false);
             } else {
               navigater("/");
@@ -107,7 +110,7 @@ function Admin() {
   useEffect(() => {
     if (cookies.token) {
       const getToken = cookies.token.token;
-      fetch("http://localhost:4001/api/user-contacts", {
+      fetch(`${URL}api/user-contacts`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

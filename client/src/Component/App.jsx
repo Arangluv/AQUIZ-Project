@@ -42,11 +42,15 @@ const MainAd = styled.div`
 function App() {
   const [user, setUser] = useState(null);
   const [cookies] = useCookies(["token"]);
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   useEffect(() => {
     if (cookies.token) {
       const getToken = cookies.token.token;
       if (cookies.token) {
-        fetch("http://localhost:4001/api/login", {
+        fetch(`${URL}api/login`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +75,6 @@ function App() {
       }
     }
   }, [cookies]);
-
   return (
     <UserInformation.Provider value={{ user, setUser }}>
       <StyledHeader />

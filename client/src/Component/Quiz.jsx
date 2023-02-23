@@ -196,6 +196,10 @@ function Quiz({
   mode = "default",
   handleDelete = null,
 }) {
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
   const handleShare = (event) => {
     const BASE_URL = "http://localhost:3000/quiz/";
     const sharedUrl = BASE_URL + event.target.dataset.quizid;

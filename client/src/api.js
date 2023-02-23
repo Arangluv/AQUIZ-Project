@@ -1,11 +1,13 @@
 export async function getQuiz(page, LIMIT, order, thema, rating, search) {
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "http://3.36.122.107:4001/"
+      : "http://localhost:4001/";
+
   const themaQuery = thema.join("&thema=");
   if (search) {
-    console.log(
-      `?page=${page}&LIMIT=${LIMIT}&order=${order}${themaQuery}&rating=${rating}&keyword=${search}`
-    );
     const response = await fetch(
-      `http://localhost:4001/?page=${page}&LIMIT=${LIMIT}&order=${order}${themaQuery}&rating=${rating}&keyword=${search}`,
+      `${URL}?page=${page}&LIMIT=${LIMIT}&order=${order}${themaQuery}&rating=${rating}&keyword=${search}`,
       {
         method: "GET",
       }
@@ -17,7 +19,7 @@ export async function getQuiz(page, LIMIT, order, thema, rating, search) {
     return quiz;
   } else {
     const response = await fetch(
-      `http://localhost:4001/?page=${page}&LIMIT=${LIMIT}&order=${order}${themaQuery}&rating=${rating}`,
+      `${URL}?page=${page}&LIMIT=${LIMIT}&order=${order}${themaQuery}&rating=${rating}`,
       {
         method: "GET",
       }
