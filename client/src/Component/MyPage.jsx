@@ -99,7 +99,7 @@ function MyPage() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.36.122.107:4001/"
+      ? "http://3.37.82.88:4001/"
       : "http://localhost:4001/";
   // Url Params Check
   useEffect(() => {
@@ -116,19 +116,14 @@ function MyPage() {
       navigate("/login");
     }
     const getToken = cookies.token.token;
-    fetch(
-      `${URL}quizzes/maked/${userId}${
-        query ? query : "?opt=maked"
-      }`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken}`,
-        },
-        credentials: "include",
-      }
-    )
+    fetch(`${URL}quizzes/maked/${userId}${query ? query : "?opt=maked"}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken}`,
+      },
+      credentials: "include",
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();

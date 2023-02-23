@@ -270,7 +270,7 @@ function AfterSolved() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.36.122.107:4001/"
+      ? "http://3.37.82.88:4001/"
       : "http://localhost:4001/";
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;

@@ -232,13 +232,14 @@ function LoginForm() {
     const password = event.target.password.value;
     const URL =
       process.env.NODE_ENV === "production"
-        ? "http://3.36.122.107:4001/"
+        ? "http://3.37.82.88:4001/"
         : "http://localhost:4001/";
-        
+
     fetch(`${URL}login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        
       }, // json형태의 데이터를 서버로 보냅니다.
       body: JSON.stringify({
         email,

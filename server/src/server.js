@@ -9,10 +9,15 @@ import apiRouter from "./router/apiRouter";
 import quizRouter from "./router/quizRouter";
 import adminRouter from "./router/adminRouter";
 const app = express();
-// app.use(morgan("combined"));
+app.use(morgan("tiny"));
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://3.37.82.88:80"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json()); // if user post data, express json parsing
