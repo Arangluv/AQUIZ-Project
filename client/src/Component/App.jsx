@@ -70,6 +70,7 @@ function App() {
           })
           .catch((error) => {
             console.log("토큰이 만료되었거나, 유효하지않은 토큰입니다.");
+            removeCookie("token");
             setUser(null);
           });
       }

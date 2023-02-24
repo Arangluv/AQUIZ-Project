@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { jwtConfig } from "../config/config";
 import UserInput from "../model/UserInput";
+require("dotenv").config();
 
 export const getJoin = (req, res, next) => {
   return res.json({ pageTitle: "회원가입 하기" });
@@ -54,6 +55,10 @@ export const postJoin = async (req, res, next) => {
 export const postLogin = async (req, res) => {
   const { secretKey, options } = jwtConfig;
   const { email, password } = req.body;
+  console.log("SecretKey : ");
+  console.log(secretKey);
+  console.log("options : ");
+  console.log(options);
   const user = await User.findOne({ email, socialOnly: false });
   if (!user) {
     // 유저를 찾지 못한 경우
@@ -81,7 +86,13 @@ export const postLogin = async (req, res) => {
 export const userLoginValid = async (req, res) => {
   const data = JSON.parse(req.cookies.token);
   const token = data.token;
-
+  console.log("data : ");
+  console.log(data);
+  console.log("리퀘스트 토큰?");
+  console.log(req.cookies);
+  console.log(req.cookies.token);
+  console.log("그래서 토큰은 ?");
+  console.log(token);
   const { secretKey } = jwtConfig;
   try {
     const userInformation = jwt.verify(token, secretKey);
