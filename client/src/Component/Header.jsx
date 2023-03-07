@@ -198,8 +198,19 @@ function Header({ className }) {
     }
   }, [emphasis, pathname]);
   const handleLogOut = () => {
-    removeCookie("token");
-    window.location.replace("/");
+    fetch(`${URL}logout`)
+      .then((response) => {
+        if (response.ok) {
+          window.location.replace("/");
+        } else {
+          throw new Error(
+            "로그아웃을 하는데 문제가 발생했습니다. 다시 로그아웃해주세요"
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   let _id;

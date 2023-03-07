@@ -307,7 +307,7 @@ export const getSolveQuiz = async (req, res) => {
     let user = null;
     if (req.cookies?.token) {
       // 쿠키가 있는 경우
-      data = JSON.parse(req.cookies.token);
+      data = req.cookies.token;
       token = data.token;
       userInformation = jwt.verify(token, secretKey);
       user = await User.findOne({ email: userInformation.email });
@@ -411,7 +411,7 @@ export const getSolveQuiz = async (req, res) => {
 export const getUserRequestQuizzes = async (req, res) => {
   const { opt } = req.query;
   try {
-    const data = JSON.parse(req.cookies.token);
+    const data = req.cookies.token;
     const token = data.token;
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
@@ -448,7 +448,7 @@ export const getUserRequestQuizzes = async (req, res) => {
 
 export const postDelete = async (req, res) => {
   const deletedQuizId = req.params.id;
-  const token = req.body.token;
+  const token = req.cookies.token.token;
   const { secretKey } = jwtConfig;
   // Use Token, varify user
   try {
@@ -570,8 +570,7 @@ export const postDelete = async (req, res) => {
             });
           }
         });
-      } catch (error) {
-      }
+      } catch (error) {}
     }
 
     await Quiz.deleteOne({ _id: deletedQuizId });

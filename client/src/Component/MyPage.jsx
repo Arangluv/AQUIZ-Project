@@ -197,14 +197,13 @@ function MyPage() {
   };
   const handleDelete = (event) => {
     if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
-      const getToken = cookies.token.token;
       const quizIdForDelete = event.target.dataset.quizid;
       fetch(`${URL}quizzes/delete/${quizIdForDelete}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token: getToken }),
+        credentials: "include",
       })
         .then((response) => {
           if (response.ok) {

@@ -111,7 +111,7 @@ export const postLogin = async (req, res) => {
 
 export const userLoginValid = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const { token } = req.cookies.token;
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const targetEmail = userInformation.email;
@@ -123,12 +123,12 @@ export const userLoginValid = async (req, res) => {
     return res.status(200).json({ email, username, _id, quizzes });
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      return res.status(419).json({
+      return res.clearCookie("token").status(419).json({
         code: 419,
         message: "토큰이 만료되었습니다.",
       });
     }
-    return res.status(401).json({
+    return res.clearCookie("token").status(401).json({
       code: 401,
       message: "유효하지 않은 토큰입니다.",
     });
@@ -342,15 +342,11 @@ export const addQuiz = async (req, res) => {
 
 export const getUserInfo = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
-    // const { token, username } = JSON.parse(req.cookies.token);
-    console.log("이게 토큰이 잘 넘어오나?");
-    console.log(req.cookies.token);
+    const { token, username } = req.cookies.token;
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const email = userInformation.email;
-    return res.status(200).json({ username: "테스트", email });
+    return res.status(200).json({ username, email });
   } catch (error) {
     return res
       .status(404)
@@ -384,4 +380,44 @@ export const postEdit = async (req, res) => {
       .status(404)
       .json({ errorMessage: "유저 정보를 바꾸는데 실패했습니다." });
   }
+};
+
+export const getRefresh = async (req, res) => {
+  try {
+    const userId = req.params;
+    const user = await User.findById(userId);
+    const { secretKey, options } = jwtConfig;
+    const payload = {
+      email: user.email,
+      username: user.username,
+    };
+    const token = jwt.sign(payload, secretKey, options);
+    const expireTime = new Date();
+    expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
+    return res
+      .cookie(
+        "token",
+        { token, username: user.username },
+        {
+          expires: expireTime,
+          sameSite: "none",
+          httpOnly: true,
+          secure: true,
+        }
+      )
+      .status(200)
+      .json({ message: "로그인에 성공했습니다" });
+  } catch (error) {
+    console.log("토큰을 리프레쉬 하는 과정에서 오류가 발생했습니다.");
+    return res
+      .status(404)
+      .json({ errorMsg: "토큰을 리프레쉬 하는 과정에서 오류가 발생했습니다." });
+  }
+};
+
+export const getLogout = (req, res) => {
+  return res
+    .clearCookie("token")
+    .status(200)
+    .json({ message: "쿠키가 삭제되었습니다." });
 };

@@ -83,46 +83,35 @@ function App() {
       ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
   console.log("수정됐습니다.");
-  console.log("16차 수정");
+  console.log("19차 수정");
   console.log(process.env.NODE_ENV);
   // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
 
   useEffect(() => {
-    if (cookies.token) {
-      const getToken = cookies.token.token;
-      console.log("실행?");
-      console.log(cookies);
-      console.log(cookies.token);
-      console.log(getToken);
-      if (cookies.token) {
-        fetch(`${URL}api/login`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken}`,
-            "Access-Control-Allow-Origin": "*",
-          },
-          credentials: "include",
-        })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error("Token is no longer valid");
-            }
-          })
-          .then((result) => {
-            setUser(result);
-          })
-          .catch((error) => {
-            console.log(error);
-            console.log("토큰이 만료되었거나, 유효하지않은 토큰입니다.");
-            removeCookie("token");
-            setUser(null);
-          });
-      }
-    }
-  }, [cookies]);
+    fetch(`${URL}api/login`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Token is no longer valid");
+        }
+      })
+      .then((result) => {
+        setUser(result);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("토큰이 만료되었거나, 유효하지않은 토큰입니다.");
+        setUser(null);
+      });
+  }, []);
   return (
     <UserInformation.Provider value={{ user, setUser }}>
       <CookiesProvider>

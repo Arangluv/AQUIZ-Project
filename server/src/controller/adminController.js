@@ -19,7 +19,7 @@ export const postContact = async (req, res) => {
 };
 
 export const getContacts = async (req, res) => {
-  const data = JSON.parse(req.cookies.token);
+  const data = req.cookies.token;
   if (data.username !== "아랑이") {
     return res.status(404).json({ message: "not ok" });
   }

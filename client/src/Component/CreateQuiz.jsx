@@ -201,6 +201,19 @@ function CreateQuiz() {
       window.location.replace("/login");
     } else {
       // token refresh
+      fetch(`${URL}api/refresh-token/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((response) => response.json())
+        .then(() => console.log("refresh"))
+        .catch((error) => {
+          console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
+          console.log(error);
+        });
       const expireTime = new Date();
       expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
       setCookie(
