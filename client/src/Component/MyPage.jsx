@@ -99,7 +99,7 @@ function MyPage() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
   // Url Params Check
   useEffect(() => {
@@ -121,6 +121,8 @@ function MyPage() {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken}`,
+        Cookies: `token=${getToken}`,
+        "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",
     })

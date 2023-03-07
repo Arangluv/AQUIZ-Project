@@ -15,23 +15,24 @@ app.use("/assets", express.static("assets"));
 app.use(
   cors({
     origin: [
-      "http://localhost:3000, http://3.37.82.88",
-      "http://ec2-3-37-82-88.ap-northeast-2.compute.amazonaws.com",
+      "http://localhost:3000",
+      "http://3.37.82.88",
+      "https://www.aquiz.co.kr",
+      "https://aquiz.co.kr",
     ],
     credentials: true,
   })
 );
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", [
-    "http://ec2-3-37-82-88.ap-northeast-2.compute.amazonaws.com",
-    "http://3.37.82.88",
-  ]);
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 개발모드
+  res.header("Access-Control-Allow-Origin", "https://aquiz.co.kr");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+  // res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
   res.setHeader("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
   next();
 });

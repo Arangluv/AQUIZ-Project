@@ -1,7 +1,7 @@
 export async function getQuiz(page, LIMIT, order, thema, rating, search) {
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
 
   const themaQuery = thema.join("&thema=");

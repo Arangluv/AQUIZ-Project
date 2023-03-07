@@ -228,6 +228,15 @@ const JoinFormBox = styled.form`
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
   }
 `;
+const ErrorMsg = styled.span`
+  font-size: 1.1vw;
+  color: #df2e38;
+  margin-bottom: 1.3vw;
+  @media screen and (max-width: 767px) {
+    font-size: 1.1vh;
+    margin-bottom: 1.3vh;
+  }
+`;
 function JoinPage() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [, setCookie] = useCookies(["token"]);
@@ -240,7 +249,7 @@ function JoinPage() {
     const passward2 = event.target.password2.value;
     const URL =
       process.env.NODE_ENV === "production"
-        ? "http://3.37.82.88:4001/"
+        ? "https://api.aquiz.co.kr/"
         : "http://localhost:4001/";
 
     fetch(`${URL}join`, {
@@ -254,40 +263,26 @@ function JoinPage() {
         passward1,
         passward2,
       }),
+      credentials: "include",
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("회원가입을 하는데 실패했습니다.");
-        }
+        return response.json();
       })
       .then((result) => {
-        const { token, username } = result;
-        const expireTime = new Date();
-        expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-        setCookie(
-          "token",
-          {
-            token,
-            username,
-          },
-          {
-            path: "/",
-            expires: expireTime,
-            // httpOnly: true,
-          }
-        );
+        console.log(result);
+        if (result?.errorMessage) {
+          throw new Error(result.errorMessage);
+        }
         navigate("/");
       })
       .catch((error) => {
         setErrorMsg(error.message);
         console.log(error);
+        console.log("------");
       });
   };
   return (
     <JoinContainer>
-      {errorMsg ? <span>{errorMsg}</span> : null}
       <JoinDescription>
         <h3>AQUIZ를 방문해주셔서 감사합니다.</h3>
         <span>이메일을 통해 간편하게 회원가입을 진행하실 수 있습니다.</span>
@@ -343,6 +338,7 @@ function JoinPage() {
             required
           />
         </label>
+        {errorMsg ? <ErrorMsg>{errorMsg}</ErrorMsg> : null}
         <input type="submit" value="회원가입하기" required />
       </JoinFormBox>
     </JoinContainer>

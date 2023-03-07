@@ -35,6 +35,9 @@ const Nav = styled.nav`
   padding-left: 2.5vw;
   padding-right: 2vw;
   box-sizing: border-box;
+  @media screen and (max-width: 767px) {
+    font-size: 1vh;
+  }
 `;
 
 const Ul = styled.ul`
@@ -61,6 +64,9 @@ const QuizContainer = styled.div`
   }
   li:nth-child(2):hover {
     a {
+      @media screen and (max-width: 767px) {
+        font-size: 1.2vh;
+      }
       span {
         color: #ff78f0;
       }
@@ -74,7 +80,7 @@ const QuizContainer = styled.div`
       font-size: 1.1vw;
       @media screen and (max-width: 767px) {
         /* 모바일 */
-        font-size: 1vh;
+        font-size: 1.6vh;
       }
     }
   }
@@ -122,7 +128,7 @@ const LoginContainer = styled.div`
       font-size: 1vw;
       @media screen and (max-width: 767px) {
         /* 모바일 */
-        font-size: 1vh;
+        font-size: 1.6vh;
       }
     }
   }

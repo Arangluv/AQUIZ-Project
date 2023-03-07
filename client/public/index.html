@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,14 +13,34 @@
       name="description"
       content="자신만의 퀴즈를 만들 수 있는 사이트입니다. 연예인, bj, 스트리머, 아이돌, 속담, 수학퀴즈 등 자신만의 퀴즈를 만들어 사람들과 함께 즐길 수 있는 곳입니다."
     />
-    <meta name="keyword" content="퀴즈, 퀴즈만들기, 연예인퀴즈, 스트리머퀴즈, bj퀴즈, 속담퀴즈, 랜덤퀴즈, 내 퀴즈 만들기, 퀴즈사이트, 나만의 퀴즈 만들기, 수학퀴즈, 과학퀴즈"/>
-    <meta name="author" content="Arang"/>
+    <meta
+      name="keyword"
+      content="퀴즈, 퀴즈만들기, 연예인퀴즈, 스트리머퀴즈, bj퀴즈, 속담퀴즈, 랜덤퀴즈, 내 퀴즈 만들기, 퀴즈사이트, 나만의 퀴즈 만들기, 수학퀴즈, 과학퀴즈"
+    />
+    <meta name="author" content="Arang" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <meta
+      property="og:image"
+      content="https://aquizbuket.s3.ap-northeast-2.amazonaws.com/logo/logo.png"
+    />
+    <meta property="og:site_name" content="AQUIZ" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+      new PartnersCoupang.G({
+        id: 123456,
+        trackingCode: "abc123",
+        subId: null,
+        template: "carousel",
+        width: "680",
+        height: "200",
+        containerId: "coupang-ads",
+      });
+    </script>
     <title>AQUIZ | 나만의 퀴즈를 만들자</title>
   </head>
   <body>

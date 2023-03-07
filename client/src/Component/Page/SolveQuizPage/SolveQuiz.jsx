@@ -6,9 +6,8 @@ import styled from "styled-components";
 import ReactHelmet from "../../ReactHelmet";
 
 const QuizContainer = styled.div`
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
-  margin-top: 1vw;
+  height: 100%;
+  display: flex;
   @media screen and (max-width: 767px) {
     padding-left: 0px;
     padding-right: 0px;
@@ -29,7 +28,7 @@ function SolveQuiz() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
 
   let findQuizzes;
@@ -50,6 +49,8 @@ function SolveQuiz() {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken}`,
+        Cookies: `token=${getToken}`,
+        "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",
     })

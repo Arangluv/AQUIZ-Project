@@ -32,6 +32,14 @@ const BannerAD = styled.div`
   height: 100%;
   background-color: white;
   grid-column: 2 / span 2;
+  a {
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   @media screen and (max-width: 767px) {
     /* 모바일 */
     grid-column: 1 / span 2;
@@ -80,7 +88,41 @@ function QuizScreens() {
   const [ref, inView] = useInView();
   // Search State
   const [quizSearchInput, setQuizSearchInput] = useState("");
-  
+  // AD Container
+  const bannerContainer = [
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+      width="680"
+      height="140"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+  ];
   const handleLoad = async () => {
     setLoading(true);
     try {
@@ -197,14 +239,14 @@ function QuizScreens() {
       />
       <MainContainer>
         {!isError ? (
-          quizList.map((subQuiz, idx) => {
+          quizList.map((subQuiz, quizListIdx) => {
             return (
-              <SubContainer quantity={subQuiz.length} key={idx}>
+              <SubContainer quantity={subQuiz.length} key={quizListIdx}>
                 {subQuiz.map((quiz, idx) => {
                   if (idx === 5) {
                     return (
                       <BannerAD key={idx}>
-                        <span>파트너스 광고</span>
+                        {bannerContainer[Math.floor(Math.random() * 4)]}
                       </BannerAD>
                     );
                   }

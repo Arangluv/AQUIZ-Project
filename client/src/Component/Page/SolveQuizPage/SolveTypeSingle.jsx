@@ -14,7 +14,7 @@ const FieldSet = styled.fieldset`
 `;
 const AnswerContainer = styled.div`
   label {
-    border: 1px solid #676a6c;
+    border: 1px solid rgba(103, 106, 108, 0.8);
     border-radius: 3px;
     margin-bottom: 0.3vw;
     background-color: white;

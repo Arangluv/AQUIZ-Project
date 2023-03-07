@@ -18,13 +18,16 @@ const MainContainer = styled.div`
   align-items: center;
 `;
 const AfterSolvedContainer = styled.div`
-  padding-left: 1vw;
-  padding-right: 1vw;
-  width: 100%;
+  padding: 2vw 1vw;
+  border: 1px solid red;
+  width: 80%;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(103, 106, 108, 0.6);
+  border-radius: 3px;
   h1 {
     font-size: 1.3vw;
     margin-top: 1vw;
@@ -62,8 +65,11 @@ const AdContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 1vw;
-  border: 1px solid black;
-  height: 5vh;
+  height: 15vh;
+  iframe {
+    height: 15vh;
+    width: 100%;
+  }
   @media screen and (max-width: 767px) {
     height: 8vh;
   }
@@ -78,6 +84,7 @@ const CommunicationContainer = styled.div`
   padding: 1vw 0;
   background-color: white;
   border-radius: 3px;
+  border: 1px solid rgba(103, 106, 108, 0.8);
   min-height: 10vh;
   height: auto;
   @media screen and (max-width: 767px) {
@@ -270,8 +277,42 @@ function AfterSolved() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
+  const bannerContainer = [
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+      width="680"
+      height="140"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+  ];
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -290,6 +331,8 @@ function AfterSolved() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken}`,
+          Cookies: `token=${getToken}`,
+          "Access-Control-Allow-Origin": "*",
         },
         credentials: "include",
       })
@@ -357,6 +400,8 @@ function AfterSolved() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken}`,
+          Cookies: `token=${getToken}`,
+          "Access-Control-Allow-Origin": "*",
         },
         credentials: "include",
       })
@@ -510,7 +555,9 @@ function AfterSolved() {
           </font>
         </button>
       </AfterSolvedContainer>
-      <AdContainer>광고</AdContainer>
+      <AdContainer>
+        {bannerContainer[Math.floor(Math.random() * 4)]}
+      </AdContainer>
       <CommunicationContainer>
         <form action="POST" onSubmit={handleSaveContent}>
           <label htmlFor="nickname">

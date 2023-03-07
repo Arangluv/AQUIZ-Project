@@ -2,23 +2,41 @@ import SolveTypeMulti from "./SolveTypeMulti";
 import SolveTypeSingle from "./SolveTypeSingle";
 import SolveTypeWord from "./SolveTypeWord";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
+const QuizDetailContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
 const BannerAd = styled.div`
   background-color: white;
   width: 15%;
-  height: auto;
+  height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const QuizDetailContainer = styled.div`
-  display: flex;
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  @media screen and (max-width: 767px) {
+    height: 70vh;
+  }
 `;
 const Outlet = styled.div`
   width: 70%;
   padding-left: 2vw;
   padding-right: 2vw;
+  border-radius: 3px;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  background-color: white;
+  border: 1px solid rgba(103, 106, 108, 0.6);
+  margin: 0 3vw;
   @media screen and (max-width: 767px) {
-    padding-top: 1vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
     width: 70%;
   }
   h2 {
@@ -26,21 +44,40 @@ const Outlet = styled.div`
       font-size: 1.5vw;
       color: #676a6c;
       display: block;
-      margin-bottom: 1vw;
+      margin-bottom: 2vw;
       @media screen and (max-width: 767px) {
         font-size: 1.5vh;
         margin-bottom: 1vh;
       }
     }
-    font {
-      font-size: 1.2vw;
-      color: rgb(103, 106, 108);
-      display: block;
-      margin-bottom: 1vw;
-      @media screen and (max-width: 767px) {
-        margin-bottom: 1vh;
-        font-size: 1.4vw;
-      }
+  }
+`;
+const QuizDescription = styled.p`
+  font-size: 1.2vw;
+  color: rgb(103, 106, 108);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vw;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 2vh;
+    font-size: 1.4vw;
+  }
+  font {
+    margin-bottom: 1vw;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 1vh;
+      font-size: 1vh;
+    }
+    span {
+      margin-right: 0.3vw;
+    }
+  }
+  span:nth-child(2) {
+    border: 1px solid rgba(103, 106, 10, 0.2);
+    border-radius: 3px;
+    padding: 1vw 2vw;
+    @media screen and (max-width: 767px) {
+      padding: 1vh 2vh;
     }
   }
 `;
@@ -102,6 +139,40 @@ function SolveQuizDetail({
   quizDescribe,
   quizCorrectRate,
 }) {
+  const bannerContainer = [
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+      width="680"
+      height="140"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+    <iframe
+      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
+      width="680"
+      height="200"
+      frameborder="0"
+      scrolling="no"
+      referrerpolicy="unsafe-url"
+    ></iframe>,
+  ];
   let questionType, notion;
   if (type === "single") {
     notion = "하나의 답을 선택해주세요";
@@ -138,12 +209,18 @@ function SolveQuizDetail({
   }
   return (
     <QuizDetailContainer>
-      <BannerAd>세부 배너광고 다음퀴즈 클릭시 바뀌어야함</BannerAd>
+      <BannerAd>{bannerContainer[Math.floor(Math.random() * 4)]}</BannerAd>
       <Outlet>
         <h2>
           <span>문제 {quizNum + 1}번</span>
-          <font>{quizDescribe}</font>
         </h2>
+        <QuizDescription>
+          <font>
+            <span>문제</span>
+            <FontAwesomeIcon icon={faVolumeLow}></FontAwesomeIcon>{" "}
+          </font>
+          <span>{quizDescribe}</span>
+        </QuizDescription>
         <ImageSecgtion imgUrl={imgUrl}>
           {imgUrl ? (
             <QuizImage
@@ -160,7 +237,7 @@ function SolveQuizDetail({
         </NotionSmall>
         {questionType}
       </Outlet>
-      <BannerAd>세부 배너광고 다음퀴즈 클릭시 바뀌어야함</BannerAd>
+      <BannerAd>{bannerContainer[Math.floor(Math.random() * 4)]}</BannerAd>
     </QuizDetailContainer>
   );
 }

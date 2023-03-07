@@ -66,6 +66,7 @@ const OptionArea = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid red;
     padding: 0.4vw 0.6vw;
     border-right: 1px solid rgba(63, 66, 68, 0.2);
     @media screen and (max-width: 767px) {
@@ -74,10 +75,10 @@ const OptionArea = styled.div`
   }
   & > div:nth-child(2) {
     display: flex;
+    border: 1px solid blue;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0.4vw 0.6vw;
   }
   & > div:nth-child(1) ${OrderButton}:nth-child(1) {
     margin-right: 0.1vw;
@@ -126,7 +127,6 @@ const StyledForm = styled.form`
 const ThemaSelectBox = styled.div`
   display: flex;
   margin-bottom: 0.2vw;
-
   & > button {
     margin-right: 0.2vw;
   }

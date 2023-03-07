@@ -13,6 +13,7 @@ export const getJoin = (req, res, next) => {
 export const postJoin = async (req, res, next) => {
   const { email, username, passward1, passward2 } = req.body;
   const { secretKey, options } = jwtConfig;
+
   let isJoinSucceed = false;
   if (passward1 !== passward2) {
     return res
@@ -43,8 +44,23 @@ export const postJoin = async (req, res, next) => {
       email,
       password: passward1,
     });
+
     const user = await User.findOne({ username });
-    return res.status(200).json({ username, isJoinSucceed: true, token });
+    const expireTime = new Date();
+    expireTime.setHours(expireTime.getHours() + 24 * 7);
+    return res
+      .cookie(
+        "token",
+        { token, username: user.username },
+        {
+          expires: expireTime,
+          sameSite: "none",
+          httpOnly: true,
+          secure: true,
+        }
+      )
+      .status(200)
+      .json({ username, isJoinSucceed: true, token });
   } catch (error) {
     return res
       .status(404)
@@ -55,10 +71,7 @@ export const postJoin = async (req, res, next) => {
 export const postLogin = async (req, res) => {
   const { secretKey, options } = jwtConfig;
   const { email, password } = req.body;
-  console.log("SecretKey : ");
-  console.log(secretKey);
-  console.log("options : ");
-  console.log(options);
+
   const user = await User.findOne({ email, socialOnly: false });
   if (!user) {
     // 유저를 찾지 못한 경우
@@ -66,8 +79,8 @@ export const postLogin = async (req, res) => {
       .status(404)
       .json({ errorMessage: "이메일 혹은 비밀번호가 맞지 않습니다" });
   }
+  console.log(user);
   const passwordOk = await bcrypt.compare(password, user.password);
-
   if (!passwordOk) {
     return res
       .status(404)
@@ -79,25 +92,29 @@ export const postLogin = async (req, res) => {
     userName: user.name,
   };
   const token = jwt.sign(payload, secretKey, options);
-  return res.status(200).json({ isLoggin: true, token, user });
-  // const token = jwt.sign(payload, secretKey, options);
+  const expireTime = new Date();
+  expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
+  res
+    .cookie(
+      "token",
+      { token, username: user.username },
+      {
+        expires: expireTime,
+        sameSite: "none",
+        httpOnly: true,
+        secure: true,
+      }
+    )
+    .status(200)
+    .json({ message: "로그인에 성공했습니다" });
 };
 
 export const userLoginValid = async (req, res) => {
-  const data = JSON.parse(req.cookies.token);
-  const token = data.token;
-  console.log("data : ");
-  console.log(data);
-  console.log("리퀘스트 토큰?");
-  console.log(req.cookies);
-  console.log(req.cookies.token);
-  console.log("그래서 토큰은 ?");
-  console.log(token);
-  const { secretKey } = jwtConfig;
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const targetEmail = userInformation.email;
-
     const findUser = await User.findOne({ email: targetEmail });
     const { email, username, _id, quizzes } = findUser;
     if (!findUser) {
@@ -323,17 +340,21 @@ export const addQuiz = async (req, res) => {
   }
 };
 
-export const getUserInfo = (req, res) => {
+export const getUserInfo = async (req, res) => {
   try {
-    const { token, username } = JSON.parse(req.cookies.token);
+    const token = req.headers.authorization.split(" ")[1];
+    console.log(token);
+    // const { token, username } = JSON.parse(req.cookies.token);
+    console.log("이게 토큰이 잘 넘어오나?");
+    console.log(req.cookies.token);
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const email = userInformation.email;
-    return res.status(200).json({ username, email });
+    return res.status(200).json({ username: "테스트", email });
   } catch (error) {
     return res
       .status(404)
-      .json({ message: "사용자 정보를 변경하는데 실패했습ㄴ디ㅏ." });
+      .json({ message: "사용자 정보를 변경하는데 실패했습니다." });
   }
 };
 

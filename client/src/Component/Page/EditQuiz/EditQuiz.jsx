@@ -195,7 +195,7 @@ function EditQuiz() {
   // URL
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
 
   useEffect(() => {

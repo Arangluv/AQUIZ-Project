@@ -219,32 +219,32 @@ function LoginForm() {
   const [cookies, setCookie] = useCookies(["token"]);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (cookies.token) {
       navigate("/");
     }
   }, []);
-
+  // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
+  // aws s3 sync ./build s3://aquizfront  profile=AQUIZ-Front
   const onSubmit = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     const URL =
       process.env.NODE_ENV === "production"
-        ? "http://3.37.82.88:4001/"
+        ? "https://api.aquiz.co.kr/"
         : "http://localhost:4001/";
 
     fetch(`${URL}login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        
       }, // json형태의 데이터를 서버로 보냅니다.
       body: JSON.stringify({
         email,
         password,
       }),
+      credentials: "include",
     })
       .then((response) => {
         if (response.ok) {
@@ -253,25 +253,12 @@ function LoginForm() {
           throw new Error("로그인하는데 오류가 발생했습니다.");
         }
       })
-      .then((result) => {
-        const { token, user } = result;
-        const expireTime = new Date();
-        expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-        setCookie(
-          "token",
-          {
-            token,
-            username: user.username,
-          },
-          {
-            path: "/",
-            expires: expireTime,
-            // httpOnly: true,
-          }
-        );
+      .then(() => {
         window.location.replace("/");
       })
       .catch((error) => {
+        console.log("여기가 실행?");
+        console.log(error.message);
         setErrorMsg(error.message);
       });
   };

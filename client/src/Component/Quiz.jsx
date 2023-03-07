@@ -101,7 +101,6 @@ const QuizMetaInfo = styled.div`
 const UserParticipationArea = styled.div`
   display: flex;
   margin-bottom: 0.6vw;
-  position: relative;
   @media screen and (max-width: 767px) {
     margin-top: 0.5vh;
     margin-bottom: 1vh;
@@ -157,7 +156,7 @@ const UserParticipationArea = styled.div`
 const DeleteBnt = styled.button`
   position: absolute;
   background-color: white;
-  top: -26.5vw;
+  top: 0.3vw;
   right: 0.3vw;
   padding: 0.3vw 0.4vw;
   border: 0.1px solid #e14d2a;
@@ -175,7 +174,8 @@ const DeleteBnt = styled.button`
   @media screen and (max-width: 767px) {
     font-size: 1vw;
     padding: 0.2vh 0.4vh;
-    top: -34vh;
+    top: 0.3vh;
+    right: 0.3vh;
     font {
       margin-right: 0.2vh;
       font-size: 1vh;
@@ -198,7 +198,7 @@ function Quiz({
 }) {
   const URL =
     process.env.NODE_ENV === "production"
-      ? "http://3.37.82.88:4001/"
+      ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
   const handleShare = (event) => {
     const BASE_URL = `${URL}quiz/`;
