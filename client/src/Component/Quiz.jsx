@@ -237,7 +237,7 @@ function Quiz({
               </font>
               시작하기
             </Link>
-            <Link onClick={handleShare} data-quizId={quizId}>
+            <Link onClick={handleShare} data-quizid={quizId}>
               <font>
                 <FontAwesomeIcon icon={faShare}></FontAwesomeIcon>
               </font>

@@ -123,20 +123,27 @@ export const userLoginValid = async (req, res) => {
     return res.status(200).json({ email, username, _id, quizzes });
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      return res.clearCookie("token").status(419).json({
-        code: 419,
-        message: "토큰이 만료되었습니다.",
-      });
+      return res
+        .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
+        .status(419)
+        .json({
+          code: 419,
+          message: "토큰이 만료되었습니다.",
+        });
     }
-    return res.clearCookie("token").status(401).json({
-      code: 401,
-      message: "유효하지 않은 토큰입니다.",
-    });
+    return res
+      .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
+      .status(401)
+      .json({
+        code: 401,
+        message: "유효하지 않은 토큰입니다.",
+      });
   }
 };
 
 export const addQuiz = async (req, res) => {
-  const { quizId, username, inputAnswerToUser } = req.body;
+  const { quizId, inputAnswerToUser } = req.body;
+  const { username } = req.cookies?.token;
   try {
     if (inputAnswerToUser.length === 0) {
       return res.status(200).json({ message: "이미 문제를 풀었습니다." });
@@ -202,10 +209,13 @@ export const addQuiz = async (req, res) => {
         }
         return res.status(200).json({ message: "add ok for unknown user" });
       } catch (error) {
-        return res.status(404).json({
-          errorMessage:
-            "로그인하지않은 유저의 퀴즈 정보를 저장하는데 오류가 발생했습니다.",
-        });
+        return res
+          .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
+          .status(404)
+          .json({
+            errorMessage:
+              "로그인하지않은 유저의 퀴즈 정보를 저장하는데 오류가 발생했습니다.",
+          });
       }
     }
 
@@ -349,6 +359,7 @@ export const getUserInfo = async (req, res) => {
     return res.status(200).json({ username, email });
   } catch (error) {
     return res
+      .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
       .status(404)
       .json({ message: "사용자 정보를 변경하는데 실패했습니다." });
   }
@@ -358,6 +369,15 @@ export const postEdit = async (req, res) => {
   try {
     const { email, username, password } = req.body;
     const user = await User.findOne({ email });
+    const { secretKey, options } = jwtConfig;
+    const payload = {
+      email,
+      username,
+    };
+    const token = jwt.sign(payload, secretKey, options);
+    const expireTime = new Date();
+    expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
+
     if (!user) {
       return res.status(404).json({ errorMessage: "유저를 찾지 못했습니다." });
     }
@@ -374,9 +394,23 @@ export const postEdit = async (req, res) => {
         username,
       }
     );
-    return res.status(200).json({ username, message: "ok" });
+    // After Edit, token refresh
+    return res
+      .cookie(
+        "token",
+        { token, username },
+        {
+          expires: expireTime,
+          sameSite: "none",
+          httpOnly: true,
+          secure: true,
+        }
+      )
+      .status(200)
+      .json({ username, message: "ok" });
   } catch (error) {
     res
+      .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
       .status(404)
       .json({ errorMessage: "유저 정보를 바꾸는데 실패했습니다." });
   }
@@ -385,7 +419,7 @@ export const postEdit = async (req, res) => {
 export const getRefresh = async (req, res) => {
   try {
     const userId = req.params;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId.id);
     const { secretKey, options } = jwtConfig;
     const payload = {
       email: user.email,
@@ -406,10 +440,11 @@ export const getRefresh = async (req, res) => {
         }
       )
       .status(200)
-      .json({ message: "로그인에 성공했습니다" });
+      .json({ message: "토큰을 리프레쉬 했습니다." });
   } catch (error) {
     console.log("토큰을 리프레쉬 하는 과정에서 오류가 발생했습니다.");
     return res
+      .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
       .status(404)
       .json({ errorMsg: "토큰을 리프레쉬 하는 과정에서 오류가 발생했습니다." });
   }
@@ -417,7 +452,35 @@ export const getRefresh = async (req, res) => {
 
 export const getLogout = (req, res) => {
   return res
-    .clearCookie("token")
+    .clearCookie("token", {
+      sameSite: "none",
+      secure: true,
+      path: "/",
+    })
     .status(200)
     .json({ message: "쿠키가 삭제되었습니다." });
+};
+
+export const isTokenValid = (req, res) => {
+  try {
+    const { token } = req.cookies?.token;
+    if (!token) {
+      return res.status(404).json({ message: "토큰이 없습니다." });
+    }
+    const { secretKey } = jwtConfig;
+    const tokenValid = jwt.verify(token, secretKey);
+    if (tokenValid) {
+      return res.status(200).json({ message: "valid 한 유저입니다." });
+    } else {
+      return res
+        .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
+        .status(404)
+        .json({ message: "유효한 토큰이 아닙니다." });
+    }
+  } catch (error) {
+    return res
+      .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
+      .status(404)
+      .json({ message: "사용자의 토큰을 검사하다가 문제가 발생했습니다." });
+  }
 };

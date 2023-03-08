@@ -10,5 +10,5 @@ const globalRouter = express.Router();
 globalRouter.route("/").get(getQuiz);
 globalRouter.route("/join").get(getJoin).post(postJoin);
 globalRouter.route("/login").post(postLogin);
-globalRouter.route("/loggout").get(getLogout);
+globalRouter.route("/logout").get(getLogout);
 export default globalRouter;

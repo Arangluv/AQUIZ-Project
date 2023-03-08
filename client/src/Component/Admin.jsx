@@ -64,80 +64,72 @@ function Admin() {
       : "http://localhost:4001/";
   useEffect(() => {
     setLoading(true);
-    if (!cookies) {
-      navigater("/");
-      return;
-    }
-    if (cookies.token) {
-      const getToken = cookies.token.token;
-      if (cookies.token) {
-        fetch(`${URL}api/login`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken}`,
-            Cookies: `token=${getToken}`,
-            "Access-Control-Allow-Origin": "*",
-          },
-          credentials: "include",
-        })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error("Token is no longer valid");
-            }
-          })
-          .then((result) => {
-            const { username, email } = result;
-            if (
-              email === process.env.REACT_APP_ADMIN_EMAIL &&
-              username === process.env.REACT_APP_ADMIN_NAME
-            ) {
-              setLoading(false);
-            } else {
-              navigater("/");
-              return;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        alert("잘못된 접근입니다.");
+        navigater("/");
       }
-    } else {
-      navigater("/");
-    }
+      return;
+    });
+    fetch(`${URL}api/login`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Token is no longer valid");
+        }
+      })
+      .then((result) => {
+        const { username, email } = result;
+        if (
+          email === process.env.REACT_APP_ADMIN_EMAIL &&
+          username === process.env.REACT_APP_ADMIN_NAME
+        ) {
+          setLoading(false);
+        } else {
+          navigater("/");
+          return;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
-    if (cookies.token) {
-      const getToken = cookies.token.token;
-      fetch(`${URL}api/user-contacts`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken}`,
-          Cookies: `token=${getToken}`,
-          "Access-Control-Allow-Origin": "*",
-        },
-        credentials: "include",
+    fetch(`${URL}api/user-contacts`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("문의사항을 불러오는데 실패했습니다.");
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("문의사항을 불러오는데 실패했습니다.");
-          }
-        })
-        .then((result) => {
-          const { userReqList } = result;
-          setReqList([...userReqList]);
-        })
-        .catch((error) => {
-          console.log("문의사항을 불러오는데 오류가 발생했습니다.");
-          console.log(error);
-        });
-    }
+      .then((result) => {
+        const { userReqList } = result;
+        setReqList([...userReqList]);
+      })
+      .catch((error) => {
+        console.log("문의사항을 불러오는데 오류가 발생했습니다.");
+        console.log(error);
+      });
   }, []);
 
   return loading ? null : (

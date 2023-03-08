@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useCookies } from "react-cookie";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -239,8 +238,19 @@ const ErrorMsg = styled.span`
 `;
 function JoinPage() {
   const [errorMsg, setErrorMsg] = useState(null);
-  const [, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
+  useEffect(() => {
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (response.ok) {
+        alert("잘못된 접근입니다.");
+        navigate("/");
+      }
+      return;
+    });
+  }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -273,7 +283,7 @@ function JoinPage() {
         if (result?.errorMessage) {
           throw new Error(result.errorMessage);
         }
-        navigate("/");
+        window.location.replace("/");
       })
       .catch((error) => {
         setErrorMsg(error.message);

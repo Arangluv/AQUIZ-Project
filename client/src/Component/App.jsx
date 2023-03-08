@@ -3,9 +3,10 @@ import { Outlet } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
 import Header from "./Header";
 import Footer from "./Footer";
-import { useCookies, CookiesProvider } from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
 import styled from "styled-components";
+import bannerContainer from "../assets/bannerData";
 // 색깔은 두개 -> #ECECEC -> rgb(236, 236, 236)
 // #ff8b13 -> rgb(255, 139, 19)
 const Wrapper = styled.div`
@@ -42,49 +43,12 @@ const MainAd = styled.div`
 `;
 function App() {
   const [user, setUser] = useState(null);
-  const [cookies, , removeCookie] = useCookies(["token"]);
-  // Banner Container
-  const bannerContainer = [
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
-      width="680"
-      height="140"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-  ];
   const URL =
     process.env.NODE_ENV === "production"
       ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
   console.log("수정됐습니다.");
-  console.log("19차 수정");
-  console.log(process.env.NODE_ENV);
+  console.log("23차 수정");
   // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
 
   useEffect(() => {

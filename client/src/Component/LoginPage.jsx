@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -216,16 +215,20 @@ const LoginErrorBox = styled.div`
   }
 `;
 function LoginForm() {
-  const [cookies, setCookie] = useCookies(["token"]);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    if (cookies.token) {
-      navigate("/");
-    }
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (response.ok) {
+        alert("잘못된 접근입니다.");
+        navigate("/");
+      }
+      return;
+    });
   }, []);
-  // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
-  // aws s3 sync ./build s3://aquizfront  profile=AQUIZ-Front
   const onSubmit = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;

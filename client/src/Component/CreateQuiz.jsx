@@ -196,39 +196,22 @@ function CreateQuiz() {
     if (!regex.test(userId)) {
       navigate("/not");
     }
-    if (!cookies.token) {
-      alert("로그인 후 이용해주세요");
-      window.location.replace("/login");
-    } else {
-      // token refresh
-      fetch(`${URL}api/refresh-token/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((response) => response.json())
-        .then(() => console.log("refresh"))
-        .catch((error) => {
-          console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
-          console.log(error);
-        });
-      const expireTime = new Date();
-      expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-      setCookie(
-        "token",
-        {
-          token: cookies.token.token,
-          username: cookies.token.username,
-        },
-        {
-          path: "/",
-          expireTime,
-          // httpOnly: true,
-        }
-      );
-    }
+    // token refresh
+    fetch(`${URL}api/refresh-token/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => console.log("refresh"))
+      .catch((error) => {
+        console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
+        console.log(error);
+        alert("로그인 후 이용해주세요");
+        window.location.replace("/");
+      });
   }, []);
 
   const addQuiz = (event) => {

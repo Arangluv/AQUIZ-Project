@@ -11,6 +11,7 @@ import {
   faPen,
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
+import bannerContainer from "../../../assets/bannerData";
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -279,40 +280,6 @@ function AfterSolved() {
     process.env.NODE_ENV === "production"
       ? "https://api.aquiz.co.kr/"
       : "http://localhost:4001/";
-  const bannerContainer = [
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
-      width="680"
-      height="140"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-  ];
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -321,17 +288,11 @@ function AfterSolved() {
   }, []);
   useEffect(() => {
     setLoading(true);
-    let getToken = null;
-    if (cookies?.token) {
-      getToken = cookies.token.token;
-    }
     if (inputAnswerToUser) {
       fetch(`${URL}quizzes/solve/${selectedQuizId}/?page=0&limit=10`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken}`,
-          Cookies: `token=${getToken}`,
           "Access-Control-Allow-Origin": "*",
         },
         credentials: "include",
@@ -385,9 +346,9 @@ function AfterSolved() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           quizId: selectedQuizId,
-          username: cookies?.token ? cookies.token.username : null,
           inputAnswerToUser,
         }),
       })
@@ -399,8 +360,6 @@ function AfterSolved() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken}`,
-          Cookies: `token=${getToken}`,
           "Access-Control-Allow-Origin": "*",
         },
         credentials: "include",
@@ -413,8 +372,6 @@ function AfterSolved() {
           }
         })
         .then((result) => {
-          console.log("Result : ");
-          console.log(result);
           return {
             quizzes: result.quiz.quizzes,
             userInput: result.inputAnswersToUser.userInputList,
@@ -481,7 +438,6 @@ function AfterSolved() {
   };
   const handleSaveContent = async (event) => {
     event.preventDefault();
-    console.log("클릭");
     const response = await fetch(
       `${URL}quizzes/add-comment/${selectedQuizId}`,
       {

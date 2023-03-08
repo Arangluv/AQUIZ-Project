@@ -178,6 +178,10 @@ function Header({ className }) {
   // Header 강조를 위한 State 선언
   const [emphasis, setEmpahsis] = useState("");
   const { pathname } = useLocation();
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "https://api.aquiz.co.kr/"
+      : "http://localhost:4001/";
 
   const pathArray = pathname.split("/");
   useEffect(() => {
@@ -198,10 +202,14 @@ function Header({ className }) {
     }
   }, [emphasis, pathname]);
   const handleLogOut = () => {
-    fetch(`${URL}logout`)
+    fetch(`${URL}logout`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => {
         if (response.ok) {
           window.location.replace("/");
+          return;
         } else {
           throw new Error(
             "로그아웃을 하는데 문제가 발생했습니다. 다시 로그아웃해주세요"

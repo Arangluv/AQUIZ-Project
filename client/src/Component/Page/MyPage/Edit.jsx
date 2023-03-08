@@ -109,7 +109,7 @@ function Edit() {
   const [password, setPassword] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   // user Token
-  const [cookies, setCookies] = useCookies(["token"]);
+
   // Navigate
   const navigate = useNavigate();
   // URL
@@ -126,16 +126,20 @@ function Edit() {
   }, []);
   useEffect(() => {
     setIsLoading(true);
-    if (!cookies.token) {
-      alert("로그인 후 이용해주세요");
-      navigate("/login");
-    }
-    const getToken = cookies.token.token;
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        alert("로그인 후 이용해주세요.");
+        navigate("/");
+      }
+      return;
+    });
     fetch(`${URL}api/userInfo`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken}`,
         "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",
@@ -191,20 +195,22 @@ function Edit() {
         }
         if (result.message) {
           alert("성공적으로 변경하였습니다.");
-          const expireTime = new Date();
-          expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-          setCookies(
-            "token",
-            {
-              token: cookies.token.token,
-              username,
+          // token refresh
+          fetch(`${URL}api/refresh-token/${userId}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
             },
-            {
-              path: "/",
-              expireTime,
-              // httpOnly: true,
-            }
-          );
+          })
+            .then((response) => response.json())
+            .then(() => console.log("refresh"))
+            .catch((error) => {
+              console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
+              console.log(error);
+              alert("로그인 후 이용해주세요");
+              window.location.replace("/");
+            });
           navigate("/");
         }
         return;

@@ -66,7 +66,6 @@ const OptionArea = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
     padding: 0.4vw 0.6vw;
     border-right: 1px solid rgba(63, 66, 68, 0.2);
     @media screen and (max-width: 767px) {
@@ -75,7 +74,6 @@ const OptionArea = styled.div`
   }
   & > div:nth-child(2) {
     display: flex;
-    border: 1px solid blue;
     flex-direction: column;
     justify-content: center;
     align-items: center;

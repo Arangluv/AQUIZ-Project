@@ -4,6 +4,7 @@ import SolveTypeWord from "./SolveTypeWord";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
+import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
   width: 100%;
@@ -139,40 +140,6 @@ function SolveQuizDetail({
   quizDescribe,
   quizCorrectRate,
 }) {
-  const bannerContainer = [
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
-      width="680"
-      height="140"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-  ];
   let questionType, notion;
   if (type === "single") {
     notion = "하나의 답을 선택해주세요";

@@ -3,6 +3,8 @@ import { useCookies } from "react-cookie";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Quiz from "./Quiz";
 import styled from "styled-components";
+import bannerContainer from "../assets/bannerData";
+
 const SubBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -92,7 +94,6 @@ function MyPage() {
   const [query, setQuery] = useState("");
   const [orderColor, setOrderColor] = useState(true);
   const userId = useParams().id;
-  const [cookies] = useCookies("token");
   const navigate = useNavigate();
   // Check Admin
   const [isAdmin, setIsAdmin] = useState(false);
@@ -111,17 +112,20 @@ function MyPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!cookies.token) {
-      alert("잘못된 접근 입니다.");
-      navigate("/login");
-    }
-    const getToken = cookies.token.token;
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        alert("로그인 후 이용해주세요");
+        navigate("/");
+      }
+      return;
+    });
     fetch(`${URL}quizzes/maked/${userId}${query ? query : "?opt=maked"}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken}`,
-        Cookies: `token=${getToken}`,
         "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",
@@ -240,20 +244,24 @@ function MyPage() {
       <MainContainer>
         {isLoading && isError
           ? null
-          : quizList.map((subQuiz) => {
+          : quizList.map((subQuiz, idx) => {
               return (
-                <SubContainer quantity={subQuiz.length}>
+                <SubContainer quantity={subQuiz.length} key={idx}>
                   {subQuiz.map((quiz, idx) => {
                     if (idx === 5) {
                       return (
-                        <BannerAD>
-                          <span>파트너스 광고</span>
+                        <BannerAD key={idx}>
+                          {bannerContainer[Math.floor(Math.random() * 4)]}
                         </BannerAD>
                       );
                     }
                     const { quizDescribe, quizTitle, thumnailUrl, _id, meta } =
                       quiz;
-                    const { correctRate, view } = meta;
+                    let correctRate, view;
+                    if (meta) {
+                      correctRate = meta.correctRate;
+                      view = meta.view;
+                    }
                     if (mode === "maked") {
                       return (
                         <Quiz

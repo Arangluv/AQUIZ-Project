@@ -4,6 +4,7 @@ import Quiz from "./Quiz";
 import SerchArea from "./SerchAera";
 import { getQuiz } from "../api";
 import styled from "styled-components";
+import bannerContainer from "../assets/bannerData";
 const Test = styled.div`
   width: 100%;
   display: ${({ hasNext, isLoading }) =>
@@ -88,41 +89,6 @@ function QuizScreens() {
   const [ref, inView] = useInView();
   // Search State
   const [quizSearchInput, setQuizSearchInput] = useState("");
-  // AD Container
-  const bannerContainer = [
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645650&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameborder="0"
-      scrolling="no"
-      referrerpolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645649&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameBorder="0"
-      scrolling="no"
-      referrerPolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645647&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
-      width="680"
-      height="140"
-      frameBorder="0"
-      scrolling="no"
-      referrerPolicy="unsafe-url"
-    ></iframe>,
-    <iframe
-      src="https://ads-partners.coupang.com/widgets.html?id=645638&template=carousel&trackingCode=AF1256886&subId=&width=680&height=200"
-      width="680"
-      height="200"
-      frameBorder="0"
-      scrolling="no"
-      referrerPolicy="unsafe-url"
-    ></iframe>,
-  ];
   const handleLoad = async () => {
     setLoading(true);
     try {
