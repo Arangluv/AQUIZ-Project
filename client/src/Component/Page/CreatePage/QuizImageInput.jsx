@@ -64,7 +64,8 @@ const DeleteButton = styled.button`
   font {
     margin-left: 0.4vw;
   }
-  @media (max-width: 500px) {
+
+  @media screen and (max-width: 767px) {
     padding: 0.4vh 0.6vh;
     span {
       font-size: 1vh;

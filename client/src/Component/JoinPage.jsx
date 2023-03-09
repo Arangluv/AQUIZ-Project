@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import URL from "../assets/url";
 const JoinContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -217,9 +218,11 @@ const JoinFormBox = styled.form`
     border-radius: 5px;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
-      width: 19.5vh;
+      width: 21.5vh;
       font-size: 1.6vh;
-      padding: 1vh 0;
+      padding: 1.4vh 0;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3;
     }
   }
   input[type="submit"]:hover {
@@ -257,10 +260,6 @@ function JoinPage() {
     const username = event.target.username.value;
     const passward1 = event.target.password1.value;
     const passward2 = event.target.password2.value;
-    const URL =
-      process.env.NODE_ENV === "production"
-        ? "https://api.aquiz.co.kr/"
-        : "http://localhost:4001/";
 
     fetch(`${URL}join`, {
       method: "POST",
@@ -279,7 +278,6 @@ function JoinPage() {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
         if (result?.errorMessage) {
           throw new Error(result.errorMessage);
         }

@@ -10,6 +10,7 @@ const AnswerContainer = styled.div`
     align-items: center;
     @media screen and (max-width: 767px) {
       margin-bottom: 0.4vh;
+      padding: 0.6vh 0.4vh;
     }
     span {
       display: flex;
@@ -19,7 +20,7 @@ const AnswerContainer = styled.div`
       font-size: 1vw;
       width: 100%;
       @media screen and (max-width: 767px) {
-        font-size: 1.2vh;
+        font-size: 1.5vh;
       }
     }
     input {
@@ -27,13 +28,12 @@ const AnswerContainer = styled.div`
       margin-right: 0.5vw;
       appearance: none;
       border: 0.1vw solid gray;
-      border-radius: 50%;
       width: 1vw;
       height: 1vw;
       @media screen and (max-width: 767px) {
         margin-right: 0.5vh;
-        width: 0.7vh;
-        height: 0.7vh;
+        width: 1vh;
+        height: 1vh;
       }
     }
     input:checked {
@@ -56,17 +56,30 @@ const IsCorrectContainer = styled.div`
   padding: 1vw 1vw;
   align-items: center;
   border: 1px solid #676a6c;
-  border-radius: 5px;
+  border-radius: 3px;
   border-color: ${({ isCorrect }) => (isCorrect ? "#AACB73" : "#F55050")};
+  @media screen and (max-width: 767px) {
+    padding: 1vh 0;
+  }
   span {
     color: ${({ isCorrect }) => (isCorrect ? "#AACB73" : "#F55050")};
     font-size: 1vw;
     font-weight: 600;
     margin-bottom: 0.3vw;
+    display: block;
+    margin-bottom: 0.3vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
+      margin-bottom: 0.3vh;
+    }
   }
   p {
     color: #676a6c;
     font-size: 0.8vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
+      font-weight: 600;
+    }
   }
 `;
 function AfterSolveTypeMulti({ questions, inputAnswerToUser, commetary }) {

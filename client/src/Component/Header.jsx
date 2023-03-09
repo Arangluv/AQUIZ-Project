@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
-import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,7 +9,7 @@ import {
   faHouseUser,
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import URL from "../assets/url";
 const LogoImageContainer = styled.div`
   height: 6vh;
   width: 14vh;
@@ -74,6 +73,9 @@ const QuizContainer = styled.div`
   }
   /* #676a6c; */
   a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #676a6c;
     span {
       margin-right: 0.3vw;
@@ -122,6 +124,9 @@ const LoginContainer = styled.div`
     width: 55%;
   }
   a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #676a6c;
     span {
       margin-right: 0.3vw;
@@ -153,19 +158,6 @@ const LoginContainer = styled.div`
         }
       }};
     }
-    a {
-      span {
-        color: ${({ emphasis }) => {
-          if (emphasis === "mypage") {
-            return "rgb(255, 139, 19)";
-          } else if (emphasis === "login") {
-            return "#205295";
-          } else {
-            return "#676a6c";
-          }
-        }};
-      }
-    }
   }
 `;
 
@@ -174,14 +166,9 @@ const LogoutButton = styled.button`
 `;
 function Header({ className }) {
   const { user } = useContext(UserInformation);
-  const [, , removeCookie] = useCookies(["token"]);
   // Header 강조를 위한 State 선언
   const [emphasis, setEmpahsis] = useState("");
   const { pathname } = useLocation();
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
 
   const pathArray = pathname.split("/");
   useEffect(() => {
@@ -200,7 +187,7 @@ function Header({ className }) {
     } else {
       setEmpahsis("");
     }
-  }, [emphasis, pathname]);
+  }, [emphasis, pathname, pathArray]);
   const handleLogOut = () => {
     fetch(`${URL}logout`, {
       method: "GET",
@@ -257,7 +244,8 @@ function Header({ className }) {
               </NavLink>
             </li>
             <li>
-              <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}>
+              {/* <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}> */}
+              <NavLink to={`${_id}/quiz/create_quiz`}>
                 <span>
                   <FontAwesomeIcon icon={faMarker} />
                 </span>

@@ -102,6 +102,7 @@ export const postLogin = async (req, res) => {
         expires: expireTime,
         sameSite: "none",
         httpOnly: true,
+        path: "/",
         secure: true,
       }
     )
@@ -142,9 +143,14 @@ export const userLoginValid = async (req, res) => {
 };
 
 export const addQuiz = async (req, res) => {
-  const { quizId, inputAnswerToUser } = req.body;
-  const { username } = req.cookies?.token;
   try {
+    const { quizId, inputAnswerToUser } = req.body;
+    let username = null;
+    console.log("쿠키는 ?");
+    console.log(req.cookies);
+    if (req.cookies) {
+      username = req.cookies.token;
+    }
     if (inputAnswerToUser.length === 0) {
       return res.status(200).json({ message: "이미 문제를 풀었습니다." });
     }
@@ -353,6 +359,8 @@ export const addQuiz = async (req, res) => {
 export const getUserInfo = async (req, res) => {
   try {
     const { token, username } = req.cookies.token;
+    console.log("쿠키 : ");
+    console.log(req.cookies);
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const email = userInformation.email;
@@ -409,6 +417,7 @@ export const postEdit = async (req, res) => {
       .status(200)
       .json({ username, message: "ok" });
   } catch (error) {
+    console.log(error);
     res
       .clearCookie("token", { sameSite: "none", secure: true, path: "/" })
       .status(404)
@@ -420,6 +429,8 @@ export const getRefresh = async (req, res) => {
   try {
     const userId = req.params;
     const user = await User.findById(userId.id);
+    console.log("리프레쉬 과정에서 user ?");
+    console.log(user);
     const { secretKey, options } = jwtConfig;
     const payload = {
       email: user.email,

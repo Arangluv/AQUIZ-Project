@@ -27,23 +27,22 @@ const ThumbnailDescription = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+    }
   }
   span {
     color: rgb(255, 139, 19);
     font-size: 1.6vw;
     margin-right: 0.5vw;
-    @media (max-width: 500px) {
-      font-size: 1.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 2vh;
     }
   }
   small {
     color: #676a6c;
-    @media (min-width: 1200px) {
-      font-size: 0.5vw;
-    }
-    @media (max-width: 500px) {
-      /* all: initial; */
-      font-size: 0.5vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
     }
   }
 `;
@@ -55,12 +54,13 @@ const ThumbnailSection = styled.div`
   margin-bottom: 1vh;
   text-align: center;
   position: relative;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     /* all: initial; */
     height: 25vh;
     border-radius: 3vw;
   }
 `;
+
 const ThumbnailLabel = styled.label`
   display: flex;
   input {
@@ -68,21 +68,21 @@ const ThumbnailLabel = styled.label`
   }
   span font {
     margin-left: 0.4vw;
-    @media (max-width: 500px) {
-      margin-left: 1vw;
+    @media screen and (max-width: 767px) {
+      margin-left: 0.6vh;
     }
   }
   span {
     color: #7286d3;
     font-size: 1vw;
     border: 0.1vw solid #7286d3;
-    padding: 0.4vw 0.6vw;
+    padding: 0.8vw 0.6vw;
     border-radius: 3px;
     transition: 0.1s ease-in-out;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.1vh;
       border: 0.3vw solid #7286d3;
-      padding: 0.4vh 0.6vh;
+      padding: 0.8vh 0.6vh;
     }
   }
   span:hover {
@@ -131,8 +131,6 @@ function CreateThumail({
 }) {
   const [preview, setPreview] = useState(initThumbnailUrl || "");
   const fileNode = useRef();
-  console.log("Create Thumbnail에서 preview ? : ");
-  console.log(preview);
   const handleFile = (event) => {
     changeThumnail(event.target.files[0]);
     setInitThumbnailUrl("");

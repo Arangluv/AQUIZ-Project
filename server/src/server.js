@@ -10,13 +10,14 @@ import quizRouter from "./router/quizRouter";
 import adminRouter from "./router/adminRouter";
 const app = express();
 app.use(morgan("tiny"));
+// app.use(morgan("combined"));
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
 app.use(
   cors({
     origin: [
+      "http://192.168.219.157:3000",
       "http://localhost:3000",
-      "http://3.37.82.88",
       "https://www.aquiz.co.kr",
       "https://aquiz.co.kr",
     ],
@@ -25,6 +26,7 @@ app.use(
 );
 app.use(function (req, res, next) {
   // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "http://192.168.219.157:3000");
   res.header("Access-Control-Allow-Origin", "https://aquiz.co.kr");
   res.header(
     "Access-Control-Allow-Headers",

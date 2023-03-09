@@ -13,6 +13,10 @@ const UserInputPart = styled.fieldset`
     margin-bottom: 0.4vw;
     margin-top: 0.2vw;
     font-size: 1.1vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.4vh;
+      margin-top: 0.5vh;
+    }
   }
   input {
     margin-bottom: 1vw;
@@ -22,6 +26,10 @@ const UserInputPart = styled.fieldset`
     border: 0.1vw solid rgba(103, 106, 108, 1);
     border-radius: 3px;
     font-size: 1.2vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.4vh;
+      padding: 0.3vh 0.8vh;
+    }
   }
   input:focus {
     outline: 0.1vw solid rgba(103, 106, 108, 1);
@@ -35,6 +43,10 @@ const NextQuizButton = styled.button`
   border-radius: 5px;
   font-size: 1.3vw;
   transition: 0.1s ease-in-out;
+  @media screen and (max-width: 767px) {
+    padding: 1vh 0vh;
+    font-size: 1.3vh;
+  }
   &:hover {
     background-color: #aacb73;
     color: white;
@@ -49,7 +61,8 @@ const QuizSubmitForm = styled.form`
     background-color: white;
     border: 0.1vw solid rgba(103, 106, 108, 0.5);
     color: #aacb73;
-    border-radius: 5px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3;
     font-size: 1.3vw;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
@@ -73,7 +86,6 @@ function SolveTypeWord({ questions, quizNum, onClick, quizLenth }) {
     setAnswer(newAnswer);
   };
   const handleClick = (event) => {
-    console.log(answer);
     onClick(answer, event);
   };
   return (

@@ -1,9 +1,8 @@
-export async function getQuiz(page, LIMIT, order, thema, rating, search) {
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
+import URL from "../src/assets/url";
 
+export async function getQuiz(page, LIMIT, order, thema, rating, search) {
+  console.log("URL?");
+  console.log(URL);
   const themaQuery = thema.join("&thema=");
   if (search) {
     const response = await fetch(

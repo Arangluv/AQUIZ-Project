@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Quiz from "./Quiz";
 import styled from "styled-components";
 import bannerContainer from "../assets/bannerData";
-
+import URL from "../assets/url";
 const SubBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -21,6 +20,10 @@ const SubBar = styled.div`
     padding: 0.8vw 0.6vw;
     font-size: 1vw;
     transition: 0.1s ease-in-out;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
+      padding: 0.8vh 0.6vh;
+    }
   }
   a:hover {
     background-color: rgba(62, 109, 156, 0.8);
@@ -42,6 +45,10 @@ const OptionButton = styled.button`
   font-weight: 500;
   padding: 0.4vw 0.5vw;
   color: #3f4244;
+  @media screen and (max-width: 767px) {
+    font-size: 1vh;
+    padding: 0.4vh 0.8vh;
+  }
   &:hover,
   &:active {
     box-shadow: 0px 0.1vw 0.3vw gray;
@@ -97,11 +104,6 @@ function MyPage() {
   const navigate = useNavigate();
   // Check Admin
   const [isAdmin, setIsAdmin] = useState(false);
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
   // Url Params Check
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;

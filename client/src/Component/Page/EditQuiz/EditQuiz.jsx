@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { useCookies } from "react-cookie";
 import CreateTitle from "../CreatePage/CreateTitle";
 import CreateThema from "../CreatePage/CreateThema";
 import CreateThumail from "../CreatePage/CreateThumnail";
@@ -13,6 +12,7 @@ import {
   faCircleXmark,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
+import URL from "../../../assets/url";
 const Div = styled.div`
   display: flex;
   justify-content: center;
@@ -68,9 +68,12 @@ const QuizPublishContainer = styled.div`
     border-radius: 5px;
     background-color: white;
     color: rgb(117, 204, 79);
-    @media (max-width: 500px) {
-      padding-top: 0.7vh;
-      padding-bottom: 0.7vh;
+    @media screen and (max-width: 767px) {
+      padding: 0.7vh 0;
+      font-size: 1.3vh;
+      font-weight: 500;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3px;
     }
   }
   input[type="submit"]:hover {
@@ -160,7 +163,6 @@ const WarningContainer = styled.div`
 function EditQuiz() {
   const quizId = useParams().id;
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
   // Loading inspect
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
@@ -192,11 +194,6 @@ function EditQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
 
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
@@ -205,26 +202,16 @@ function EditQuiz() {
     }
   }, []);
   useEffect(() => {
-    if (!cookies.token) {
-      alert("로그인 후 이용해주세요");
-      window.location.replace("/login");
-    } else {
-      // token refresh
-      const expireTime = new Date();
-      expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-      setCookie(
-        "token",
-        {
-          token: cookies.token.token,
-          username: cookies.token.username,
-        },
-        {
-          path: "/",
-          expireTime,
-          // httpOnly: true,
-        }
-      );
-    }
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        alert("로그인 후 이용해주세요");
+        navigate("/");
+      }
+      return;
+    });
   }, []);
   useEffect(() => {
     setIsLoading(true);
@@ -598,7 +585,6 @@ function EditQuiz() {
   };
   const errorBoxClick = () => {
     setIsErrorBoxClick(!isErrorBoxClick);
-    console.log(isErrorBoxClick);
   };
   const handleMainTitleClick = (event) => {
     event.preventDefault();
@@ -640,8 +626,6 @@ function EditQuiz() {
       });
     }
   };
-  console.log("Quizzes : ");
-  console.log(quizzes);
   return isLoading || isError || quizzes === undefined ? null : (
     <Div>
       <EditFormContainer

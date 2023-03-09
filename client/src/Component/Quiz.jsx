@@ -53,14 +53,20 @@ const QuizTilte = styled.h4`
   font-size: 1.5vw;
   margin-bottom: 0.5vw;
   @media screen and (max-width: 767px) {
-    font-size: 1.3vh;
+    font-size: 2vh;
   }
 `;
 const QuizShortDescrtion = styled.span`
   font-size: 1vw;
   white-space: normal;
   color: rgba(9, 91, 191, 1);
+  display: block;
+  padding-left: 0.4vw;
   margin-bottom: 1vw;
+  @media screen and (max-width: 767px) {
+    font-size: 1.4vh;
+    padding-left: 0.4vh;
+  }
 `;
 const QuizMetaInfo = styled.div`
   display: flex;
@@ -73,6 +79,9 @@ const QuizMetaInfo = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    @media screen and (max-width: 767px) {
+      font-size: 1.4vh;
+    }
     font:nth-child(1) {
       margin-right: 0.1vw;
     }
@@ -111,12 +120,13 @@ const UserParticipationArea = styled.div`
     border-radius: 5%;
     font-size: 1vw;
     padding: 0.3vw 0.4vw;
+
     font {
       margin-right: 0.3vw;
     }
     @media screen and (max-width: 767px) {
-      font-size: 1vh;
-      padding: 0.3vh 0.4vh;
+      font-size: 1.6vh;
+      padding: 0.4vh 0.6vh;
     }
   }
   a:nth-child(1) {
@@ -196,12 +206,8 @@ function Quiz({
   mode = "default",
   handleDelete = null,
 }) {
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
   const handleShare = (event) => {
-    const BASE_URL = `${URL}quiz/`;
+    const BASE_URL = "https://aquiz.co.kr/quiz/";
     const sharedUrl = BASE_URL + event.target.dataset.quizid;
     navigator.clipboard
       .writeText(sharedUrl)
@@ -212,7 +218,6 @@ function Quiz({
       .catch((err) => {
         console.error(`Failed to copy ${sharedUrl} to clipboard: ${sharedUrl}`);
       });
-    //http://localhost:3000/quiz/63edd5a5d24ec2b0bd2ee8a4
   };
   return (
     <StyledQuiz>

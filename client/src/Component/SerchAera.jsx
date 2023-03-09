@@ -99,10 +99,14 @@ const StyledForm = styled.form`
     font-size: 1vw;
     color: #3f4244;
     padding-left: 1vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.2vh;
+      padding: 0vh 1vh;
+    }
   }
 
-  input:nth-child(2) {
-    font-size: 1.1vw;
+  input[type="submit"] {
+    font-size: 1vw;
     padding: 0.5vw 0.6vw;
     border-radius: 0px 3px 3px 0px;
     background-color: #ff8b13;
@@ -110,8 +114,12 @@ const StyledForm = styled.form`
     color: #3f4244;
     font-family: "Gowun Batang", serif;
     font-weight: 500;
-    @media (max-width: 500px) {
-      padding: 0.5vh 0.6vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
+      padding: 1vh 1vh;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px 3px 3px 0px;
+      margin-left: 0;
     }
   }
   input:nth-child(1):focus {

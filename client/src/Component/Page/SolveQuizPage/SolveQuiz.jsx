@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useParams, useNavigate } from "react-router-dom";
 import SolveQuizDetail from "./SolveQuizDetail";
 import styled from "styled-components";
 import ReactHelmet from "../../ReactHelmet";
-
+import URL from "../../../assets/url";
 const QuizContainer = styled.div`
   height: 100%;
   display: flex;
@@ -24,32 +23,18 @@ function SolveQuiz() {
   const [isError, setIsError] = useState(null);
   const selectedQuizId = useParams().id;
   const history = useNavigate();
-  const [cookies] = useCookies(["token"]);
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
-
-  let findQuizzes;
+  let findQuizzes = null;
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(selectedQuizId)) {
       history("/not");
     }
   }, []);
-
   useEffect(() => {
-    let getToken = null;
-    if (cookies?.token) {
-      getToken = cookies.token.token;
-    }
     fetch(`${URL}quizzes/solve/${selectedQuizId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken}`,
-        Cookies: `token=${getToken}`,
         "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",

@@ -7,11 +7,8 @@ import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
 import styled from "styled-components";
 import bannerContainer from "../assets/bannerData";
-// 색깔은 두개 -> #ECECEC -> rgb(236, 236, 236)
-// #ff8b13 -> rgb(255, 139, 19)
+import URL from "../assets/url";
 const Wrapper = styled.div`
-  /* height: auto;
-  min-height: 100%; */
   min-height: calc(100vh - 5vh);
   padding-bottom: 8vh;
   position: relative;
@@ -43,12 +40,6 @@ const MainAd = styled.div`
 `;
 function App() {
   const [user, setUser] = useState(null);
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
-  console.log("수정됐습니다.");
-  console.log("23차 수정");
   // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
 
   useEffect(() => {
@@ -75,7 +66,7 @@ function App() {
         console.log("토큰이 만료되었거나, 유효하지않은 토큰입니다.");
         setUser(null);
       });
-  }, []);
+  }, [URL]);
   return (
     <UserInformation.Provider value={{ user, setUser }}>
       <CookiesProvider>

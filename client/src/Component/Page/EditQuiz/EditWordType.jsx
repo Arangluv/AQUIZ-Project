@@ -11,6 +11,9 @@ const QuizLabel = styled.label`
   font {
     color: rgba(0, 0, 0, 0.8);
     font-size: 1vw;
+    @media screen and (max-width: 767px) {
+      font-size: 0.9vh;
+    }
   }
 `;
 const QusetionContainer = styled.div`
@@ -26,7 +29,7 @@ const QusetionContainer = styled.div`
       font-weight: 500;
     }
     @media (max-width: 500px) {
-      font-size: 0.5vh;
+      font-size: 0.9vh;
       display: flex;
       flex-direction: column;
       span {
@@ -38,13 +41,15 @@ const QusetionContainer = styled.div`
   input[type="text"] {
     padding: 0.6vw 0.8vw;
     color: #676a6c;
-    @media (max-width: 500px) {
-      padding: 0.2vh 0.2vh;
-      font-size: 0.7vh;
+    height: 1vh;
+    @media screen and (max-width: 767px) {
+      padding: 0.8vh 0.6vh;
+      font-size: 1vh;
       margin-top: 0.6vh;
       margin-bottom: 1vh;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3px;
     }
-    height: 1vh;
   }
   input[type="text"]:focus {
     border: 0.12vw solid #676a6c;
@@ -56,8 +61,9 @@ const SpaceHint = styled.span`
   color: rgba(0, 0, 0, 0.8);
   font-size: 1.2vw;
   margin-bottom: 2vh;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     margin-bottom: 1vh;
+    font-size: 1vh;
   }
 `;
 function EditWordType({ setQuestion, quizzes, quizNumber }) {

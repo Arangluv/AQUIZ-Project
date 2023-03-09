@@ -2,7 +2,6 @@ import AfterSolvedDetail from "./AfterSolveDetail";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,6 +11,7 @@ import {
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
 import bannerContainer from "../../../assets/bannerData";
+import URL from "../../../assets/url";
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,7 +35,8 @@ const AfterSolvedContainer = styled.div`
     font-weight: 600;
     color: #676a6c;
     @media screen and (max-width: 767px) {
-      font-size: 1.2vh;
+      font-size: 1.3vh;
+      margin-bottom: 0.5vh;
     }
   }
   button {
@@ -50,6 +51,7 @@ const AfterSolvedContainer = styled.div`
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
+      border: 0.2vw solid #205295;
       padding: 1vh 0;
       width: calc(80% + 1.6vh);
     }
@@ -66,13 +68,13 @@ const AdContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 1vw;
-  height: 15vh;
+  height: 20vh;
   iframe {
-    height: 15vh;
+    height: 20vh;
     width: 100%;
-  }
-  @media screen and (max-width: 767px) {
-    height: 8vh;
+    @media screen and (max-width: 767px) {
+      height: 16vh;
+    }
   }
 `;
 const CommunicationContainer = styled.div`
@@ -129,8 +131,12 @@ const CommunicationContainer = styled.div`
       padding: 0.6vw 0.8vw;
       color: #676a6c;
       @media screen and (max-width: 767px) {
+        -webkit-appearance: none;
+        -webkit-border-radius: 2px;
+        -webkit-border: 0.1vw solid #676a6c;
         padding: 0.4vh 0.6vh;
-        font-size: 1vw;
+        font-size: 1vh;
+        margin-bottom: 1vh;
       }
     }
     textarea {
@@ -141,7 +147,10 @@ const CommunicationContainer = styled.div`
       margin-bottom: 1vw;
       @media screen and (max-width: 767px) {
         padding: 0.4vh 0.6vh;
-        font-size: 1vw;
+        font-size: 1vh;
+        -webkit-appearance: none;
+        -webkit-border-radius: 2px;
+        -webkit-border: 0.1vw solid #676a6c;
       }
     }
     input[type="submit"] {
@@ -156,8 +165,8 @@ const CommunicationContainer = styled.div`
       transition: 0.1s ease-in-out;
       @media screen and (max-width: 767px) {
         width: calc(60% + 1.2vh);
-        font-size: 1.2vh;
-        padding: 0.8vh 0;
+        font-size: 1.1vh;
+        padding: 1vh 0;
         margin-bottom: 0.6vh;
       }
     }
@@ -215,7 +224,6 @@ const Board = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
   width: calc(60% + 1.6vw);
   margin-top: 1vw;
   @media screen and (max-width: 767px) {
@@ -239,6 +247,8 @@ const ContentDetail = styled.div`
 `;
 const UserInfo = styled.div`
   margin-bottom: 0.5vw;
+  display: flex;
+  align-items: center;
   @media screen and (max-width: 767px) {
     margin-bottom: 0.5vh;
   }
@@ -248,7 +258,7 @@ const UserInfo = styled.div`
     font-size: 1vw;
     margin-right: 0.8vw;
     @media screen and (max-width: 767px) {
-      font-size: 0.6vh;
+      font-size: 1.1vh;
     }
   }
   font {
@@ -260,7 +270,6 @@ function AfterSolved() {
   const navigate = useNavigate();
   const [quizList, setQuizList] = useState(null);
   const [isError, setIsError] = useState(null);
-  const [cookies] = useCookies("token");
   const quizId = useParams().id;
   // Community
   const [nickname, setNickname] = useState("익명");
@@ -275,11 +284,6 @@ function AfterSolved() {
   const [page, setPage] = useState(0);
   const [nextPage, setNextPage] = useState(true);
   const LIMIT = 10;
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -319,7 +323,6 @@ function AfterSolved() {
             setNickname(result.username);
           }
           const newQuizList = quizzes.map((quiz, idx) => {
-            console.log(quiz);
             return (
               <AfterSolvedDetail
                 inputAnswerToUser={inputAnswerToUser[idx]}

@@ -11,8 +11,6 @@ const CreateTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
-  /* padding-left: 1vw;
-  padding-right: 1vw; */
 `;
 const NotionPart = styled.div`
   background-color: rgba(123, 143, 161, 0.2);
@@ -27,11 +25,16 @@ const NotionPart = styled.div`
   margin-bottom: 1vw;
   margin-top: 0.6vw;
   text-align: center;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     margin-bottom: 1.5vh;
     p {
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       font:nth-child(2) {
-        font-size: 10%;
+        font-size: 0.8vh;
       }
       font:nth-child(1) {
         font-size: 1vh;
@@ -43,6 +46,9 @@ const NotionPart = styled.div`
     font-weight: 600;
     color: #676a6c;
     margin-bottom: 0.8vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.1vh;
+    }
   }
   p {
     margin-top: 0.6rem;
@@ -53,7 +59,7 @@ const NotionPart = styled.div`
     display: block;
   }
   p span:nth-child(1) {
-    display: block;
+    /* display: block; */
     margin-bottom: 0.6vw;
   }
   p span font:nth-child(1) {
@@ -69,18 +75,24 @@ const TitleDescription = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+    }
   }
   span {
     color: rgb(255, 139, 19);
     font-size: 1.6vw;
     margin-right: 0.5vw;
-    @media (max-width: 500px) {
-      font-size: 1.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 2vh;
     }
   }
   small {
     font-size: 0.5vw;
     color: #676a6c;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
+    }
   }
 `;
 const UserInputTitle = styled.div`
@@ -94,8 +106,9 @@ const UserInputTitle = styled.div`
     font-family: "Gowun Batang", serif;
     font-size: 0.9vw;
     margin-bottom: 2vh;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       height: 3vh;
+      font-size: 1vh;
     }
   }
   input:focus {
@@ -109,6 +122,9 @@ const Title = styled.div`
   font-size: 1vw;
   justify-content: space-between;
   margin-bottom: 0.8vh;
+  @media screen and (max-width: 767px) {
+    font-size: 1vh;
+  }
 `;
 function CreateTitle({
   changeTitle,

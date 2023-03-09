@@ -4,7 +4,6 @@ import CreateThumail from "./Page/CreatePage/CreateThumnail";
 import CreateProblem from "./Page/CreatePage/CreateProblem";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { useCookies } from "react-cookie";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +12,7 @@ import {
   faCircleXmark,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
+import URL from "../assets/url";
 const Div = styled.div`
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@ const QuizPublishContainer = styled.div`
   align-items: center;
   width: 80%;
   margin-top: 1vh;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     padding-top: 1vh;
     padding-bottom: 1vh;
     margin-top: 1vh;
@@ -44,7 +44,7 @@ const QuizPublishContainer = styled.div`
       margin-right: 10px;
       color: #ff8b13;
     }
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.5vh;
       margin-bottom: 1vh;
     }
@@ -54,13 +54,16 @@ const QuizPublishContainer = styled.div`
     padding-top: 0.7vw;
     padding-bottom: 0.7vw;
     font-size: 1.6vw;
-    border: 1px solid rgb(117, 204, 79);
-    border-radius: 5px;
+    border: 0.1vw solid rgb(117, 204, 79);
+    border-radius: 3px;
     background-color: white;
     color: rgb(117, 204, 79);
-    @media (max-width: 500px) {
-      padding-top: 0.7vh;
-      padding-bottom: 0.7vh;
+    @media screen and (max-width: 767px) {
+      padding: 0.7vh 0;
+      font-size: 1.3vh;
+      font-weight: 500;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3px;
     }
   }
   input[type="submit"]:hover {
@@ -91,6 +94,13 @@ const ErrorBox = styled.div`
   z-index: 1;
   width: 15%;
   padding: 1.5vw 1vw;
+  @media screen and (max-width: 767px) {
+    bottom: 10vh;
+    width: 20%;
+    right: 3vw;
+    justify-content: center;
+    padding: 0.8vh;
+  }
 `;
 const ErrorContainer = styled.div`
   display: ${({ boxClick }) => (boxClick ? "flex" : "none")};
@@ -102,6 +112,10 @@ const ErrorContainer = styled.div`
     margin-bottom: 1.3vw;
     font-size: 1vw;
     color: rgba(0, 0, 0, 0.8);
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
+      font-weight: 600;
+    }
   }
   font {
     position: absolute;
@@ -110,6 +124,9 @@ const ErrorContainer = styled.div`
     top: -1vw;
     right: 0vw;
     transition: 0.1s ease-in-out;
+    @media screen and (max-width: 767px) {
+      right: -0.5vh;
+    }
   }
   font:hover {
     color: #f55050;
@@ -117,12 +134,21 @@ const ErrorContainer = styled.div`
   h3 {
     margin-bottom: 0.4vw;
     border: 1px solid #676a6c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 2px;
     padding: 0.2vw 0.4vw;
     transition: 0.1s ease-in-out;
+    @media screen and (max-width: 767px) {
+      padding: 0.7vh 0;
+    }
     a {
       font-size: 1.2vw;
       color: #676a6c;
+      @media screen and (max-width: 767px) {
+        font-size: 1vh;
+      }
     }
   }
   h3:hover {
@@ -144,6 +170,10 @@ const WarningContainer = styled.div`
     align-items: center;
     font-size: 1.5vw;
     color: #f55050;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+      margin-right: 0.3vh;
+    }
   }
   p {
     display: flex;
@@ -151,9 +181,15 @@ const WarningContainer = styled.div`
     font-size: 1vw;
     color: #f55050;
     font-weight: 600;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
+    }
     font {
       margin-top: 0.3vw;
       color: rgba(0, 0, 0, 0.6);
+      @media screen and (max-width: 767px) {
+        margin-top: 0.6vh;
+      }
     }
   }
 `;
@@ -161,7 +197,6 @@ function CreateQuiz() {
   // get User id and cookies
   const userId = useParams().id;
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
   // Key Id Setting
   const [keyId, setKeyId] = useState([]);
   // CreateQuiz Component의 보낼 data setting
@@ -186,10 +221,6 @@ function CreateQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
 
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
@@ -209,10 +240,10 @@ function CreateQuiz() {
       .catch((error) => {
         console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
         console.log(error);
-        alert("로그인 후 이용해주세요");
+        alert("로그인 후 이용해주세요1");
         window.location.replace("/");
       });
-  }, []);
+  }, [URL, userId, navigate]);
 
   const addQuiz = (event) => {
     event.preventDefault();
@@ -275,7 +306,7 @@ function CreateQuiz() {
     }
   };
   if (userId === "null") {
-    alert("로그인 후 이용해주세요");
+    alert("로그인 후 이용해주세요2");
     window.location.replace("/login");
   }
   const userDataValidation = (quizzes) => {
@@ -320,7 +351,6 @@ function CreateQuiz() {
           }
           // Question Inspect -> in word case, if questions is not null, this part unreachable
         } else {
-          console.log(quizzes[i].questions);
           if (
             quizzes[i].questions === null ||
             quizzes[i].questions.length === 0
@@ -337,7 +367,6 @@ function CreateQuiz() {
           }
           // Add Part : Question Content inspect
           let emptyContentCount = 0;
-          console.log(quizzes[i].questions);
           quizzes[i].questions.forEach((question) => {
             if (question?.content) {
               if (question.content === "") {

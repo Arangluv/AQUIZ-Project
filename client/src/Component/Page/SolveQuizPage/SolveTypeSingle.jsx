@@ -4,6 +4,7 @@ const TypeContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 1vw;
+
   @media screen and (max-width: 767px) {
     margin-top: 0.6vh;
   }
@@ -23,6 +24,7 @@ const AnswerContainer = styled.div`
     align-items: center;
     @media screen and (max-width: 767px) {
       margin-bottom: 0.4vh;
+      padding: 0.6vh 0.4vh;
     }
     span {
       display: flex;
@@ -32,11 +34,12 @@ const AnswerContainer = styled.div`
       font-size: 1vw;
       width: 100%;
       @media screen and (max-width: 767px) {
-        font-size: 1.2vh;
+        font-size: 1.5vh;
       }
     }
     input {
       margin-top: 0;
+      margin-bottom: 0;
       margin-right: 0.5vw;
       appearance: none;
       border: 0.1vw solid gray;
@@ -45,8 +48,10 @@ const AnswerContainer = styled.div`
       height: 1vw;
       @media screen and (max-width: 767px) {
         margin-right: 0.5vh;
-        width: 0.7vh;
-        height: 0.7vh;
+        width: 1vh;
+        height: 1vh;
+        -webkit-appearance: none;
+        -webkit-border-radius: 50%;
       }
     }
     input:checked {
@@ -86,7 +91,8 @@ const QuizSubmitForm = styled.form`
     background-color: white;
     border: 0.1vw solid rgba(103, 106, 108, 0.5);
     color: #aacb73;
-    border-radius: 5px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3;
     font-size: 1.3vw;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {

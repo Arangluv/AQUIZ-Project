@@ -11,6 +11,9 @@ const QuizLabel = styled.label`
   font {
     color: rgba(0, 0, 0, 0.8);
     font-size: 1vw;
+    @media screen and (max-width: 767px) {
+      font-size: 0.9vh;
+    }
   }
 `;
 const QusetionContainer = styled.div`
@@ -25,7 +28,8 @@ const Question = styled.div`
   border-radius: 5px;
   margin-bottom: 1vh;
   background: rgba(255, 242, 242, 0.8);
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
+    border: 0.2vw solid rgba(103, 106, 108, 0.7);
     margin-bottom: 0.8vh;
   }
   input[type="text"] {
@@ -35,9 +39,12 @@ const Question = styled.div`
     border-left: 1px solid rgba(103, 106, 108, 0.7);
     font-size: 1vw;
     color: rgba(0, 0, 0, 0.8);
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
+      border-left: 0.1vw solid rgba(103, 106, 108, 0.9);
       padding: 0.6vh 0.8vh;
-      font-size: 0.1vh;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+      font-size: 1vh;
       font-family: "Gowun Batang", serif;
     }
   }
@@ -90,10 +97,16 @@ const OptionContainer = styled.div`
     border-radius: 5px;
     border: 1px solid #7286d3;
     background-color: #fffbf6;
+    @media screen and (max-width: 767px) {
+      border: 0.3vw solid #7286d3;
+    }
     font {
       margin-left: 3px;
       color: #7286d3;
       font-size: 1vw;
+      @media screen and (max-width: 767px) {
+        font-size: 1vh;
+      }
     }
     span {
       margin-top: 0;
@@ -101,8 +114,10 @@ const OptionContainer = styled.div`
       font-size: 1vw;
       padding: 0.6vw 0.4vw;
       border-radius: 3px;
+      display: flex;
+      align-items: center;
       transition: 0.1s ease-in-out;
-      @media (max-width: 500px) {
+      @media screen and (max-width: 767px) {
         font-size: 1vh;
         padding: 0.6vh 0.4vh;
       }

@@ -11,15 +11,28 @@ const IsCorrectContainer = styled.div`
   border: 1px solid #676a6c;
   border-radius: 5px;
   border-color: ${({ isCorrect }) => (isCorrect ? "#AACB73" : "#F55050")};
+  @media screen and (max-width: 767px) {
+    padding: 1vh 0;
+  }
   span {
     color: ${({ isCorrect }) => (isCorrect ? "#AACB73" : "#F55050")};
     font-size: 1vw;
     font-weight: 600;
     margin-bottom: 0.3vw;
+    display: block;
+    margin-bottom: 0.3vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
+      margin-bottom: 0.3vh;
+    }
   }
   p {
     color: #676a6c;
     font-size: 0.8vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
+      font-weight: 600;
+    }
   }
 `;
 const WordTypeLabel = styled.label`
@@ -32,18 +45,29 @@ const WordTypeLabel = styled.label`
     padding: 0.5vw 0.5vw;
     color: #676a6c;
     @media screen and (max-width: 767px) {
-      padding: 0.4vw 0.4vw;
-      font-size: 1.2vh;
+      font-size: 1.4vh;
+      padding: 0.3vh 0.8vh;
+      margin-left: 0;
+      margin-right: 0;
+      /* width: 100%; */
     }
   }
   span {
     font-size: 1vw;
     color: #676a6c;
     font-weight: 600;
+
+    margin-top: 1vw;
     font {
       font-weight: 500;
       font-size: 1vw;
       margin-top: 0.3vw;
+      @media screen and (max-width: 767px) {
+        font-size: 1.4vh;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      font-size: 1.4vh;
     }
   }
 `;

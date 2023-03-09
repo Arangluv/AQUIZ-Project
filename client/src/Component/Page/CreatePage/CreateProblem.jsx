@@ -21,7 +21,7 @@ const QuizFormContainer = styled.div`
   border-radius: 5px;
   margin-top: 1vw;
   background-color: #fffbf5;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     border: 0.2vw solid black;
     margin-top: 1vh;
   }
@@ -31,31 +31,37 @@ const ProblemNumber = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 4vh;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 1vh;
+  }
   h4 {
     font-size: 1.5vw;
     color: rgba(0, 0, 0, 0.7);
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
-  }
-  @media (max-width: 500px) {
-    margin-bottom: 2vh;
   }
 `;
 const QuizDeleteButton = styled.button`
   background-color: white;
   border: 1px solid rgba(245, 80, 80, 0.8);
+  display: flex;
   color: black;
-  padding: 6px 4px 6px 4px;
+  padding: 0.4vw 0.6vw;
   border-radius: 3px;
   font-size: 0.9vw;
   transition: 0.1s ease-in-out;
+  @media screen and (max-width: 767px) {
+    padding: 0.4vh 0.6vh;
+  }
   font {
     margin-left: 0.3vw;
     font-size: 1vw;
   }
   & span {
     color: rgba(245, 80, 80, 0.8);
+    display: flex;
+    align-items: center;
   }
   &:hover {
     background-color: rgba(245, 80, 80, 0.8);
@@ -63,7 +69,7 @@ const QuizDeleteButton = styled.button`
       color: white;
     }
   }
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     font-size: 1vh;
     font {
       margin-left: 0.3vh;
@@ -79,20 +85,20 @@ const QuizDescription = styled.div`
 
   label {
     margin-bottom: 0.8vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       margin-bottom: 1vh;
     }
   }
   label:nth-child(1) span {
     color: #676a6c;
     font-size: 1vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.1vh;
     }
   }
   label:nth-child(1) span font {
     margin-left: 0.3vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       margin-left: 0.3vh;
     }
   }
@@ -101,24 +107,24 @@ const QuizDescription = styled.div`
     height: 8vh;
     padding: 1vw;
     color: #676a6c;
-    font-size: 0.5vw;
+    font-size: 1vw;
     margin-bottom: 10px;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       height: 4vh;
       padding: 1vh;
-      font-size: 0.3vw;
+      font-size: 1vh;
     }
   }
   textarea::placeholder {
     color: #676a6c;
     font-size: 0.8vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 0.8vh;
     }
   }
   textarea:focus {
     outline: 0.01vw solid #676a6c;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       outline: 0.005vw solid #676a6c;
     }
   }
@@ -128,34 +134,33 @@ const AnswerTypeBox = styled.div`
   flex-direction: column;
   label {
     margin-bottom: 0.6vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       margin-bottom: 1vh;
     }
   }
   label span {
     font-size: 1vw;
     color: #676a6c;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.1vh;
     }
   }
   label span font {
     margin-left: 0.3vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       margin-left: 0.3vh;
     }
   }
   select {
     -moz-appearance: none;
-    /* -webkit-appearance: none; */
-    /* appearance: none; */
-    border: 1px solid #676a6c;
+    background-color: white;
+    border: 0.1vw solid #676a6c;
     border-radius: 4px;
     font-size: 1vw;
     margin-bottom: 2vw;
     color: rgba(0, 0, 0, 0.7);
     padding: 0.4vw 0.6vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font-size: 1.3vh;
     }
   }
@@ -168,22 +173,26 @@ const OptionContainer = styled.div`
     height: 15vh;
     padding: 10px;
     color: #676a6c;
-    font-size: 0.5vh;
+    font-size: 1vh;
     margin-bottom: 10px;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       height: 4vh;
+      font-size: 1vh;
     }
   }
   textarea::placeholder {
     color: #676a6c;
     font-size: 1vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
+    }
   }
   textarea:focus {
     outline: 0.05vw solid #676a6c;
   }
 `;
 const OptionLabel = styled.label`
-  margin-bottom: 8px;
+  margin-bottom: 1vw;
   span {
     display: flex;
     color: #676a6c;
@@ -192,10 +201,10 @@ const OptionLabel = styled.label`
     width: 100%;
     font:nth-child(1) {
       white-space: nowrap;
-      font-size: 0.5vh;
+      font-size: 1vh;
       color: #7286d3;
     }
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       font:nth-child(2) {
         display: none;
       }
@@ -385,7 +394,7 @@ const CreateProblemContainer = styled.div`
   flex-direction: column;
   width: 80%;
   margin-top: 4vh;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     margin-top: 2vh;
   }
 `;
@@ -395,29 +404,28 @@ const CreateProblemDescription = styled.div`
   flex-direction: column;
   font-size: 1.3vw;
   margin-bottom: 1.3vh;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     margin-bottom: 0.3vh;
   }
   h2 {
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+    }
   }
   span {
     color: rgb(255, 139, 19);
     font-size: 1.6vw;
     margin-right: 0.5vw;
-    @media (max-width: 500px) {
-      font-size: 1.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 2vh;
     }
   }
   small {
-    @media (min-width: 1200px) {
-      font-size: 0.5vw;
-    }
-    @media (max-width: 500px) {
-      /* all: initial; */
-      font-size: 0.5vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
     }
     color: #676a6c;
   }
@@ -430,11 +438,12 @@ const AddQuizContainer = styled.div`
   button {
     width: 100%;
     text-align: center;
-    font-size: 2vw;
+    font-size: 1.7vw;
     background-color: white;
     border: 0.15vw solid rgb(117, 204, 79);
     padding: 1vw 0px;
-    @media (max-width: 500px) {
+
+    @media screen and (max-width: 767px) {
       /* all: initial; */
       padding: 1vh 0px;
     }
@@ -460,6 +469,9 @@ const AddQuizContainer = styled.div`
 const MaxProblemAlert = styled.span`
   font-size: 1vw;
   color: #f55050;
+  @media screen and (max-width: 767px) {
+    font-size: 1vh;
+  }
 `;
 function CreateProblem({
   changeQuiz,
@@ -468,15 +480,12 @@ function CreateProblem({
   setQuizNumber,
   quizForm,
   setQuizForm,
-  quizType,
   setQuizType,
-  quizDescribe,
   setQuizDescribe,
   imgUrl,
   setImgUrl,
   questions,
   setQuestion,
-  commentary,
   setCommentary,
   addQuiz,
   keyId,

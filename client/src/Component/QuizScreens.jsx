@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Quiz from "./Quiz";
 import SerchArea from "./SerchAera";
@@ -74,6 +74,15 @@ const SubContainer = styled.div`
     column-gap: 0.6vh;
   }
 `;
+const ErrorMsg = styled.span`
+  font-size: 2vw;
+  margin-top: 10vw;
+  text-align: center;
+  display: block;
+  @media screen and (max-width: 767px) {
+    font-size: 1.5vh;
+  }
+`;
 function QuizScreens() {
   const [quizList, setQuizList] = useState([]);
   const [totalQuiz, setTotalQuiz] = useState([]); // 이렇게 구현해도 될까 메모리 낭비가 심하지는 않을까?
@@ -93,7 +102,6 @@ function QuizScreens() {
     setLoading(true);
     try {
       const quizzes = await getQuiz(page, LIMIT, order, thema, rating);
-      console.log(quizzes);
       setNextPage(quizzes.length === 6);
       if (quizzes.length > 0) {
         setPage((pre) => pre + 1);
@@ -135,7 +143,7 @@ function QuizScreens() {
         handleLoad();
       }
     }
-  }, [inView, order]);
+  }, [inView, order, handleLoad, loading, nextPage, quizSearchInput]);
 
   useEffect(() => {
     setQuizList([]);
@@ -236,9 +244,9 @@ function QuizScreens() {
             );
           })
         ) : (
-          <span>
+          <ErrorMsg>
             퀴즈를 불러오는데 실패했습니다. 새로고침 후 다시 이용해주세요
-          </span>
+          </ErrorMsg>
         )}
       </MainContainer>
       <Test ref={ref} hasNext={nextPage} isLoading={loading}></Test>

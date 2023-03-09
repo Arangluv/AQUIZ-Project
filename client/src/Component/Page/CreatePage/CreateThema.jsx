@@ -9,7 +9,7 @@ const CreateThumbnailContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 2vh;
-  @media (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     margin-top: 0.4vh;
   }
   width: 80%;
@@ -23,23 +23,22 @@ const ThumbnailDescription = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+    }
   }
   span {
     color: rgb(255, 139, 19);
     font-size: 1.6vw;
     margin-right: 0.5vw;
-    @media (max-width: 500px) {
-      font-size: 1.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 2vh;
     }
   }
   small {
     color: #676a6c;
-    @media (min-width: 1200px) {
-      font-size: 0.5vw;
-    }
-    @media (max-width: 500px) {
-      /* all: initial; */
-      font-size: 0.5vw;
+    @media screen and (max-width: 767px) {
+      font-size: 1vh;
     }
   }
 `;
@@ -58,10 +57,11 @@ const ButtonBox = styled.div`
     font-family: "Gowun Batang", serif;
     transition: 0.1s ease-in-out;
     font-size: 1.4vw;
-    @media (max-width: 500px) {
+    @media screen and (max-width: 767px) {
       /* all: initial; */
       margin-right: 2vw;
       font-size: 1.4vh;
+      padding: 0.3vh 0.7vh;
     }
   }
   button:hover {
@@ -72,10 +72,11 @@ const ThemaContainer = styled.div`
   span {
     font-size: 1vw;
     color: #676a6c;
-    display: block;
+    display: flex;
+    align-items: center;
     margin-bottom: 1vh;
-    @media (max-width: 500px) {
-      font-size: 1vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.3vh;
     }
   }
   span font {
@@ -102,19 +103,21 @@ const ButtonItem = styled.div`
     color: rgba(0, 0, 0, 0.8);
     font-family: "Gowun Batang", serif;
     font-size: 1.4vw;
-    @media (max-width: 500px) {
-      /* all: initial; */
-      font-size: 1.4vh;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+      padding: 0.3vh 0.4vh;
     }
     transition: 0.1s ease-in-out;
   }
   button:nth-child(1) {
     border-radius: 5px 0px 0px 5px;
     border-right: none;
+    margin-right: 0;
   }
   button:nth-child(2) {
     border-radius: 0px 5px 5px 0px;
     border-left: none;
+    margin-left: 0;
   }
   &:hover {
     button:nth-child(1),

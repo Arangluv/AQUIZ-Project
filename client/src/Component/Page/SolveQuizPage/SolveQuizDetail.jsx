@@ -47,8 +47,9 @@ const Outlet = styled.div`
       display: block;
       margin-bottom: 2vw;
       @media screen and (max-width: 767px) {
-        font-size: 1.5vh;
+        font-size: 2vh;
         margin-bottom: 1vh;
+        font-weight: 600;
       }
     }
   }
@@ -61,13 +62,15 @@ const QuizDescription = styled.p`
   margin-bottom: 2vw;
   @media screen and (max-width: 767px) {
     margin-bottom: 2vh;
-    font-size: 1.4vw;
+    font-size: 1.5vh;
   }
   font {
+    display: flex;
+    align-items: center;
     margin-bottom: 1vw;
     @media screen and (max-width: 767px) {
       margin-bottom: 1vh;
-      font-size: 1vh;
+      font-size: 1.5vh;
     }
     span {
       margin-right: 0.3vw;
@@ -95,7 +98,7 @@ const ImageSecgtion = styled.div`
   border-radius: 3px;
   overflow: hidden;
   @media screen and (max-width: 767px) {
-    height: 40vh;
+    height: 30vh;
     border: 0.1vw solid rgba(103, 106, 108, 0.3);
     margin-bottom: 1vh;
   }
@@ -111,6 +114,9 @@ const NotionSmall = styled.small`
   margin-bottom: 0.5vw;
   font-size: 1.2vw;
   color: rgba(103, 106, 108, 0.9);
+  @media screen and (max-width: 767px) {
+    font-size: 1.5vh;
+  }
   span {
     display: flex;
     justify-content: space-between;
@@ -124,9 +130,6 @@ const NotionSmall = styled.small`
           return "#D61355";
         }
       }};
-      /* D61355 빨강 */
-      /* 7286D3 파랑 */
-      /* 03C988 */
     }
   }
 `;
@@ -152,7 +155,7 @@ function SolveQuizDetail({
       />
     );
   } else if (type === "multi") {
-    notion = "두개 이상의 답을 선택해주세요 (두 개 이상입니다.)";
+    notion = "두개 이상의 답을 선택해주세요.";
     questionType = (
       <SolveTypeMulti
         questions={questions}

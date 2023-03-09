@@ -9,6 +9,7 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import URL from "../assets/url";
 //#fffbf5
 const LoginContainer = styled.div`
   display: flex;
@@ -19,7 +20,6 @@ const LoginFormBox = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3vw;
   @media screen and (max-width: 767px) {
     margin-bottom: 3vh;
   }
@@ -115,11 +115,13 @@ const LoginFormBox = styled.form`
     background-color: rgba(255, 139, 19, 0.8);
     border: none;
     color: rgba(255, 255, 255, 0.9);
-    border-radius: 5px;
+    border-radius: 3px;
     @media screen and (max-width: 767px) {
-      width: 16vh;
+      width: 17vh;
       height: 3vh;
       font-size: 1.2vh;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3;
     }
   }
 
@@ -163,6 +165,10 @@ const JoinContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2vw;
+  @media screen and (max-width: 767px) {
+    margin-top: 0.5vh;
+  }
   small {
     opacity: 0.6;
     margin-bottom: 1vw;
@@ -228,15 +234,11 @@ function LoginForm() {
       }
       return;
     });
-  }, []);
+  }, [URL, navigate]);
   const onSubmit = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const URL =
-      process.env.NODE_ENV === "production"
-        ? "https://api.aquiz.co.kr/"
-        : "http://localhost:4001/";
 
     fetch(`${URL}login`, {
       method: "POST",
@@ -260,7 +262,6 @@ function LoginForm() {
         window.location.replace("/");
       })
       .catch((error) => {
-        console.log("여기가 실행?");
         console.log(error.message);
         setErrorMsg(error.message);
       });
@@ -306,7 +307,7 @@ function LoginForm() {
             <FontAwesomeIcon icon={faTriangleExclamation} />
           </LoginErrorBox>
         ) : null}
-        <input type="submit" value="로그인 하기" />
+        <input id="submitBnt" type="submit" value="로그인 하기" />
       </LoginFormBox>
       {/* <button>트위터로 바로 로그인하기</button> */}
       <JoinContainer>

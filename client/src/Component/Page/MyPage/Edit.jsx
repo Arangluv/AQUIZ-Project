@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import URL from "../../../assets/url";
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -31,7 +31,6 @@ const EditFormBox = styled.form`
     }
     @media screen and (max-width: 767px) {
       margin-bottom: 2vh;
-
       input {
         width: 20vh;
         padding: 0.4vh 0.6vh;
@@ -60,12 +59,14 @@ const EditFormBox = styled.form`
     color: #3e6d9c;
     font-size: 1.3vw;
     padding: 0.4vw 0.6vw;
-    width: 40%;
+    width: 80%;
     transition: 0.1s ease-in-out;
     box-shadow: 0.05vw 0.05vw 0.1vw gray;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
-      padding: 0.6vh 0.8vh;
+      padding: 1vh 0.8vh;
+      -webkit-appearance: none;
+      -webkit-border-radius: 3px;
     }
   }
   input[type="submit"]:hover {
@@ -112,11 +113,6 @@ function Edit() {
 
   // Navigate
   const navigate = useNavigate();
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
 
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
@@ -126,6 +122,7 @@ function Edit() {
   }, []);
   useEffect(() => {
     setIsLoading(true);
+    // User login check
     fetch(`${URL}api/tokenInspect`, {
       method: "GET",
       credentials: "include",
@@ -136,6 +133,7 @@ function Edit() {
       }
       return;
     });
+    // set username
     fetch(`${URL}api/userInfo`, {
       method: "GET",
       headers: {
@@ -175,6 +173,7 @@ function Edit() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         email,
@@ -194,7 +193,6 @@ function Edit() {
           setErrorMsg(result.errorMessage);
         }
         if (result.message) {
-          alert("성공적으로 변경하였습니다.");
           // token refresh
           fetch(`${URL}api/refresh-token/${userId}`, {
             method: "GET",
@@ -205,6 +203,26 @@ function Edit() {
           })
             .then((response) => response.json())
             .then(() => console.log("refresh"))
+            .then(() => {
+              fetch(`${URL}logout`, {
+                method: "GET",
+                credentials: "include",
+              })
+                .then((response) => {
+                  if (response.ok) {
+                    alert("성공적으로 변경하였습니다. 다시 로그인해주세요.");
+                    window.location.replace("/");
+                    return;
+                  } else {
+                    throw new Error(
+                      "로그아웃을 하는데 문제가 발생했습니다. 다시 로그아웃해주세요"
+                    );
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
             .catch((error) => {
               console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
               console.log(error);

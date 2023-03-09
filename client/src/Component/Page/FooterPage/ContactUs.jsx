@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import URL from "../../../assets/url";
 
 const Container = styled.div`
   display: flex;
@@ -100,11 +101,6 @@ function ContactUs() {
   const [requestContent, setRequestContent] = useState(null);
   // Navigate
   const navigater = useNavigate();
-  // URL
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
   const handleChange = (event, handleFunction) => {
     handleFunction(event.target.value);
   };

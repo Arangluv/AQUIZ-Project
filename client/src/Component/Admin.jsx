@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import URL from "../assets/url";
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -54,14 +54,9 @@ const RequestionSubContainer = styled.div`
   }
 `;
 function Admin() {
-  const [cookies] = useCookies("token");
   const [loading, setLoading] = useState(true);
   const navigater = useNavigate();
   const [reqList, setReqList] = useState([]);
-  const URL =
-    process.env.NODE_ENV === "production"
-      ? "https://api.aquiz.co.kr/"
-      : "http://localhost:4001/";
   useEffect(() => {
     setLoading(true);
     fetch(`${URL}api/tokenInspect`, {
