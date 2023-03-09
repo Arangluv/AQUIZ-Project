@@ -1,8 +1,6 @@
 import URL from "../src/assets/url";
 
 export async function getQuiz(page, LIMIT, order, thema, rating, search) {
-  console.log("URL?");
-  console.log(URL);
   const themaQuery = thema.join("&thema=");
   if (search) {
     const response = await fetch(

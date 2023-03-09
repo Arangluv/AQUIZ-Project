@@ -146,10 +146,8 @@ export const addQuiz = async (req, res) => {
   try {
     const { quizId, inputAnswerToUser } = req.body;
     let username = null;
-    console.log("쿠키는 ?");
-    console.log(req.cookies);
-    if (req.cookies) {
-      username = req.cookies.token;
+    if (JSON.stringify(req.cookies) !== "{}") {
+      username = req.cookies.token.username;
     }
     if (inputAnswerToUser.length === 0) {
       return res.status(200).json({ message: "이미 문제를 풀었습니다." });
@@ -359,8 +357,6 @@ export const addQuiz = async (req, res) => {
 export const getUserInfo = async (req, res) => {
   try {
     const { token, username } = req.cookies.token;
-    console.log("쿠키 : ");
-    console.log(req.cookies);
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const email = userInformation.email;
