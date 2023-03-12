@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  getJoin,
   postJoin,
   postLogin,
   getLogout,
@@ -8,7 +7,7 @@ import {
 import { getQuiz } from "../controller/quizController";
 const globalRouter = express.Router();
 globalRouter.route("/").get(getQuiz);
-globalRouter.route("/join").get(getJoin).post(postJoin);
+globalRouter.route("/join").post(postJoin);
 globalRouter.route("/login").post(postLogin);
 globalRouter.route("/logout").get(getLogout);
 export default globalRouter;

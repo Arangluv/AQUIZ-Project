@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ReactHelmet from "../../ReactHelmet";
 const AboutContainer = styled.div`
   width: 100%;
   display: flex;
@@ -55,6 +56,11 @@ const AboutSubContainer = styled.div`
 function About() {
   return (
     <AboutContainer>
+      <ReactHelmet
+        description="AQUIZ, 퀴즈메이커가 어떤 사이트인지 설명해주는 곳입니다. 자신만의 다양한 문제를 만들고 사람들과 즐겨주세요."
+        title="AQUIZ, 퀴즈메이커에 대하여"
+        pageTitle="AQUIZ, 퀴즈메이커에 대하여"
+      />
       <AboutSubContainer>
         <article>
           <h2>

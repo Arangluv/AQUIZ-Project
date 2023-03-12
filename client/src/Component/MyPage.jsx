@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Quiz from "./Quiz";
 import styled from "styled-components";
+import ReactHelmet from "./ReactHelmet";
 import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
 const SubBar = styled.div`
@@ -229,6 +230,11 @@ function MyPage() {
   };
   return (
     <>
+      <ReactHelmet
+        description="자신이 만든 퀴즈 혹은 풀었던 퀴즈를 확인할 수 있습니다. 또는 닉네임 변경을 원할 시 내 정보 수정을 통해 변경할 수 있습니다."
+        title="AQUIZ - 마이페이지"
+        pageTitle="AQUIZ - 마이페이지"
+      />
       <SubBar>
         <OptionBox>
           <OptionButton onClick={handleGetMakedProblem} color={orderColor}>

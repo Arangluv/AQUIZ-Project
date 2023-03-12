@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import ReactHelmet from "./ReactHelmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -267,59 +268,66 @@ function LoginForm() {
       });
   };
   return (
-    <LoginContainer>
-      <LoginDescription>
-        <h3>AQUIZ를 방문해주셔서 감사합니다.</h3>
-        <span>
-          AQUIZ에서 제공하는 서비스를 원할하게 이용하기 위해서는 로그인이
-          필요합니다.
-        </span>
-        <span>이메일을 통해 간편하게 회원가입을 진행하실 수 있습니다.</span>
-      </LoginDescription>
-      <LoginFormBox onSubmit={onSubmit}>
-        <label htmlFor="login_email" className="focus-border-email">
+    <>
+      <ReactHelmet
+        description="AQUIZ 퀴즈메이커의 로그인페이지 입니다."
+        title="AQUIZ, 퀴즈메이커 - 로그인"
+        pageTitle="AQUIZ - 로그인"
+      />
+      <LoginContainer>
+        <LoginDescription>
+          <h3>AQUIZ를 방문해주셔서 감사합니다.</h3>
           <span>
-            <FontAwesomeIcon icon={faEnvelope} />
+            AQUIZ에서 제공하는 서비스를 원할하게 이용하기 위해서는 로그인이
+            필요합니다.
           </span>
-          <input
-            id="login_email"
-            name="email"
-            type="email"
-            placeholder="이메일"
-            required
-          />
-        </label>
-        <label htmlFor="login_password">
+          <span>이메일을 통해 간편하게 회원가입을 진행하실 수 있습니다.</span>
+        </LoginDescription>
+        <LoginFormBox onSubmit={onSubmit}>
+          <label htmlFor="login_email" className="focus-border-email">
+            <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              id="login_email"
+              name="email"
+              type="email"
+              placeholder="이메일"
+              required
+            />
+          </label>
+          <label htmlFor="login_password">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="login_password"
+              name="password"
+              type="password"
+              placeholder="비밀번호"
+              required
+            />
+          </label>
+          {errorMsg ? (
+            <LoginErrorBox>
+              <span>이메일 혹은 비밀번호가 맞지 않습니다</span>
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+            </LoginErrorBox>
+          ) : null}
+          <input id="submitBnt" type="submit" value="로그인 하기" />
+        </LoginFormBox>
+        {/* <button>트위터로 바로 로그인하기</button> */}
+        <JoinContainer>
+          <small>아직 회원가입 하지 않으셨나요?</small>
           <span>
-            <FontAwesomeIcon icon={faLock} />
+            <Link to="/join">
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              회원가입하기
+            </Link>
           </span>
-          <input
-            id="login_password"
-            name="password"
-            type="password"
-            placeholder="비밀번호"
-            required
-          />
-        </label>
-        {errorMsg ? (
-          <LoginErrorBox>
-            <span>이메일 혹은 비밀번호가 맞지 않습니다</span>
-            <FontAwesomeIcon icon={faTriangleExclamation} />
-          </LoginErrorBox>
-        ) : null}
-        <input id="submitBnt" type="submit" value="로그인 하기" />
-      </LoginFormBox>
-      {/* <button>트위터로 바로 로그인하기</button> */}
-      <JoinContainer>
-        <small>아직 회원가입 하지 않으셨나요?</small>
-        <span>
-          <Link to="/join">
-            <FontAwesomeIcon icon={faRightFromBracket} />
-            회원가입하기
-          </Link>
-        </span>
-      </JoinContainer>
-    </LoginContainer>
+        </JoinContainer>
+      </LoginContainer>
+    </>
   );
 }
 

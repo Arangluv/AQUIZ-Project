@@ -6,34 +6,28 @@ import { jwtConfig } from "../config/config";
 import UserInput from "../model/UserInput";
 require("dotenv").config();
 
-export const getJoin = (req, res, next) => {
-  return res.json({ pageTitle: "회원가입 하기" });
-};
-
-export const postJoin = async (req, res, next) => {
-  const { email, username, passward1, passward2 } = req.body;
-  const { secretKey, options } = jwtConfig;
-
-  let isJoinSucceed = false;
-  if (passward1 !== passward2) {
-    return res
-      .status(404)
-      .json({ isJoinSucceed, errorMessage: "비밀번호가 맞지 않습니다." });
-  }
-  const usernameExist = await User.exists({ username });
-  if (usernameExist) {
-    return res
-      .status(404)
-      .json({ isJoinSucceed, errorMessage: "이미 사용중인 닉네임입니다." });
-  }
-  const emailExist = await User.exists({ email });
-  if (emailExist) {
-    return res
-      .status(404)
-      .json({ isJoinSucceed, errorMessage: "이미 사용중인 이메일 입니다." });
-  }
-
+export const postJoin = async (req, res) => {
   try {
+    const { email, username, passward1, passward2 } = req.body;
+    const { secretKey, options } = jwtConfig;
+    let isJoinSucceed = false;
+    if (passward1 !== passward2) {
+      return res
+        .status(404)
+        .json({ isJoinSucceed, errorMessage: "비밀번호가 맞지 않습니다." });
+    }
+    const usernameExist = await User.exists({ username });
+    if (usernameExist) {
+      return res
+        .status(404)
+        .json({ isJoinSucceed, errorMessage: "이미 사용중인 닉네임입니다." });
+    }
+    const emailExist = await User.exists({ email });
+    if (emailExist) {
+      return res
+        .status(404)
+        .json({ isJoinSucceed, errorMessage: "이미 사용중인 이메일 입니다." });
+    }
     const payload = {
       email,
       username,
@@ -69,45 +63,49 @@ export const postJoin = async (req, res, next) => {
 };
 
 export const postLogin = async (req, res) => {
-  const { secretKey, options } = jwtConfig;
-  const { email, password } = req.body;
+  try {
+    const { secretKey, options } = jwtConfig;
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, socialOnly: false });
+    if (!user) {
+      // 유저를 찾지 못한 경우
+      return res
+        .status(404)
+        .json({ errorMessage: "이메일 혹은 비밀번호가 맞지 않습니다" });
+    }
+    const passwordOk = await bcrypt.compare(password, user.password);
+    if (!passwordOk) {
+      return res
+        .status(404)
+        .json({ errorMessage: "이메일 혹은 비밀번호가 맞지 않습니다" });
+    }
 
-  const user = await User.findOne({ email, socialOnly: false });
-  if (!user) {
-    // 유저를 찾지 못한 경우
+    const payload = {
+      email,
+      userName: user.name,
+    };
+    const token = jwt.sign(payload, secretKey, options);
+    const expireTime = new Date();
+    expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
+    res
+      .cookie(
+        "token",
+        { token, username: user.username },
+        {
+          expires: expireTime,
+          sameSite: "none",
+          httpOnly: true,
+          path: "/",
+          secure: true,
+        }
+      )
+      .status(200)
+      .json({ message: "로그인에 성공했습니다" });
+  } catch (error) {
     return res
       .status(404)
-      .json({ errorMessage: "이메일 혹은 비밀번호가 맞지 않습니다" });
+      .json({ errorMessage: "로그인을 하는데 문제가 발생했습니다.ㄴ" });
   }
-  console.log(user);
-  const passwordOk = await bcrypt.compare(password, user.password);
-  if (!passwordOk) {
-    return res
-      .status(404)
-      .json({ errorMessage: "이메일 혹은 비밀번호가 맞지 않습니다" });
-  }
-
-  const payload = {
-    email,
-    userName: user.name,
-  };
-  const token = jwt.sign(payload, secretKey, options);
-  const expireTime = new Date();
-  expireTime.setHours(expireTime.getHours() + 24 * 7); // 유효기간 7일
-  res
-    .cookie(
-      "token",
-      { token, username: user.username },
-      {
-        expires: expireTime,
-        sameSite: "none",
-        httpOnly: true,
-        path: "/",
-        secure: true,
-      }
-    )
-    .status(200)
-    .json({ message: "로그인에 성공했습니다" });
 };
 
 export const userLoginValid = async (req, res) => {
@@ -458,14 +456,20 @@ export const getRefresh = async (req, res) => {
 };
 
 export const getLogout = (req, res) => {
-  return res
-    .clearCookie("token", {
-      sameSite: "none",
-      secure: true,
-      path: "/",
-    })
-    .status(200)
-    .json({ message: "쿠키가 삭제되었습니다." });
+  try {
+    return res
+      .clearCookie("token", {
+        sameSite: "none",
+        secure: true,
+        path: "/",
+      })
+      .status(200)
+      .json({ message: "쿠키가 삭제되었습니다." });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ errorMessage: "로그아웃을 하는데 문제가 발생했습니다." });
+  }
 };
 
 export const isTokenValid = (req, res) => {

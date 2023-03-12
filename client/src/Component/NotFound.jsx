@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ReactHelmet from "./ReactHelmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceMeh } from "@fortawesome/free-solid-svg-icons";
 const NotFoundContainer = styled.div`
@@ -47,15 +48,22 @@ const NotFoundContainer = styled.div`
 `;
 function NotFound() {
   return (
-    <NotFoundContainer>
-      <h1>페이지를 찾을 수 없습니다 </h1>
-      <span>
-        <font>
-          <FontAwesomeIcon icon={faFaceMeh}></FontAwesomeIcon>
-        </font>
-      </span>
-      <Link to="/">홈으로 가기</Link>
-    </NotFoundContainer>
+    <>
+      <ReactHelmet
+        description="요청을 처리하는 도중 오류가 발생하였거나, 네트워크에 문제가 발생하여 정상적으로 페이지 이동이 불가합니다. 새로고침 후 다시 이용해주시거나, 홈화면에서 다시 이동해주세요."
+        title="페이지를 찾을 수 없습니다."
+        pageTitle="페이지를 찾을 수 없습니다."
+      />
+      <NotFoundContainer>
+        <h1>페이지를 찾을 수 없습니다 </h1>
+        <span>
+          <font>
+            <FontAwesomeIcon icon={faFaceMeh}></FontAwesomeIcon>
+          </font>
+        </span>
+        <Link to="/">홈으로 가기</Link>
+      </NotFoundContainer>
+    </>
   );
 }
 

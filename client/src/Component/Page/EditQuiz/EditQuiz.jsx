@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import CreateTitle from "../CreatePage/CreateTitle";
 import CreateThema from "../CreatePage/CreateThema";
 import CreateThumail from "../CreatePage/CreateThumnail";
+import ReactHelmet from "../../ReactHelmet";
 import EditQuizProblem from "./EditQuizProblem";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
@@ -628,6 +629,11 @@ function EditQuiz() {
   };
   return isLoading || isError || quizzes === undefined ? null : (
     <Div>
+      <ReactHelmet
+        description="내가 만들었던 퀴즈에서 수정하고 싶은 부분, 추가하고 싶은 부분, 혹은 답을 잘못만들어서 삭제하고 싶은 퀴즈에 대해 삭제를 진행할 수 있습니다."
+        title="AQUIZ, 퀴즈메이커 - 퀴즈 수정하기"
+        pageTitle="AQUIZ, 퀴즈메이커 - 퀴즈 수정하기"
+      />
       <EditFormContainer
         action="POST"
         encType="multipart/form-data"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactHelmet from "../../ReactHelmet";
 import styled from "styled-components";
 import URL from "../../../assets/url";
 
@@ -145,6 +146,11 @@ function ContactUs() {
   };
   return (
     <Container>
+      <ReactHelmet
+        description="사이트를 이용하다가 생긴 문제점, 개선할 부분이 필요한 점이나 특정 부분에 대하여 추가적으로 필요한 부분이 있으면 건의할 수 있는 곳입니다. 불량이용자 신고도 이곳에서 가능합니다."
+        title="AQUIZ, 퀴즈메이커 - 문의하기"
+        pageTitle="AQUIZ, 퀴즈메이커 - 문의하기"
+      />
       <SubContainer>
         <h1>문의 사항</h1>
         <form action="post" onSubmit={onSubmit}>

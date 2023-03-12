@@ -1,7 +1,7 @@
 import AfterSolvedDetail from "./AfterSolveDetail";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ReactHelmet from "../../ReactHelmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -500,6 +500,11 @@ function AfterSolved() {
   };
   return loading && isError ? null : (
     <MainContainer>
+      <ReactHelmet
+        description="내가 풀었던 퀴즈에 대해 틀렸는지 맞았는지 확인할 수 있습니다. 풀었던 퀴즈에 대한 다른사람들의 생각을 자유게시판에서 확인할 수 있으며, 자유롭게 내 생각도 적어볼 수 있습니다."
+        title="AQUIZ, 퀴즈메이커 - 정답 확인하기"
+        pageTitle="AQUIZ, 퀴즈메이커 - 정답 확인하기"
+      />
       <AfterSolvedContainer>
         <h1>나는 얼마나 맞았을까?</h1>
         {quizList === null

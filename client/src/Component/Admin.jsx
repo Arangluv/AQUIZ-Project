@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import ReactHelmet from "./ReactHelmet";
 import { useState } from "react";
 import URL from "../assets/url";
 const Container = styled.div`
@@ -129,6 +130,11 @@ function Admin() {
 
   return loading ? null : (
     <Container>
+      <ReactHelmet
+        description="AQUIZ 관리자 페이지 입니다. 사용자들의 문의사항을 확인 할 수 있습니다."
+        title="AQUIZ, 퀴즈메이커 - 관리자 페이지"
+        pageTitle="AQUIZ, 퀴즈메이커 - 관리자 페이지"
+      />
       <h3>문의 내용</h3>
       <RequestionContainer>
         {reqList.map((req) => {

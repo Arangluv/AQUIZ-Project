@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import ReactHelmet from "../../ReactHelmet";
 const FaqContainer = styled.div`
   width: 100%;
   display: flex;
@@ -70,6 +70,11 @@ const FaqSubContainer = styled.div`
 function Faq() {
   return (
     <FaqContainer>
+      <ReactHelmet
+        description="퀴즈를 풀거나 혹은 만들거나 할 때 의문이 들 수 있는 부분들을 볼 수 있습니다."
+        title="AQUIZ, 퀴즈메이커 - 자주 묻는 질문"
+        pageTitle="AQUIZ, 퀴즈메이커 - 자주 묻는 질문"
+      />
       <FaqSubContainer>
         <article>
           <h2>

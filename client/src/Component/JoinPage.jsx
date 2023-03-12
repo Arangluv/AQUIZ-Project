@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ReactHelmet from "./ReactHelmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import URL from "../assets/url";
@@ -109,7 +110,7 @@ const JoinFormBox = styled.form`
     input {
       width: 16vw;
       background-color: #fffbf5;
-      height: 5h;
+      height: 5vh;
       border: none;
       @media screen and (max-width: 767px) {
         width: 16vh;
@@ -290,66 +291,73 @@ function JoinPage() {
       });
   };
   return (
-    <JoinContainer>
-      <JoinDescription>
-        <h3>AQUIZ를 방문해주셔서 감사합니다.</h3>
-        <span>이메일을 통해 간편하게 회원가입을 진행하실 수 있습니다.</span>
-        <span>별도의 인증은 요구하지 않습니다!</span>
-      </JoinDescription>
-      <JoinFormBox onSubmit={onSubmit}>
-        <label htmlFor="join_email">
-          <span>
-            <FontAwesomeIcon icon={faEnvelope} />
-          </span>
-          <input
-            id="join_email"
-            name="email"
-            type="email"
-            placeholder="이메일"
-            required
-          />
-        </label>
-        <label htmlFor="join_username">
-          <span>
-            <FontAwesomeIcon icon={faUser} />
-          </span>
-          <input
-            id="join_username"
-            name="username"
-            type="text"
-            placeholder="닉네임"
-            required
-            maxLength={10}
-          />
-        </label>
-        <label htmlFor="join_password1">
-          <span>
-            <FontAwesomeIcon icon={faLock} />
-          </span>
-          <input
-            id="join_password1"
-            name="password1"
-            type="password"
-            placeholder="비밀번호"
-            required
-          />
-        </label>
-        <label htmlFor="join_password2">
-          <span>
-            <FontAwesomeIcon icon={faLock} />
-          </span>
-          <input
-            id="join_password2"
-            name="password2"
-            type="password"
-            placeholder="비밀번호 확인"
-            required
-          />
-        </label>
-        {errorMsg ? <ErrorMsg>{errorMsg}</ErrorMsg> : null}
-        <input type="submit" value="회원가입하기" required />
-      </JoinFormBox>
-    </JoinContainer>
+    <>
+      <ReactHelmet
+        description="AQUIZ 퀴즈메이커의 회원가입 페이지 입니다."
+        title="AQUIZ, 퀴즈메이커 - 회원가입"
+        pageTitle="AQUIZ, 퀴즈메이커 - 회원가입"
+      />
+      <JoinContainer>
+        <JoinDescription>
+          <h3>AQUIZ를 방문해주셔서 감사합니다.</h3>
+          <span>이메일을 통해 간편하게 회원가입을 진행하실 수 있습니다.</span>
+          <span>별도의 인증은 요구하지 않습니다!</span>
+        </JoinDescription>
+        <JoinFormBox onSubmit={onSubmit}>
+          <label htmlFor="join_email">
+            <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              id="join_email"
+              name="email"
+              type="email"
+              placeholder="이메일"
+              required
+            />
+          </label>
+          <label htmlFor="join_username">
+            <span>
+              <FontAwesomeIcon icon={faUser} />
+            </span>
+            <input
+              id="join_username"
+              name="username"
+              type="text"
+              placeholder="닉네임"
+              required
+              maxLength={10}
+            />
+          </label>
+          <label htmlFor="join_password1">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="join_password1"
+              name="password1"
+              type="password"
+              placeholder="비밀번호"
+              required
+            />
+          </label>
+          <label htmlFor="join_password2">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="join_password2"
+              name="password2"
+              type="password"
+              placeholder="비밀번호 확인"
+              required
+            />
+          </label>
+          {errorMsg ? <ErrorMsg>{errorMsg}</ErrorMsg> : null}
+          <input type="submit" value="회원가입하기" required />
+        </JoinFormBox>
+      </JoinContainer>
+    </>
   );
 }
 

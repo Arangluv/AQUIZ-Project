@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ReactHelmet from "../../ReactHelmet";
 const GuideContainer = styled.div`
   width: 100%;
   display: flex;
@@ -54,6 +55,11 @@ const GuideSubContainer = styled.div`
 function Guideline() {
   return (
     <GuideContainer>
+      <ReactHelmet
+        description="서비스를 이용하면서 준수해야할 부분을 정리한 가이드라인입니다."
+        title="AQUIZ, 퀴즈메이커 - 가이드 라인"
+        pageTitle="AQUIZ, 퀴즈메이커 - 가이드 라인"
+      />
       <GuideSubContainer>
         <article>
           <h2>만들어서는 안되는 퀴즈</h2>

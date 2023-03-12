@@ -68,8 +68,10 @@ const OptionArea = styled.div`
     align-items: center;
     padding: 0.4vw 0.6vw;
     border-right: 1px solid rgba(63, 66, 68, 0.2);
+    margin-right: 1vw;
     @media screen and (max-width: 767px) {
       border-right: none;
+      margin-right: 0;
     }
   }
   & > div:nth-child(2) {

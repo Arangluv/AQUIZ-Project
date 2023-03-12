@@ -144,7 +144,7 @@ function SolveQuiz() {
       <ReactHelmet
         description={quizDescribe}
         title={quizTitle}
-        pageTitle={quizTitle}
+        pageTitle={"AQUIZ, 퀴즈메이커 - " + " " + quizTitle}
         image={thumnailUrl}
       />
       {quizList[currentQuizIndex]}

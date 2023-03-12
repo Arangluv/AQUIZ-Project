@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
+import ReactHelmet from "./ReactHelmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

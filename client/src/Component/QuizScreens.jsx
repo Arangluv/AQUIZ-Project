@@ -15,6 +15,7 @@ const StyledSearchArea = styled(SerchArea)`
   justify-content: space-between;
   height: auto;
   background-color: #fffbf5;
+  margin-bottom: 1vw;
   align-items: center;
   padding-left: 2vw;
   padding-right: 2vw;
@@ -22,6 +23,7 @@ const StyledSearchArea = styled(SerchArea)`
     padding-left: 2vh;
     padding-right: 2vh;
     height: auto;
+    margin-bottom: 1vh;
   }
 `;
 const BannerAD = styled.div`

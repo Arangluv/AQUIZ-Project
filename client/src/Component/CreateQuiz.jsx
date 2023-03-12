@@ -4,6 +4,7 @@ import CreateThumail from "./Page/CreatePage/CreateThumnail";
 import CreateProblem from "./Page/CreatePage/CreateProblem";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import ReactHelmet from "./ReactHelmet";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -227,6 +228,16 @@ function CreateQuiz() {
     if (!regex.test(userId)) {
       navigate("/not");
     }
+    fetch(`${URL}api/tokenInspect`, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        alert("로그인 후 이용해주세요");
+        window.location.replace("/");
+      }
+      return;
+    });
     // token refresh
     fetch(`${URL}api/refresh-token/${userId}`, {
       method: "GET",
@@ -240,7 +251,7 @@ function CreateQuiz() {
       .catch((error) => {
         console.log("쿠키를 리프레쉬 하는 과정에서 문제가 발생했습니다.");
         console.log(error);
-        alert("로그인 후 이용해주세요1");
+        alert("로그인 후 이용해주세요");
         window.location.replace("/");
       });
   }, [URL, userId, navigate]);
@@ -306,7 +317,7 @@ function CreateQuiz() {
     }
   };
   if (userId === "null") {
-    alert("로그인 후 이용해주세요2");
+    alert("로그인 후 이용해주세요");
     window.location.replace("/login");
   }
   const userDataValidation = (quizzes) => {
@@ -578,6 +589,11 @@ function CreateQuiz() {
   };
   return (
     <Div>
+      <ReactHelmet
+        description="퀴즈를 만들 수 있는 공간으로, 속담 퀴즈, 애니메이션에 나오는 캐릭터 혹은 스토리에 관한 퀴즈, 자신이 좋아하는 bj 혹은 스트리머에 대한 퀴즈 등 다양한 주제의 퀴즈를 만들 수 있습니다."
+        title="AQUIZ, 퀴즈메이커 - 내 퀴즈 만들기"
+        pageTitle="AQUIZ, 퀴즈메이커 - 내 퀴즈 만들기"
+      />
       <CreateFormContainer
         method="POST"
         encType="multipart/form-data"

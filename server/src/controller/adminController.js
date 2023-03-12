@@ -1,8 +1,8 @@
 import Requestion from "../model/Requestion";
 
 export const postContact = async (req, res) => {
-  const { userEmail, requestReason, requestContent } = req.body;
   try {
+    const { userEmail, requestReason, requestContent } = req.body;
     await Requestion.create({
       email: userEmail,
       reason: requestReason,
@@ -19,11 +19,11 @@ export const postContact = async (req, res) => {
 };
 
 export const getContacts = async (req, res) => {
-  const data = req.cookies.token;
-  if (data.username !== "아랑이") {
-    return res.status(404).json({ message: "not ok" });
-  }
   try {
+    const data = req.cookies.token;
+    if (data.username !== "아랑이") {
+      return res.status(404).json({ message: "not ok" });
+    }
     const userReqList = await Requestion.find({});
     return res.status(200).json({ userReqList });
   } catch (error) {

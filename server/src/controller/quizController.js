@@ -12,46 +12,47 @@ aws.config.update({
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 const s3 = new aws.S3();
-export const postQuiz = async (req, res, next) => {
-  const { userId, quizTitle, quizDescribe, themaBox, quizzes } = req.body;
-  const modifiedThembox = themaBox.split(",");
-  const thumnailFile = req.files.thumbnailFile;
-  const parsedQuizzes = JSON.parse(quizzes);
-  const quizFiles = req.files.imageFiles;
-  let imgCount = 0;
-  const newQuizzes = parsedQuizzes.map((quiz) => {
-    let quizImgUrl;
-    if (quiz.imgUrl !== null) {
-      quizImgUrl = quizFiles[imgCount];
-      imgCount++;
-    } else {
-      quizImgUrl = "";
-    }
-    return {
-      id: quiz.id,
-      quizDescribe: quiz.quizProblemDescribe,
-      type: quiz.quizType,
-      imgUrl: quizImgUrl.key,
-      commetary: quiz.commentary,
-      questions: quiz.questions.map((item) => {
-        if (!item.spacingHint) {
-          return {
-            number: Number(item.number),
-            content: item.content,
-            isCorrect: item.isCorrect,
-          };
-        } else {
-          return {
-            number: Number(item.number),
-            content: item.content,
-            isCorrect: item.isCorrect,
-            spacingHint: item.spacingHint,
-          };
-        }
-      }),
-    };
-  });
+
+export const postQuiz = async (req, res) => {
   try {
+    const { userId, quizTitle, quizDescribe, themaBox, quizzes } = req.body;
+    const modifiedThembox = themaBox.split(",");
+    const thumnailFile = req.files.thumbnailFile;
+    const parsedQuizzes = JSON.parse(quizzes);
+    const quizFiles = req.files.imageFiles;
+    let imgCount = 0;
+    const newQuizzes = parsedQuizzes.map((quiz) => {
+      let quizImgUrl;
+      if (quiz.imgUrl !== null) {
+        quizImgUrl = quizFiles[imgCount];
+        imgCount++;
+      } else {
+        quizImgUrl = "";
+      }
+      return {
+        id: quiz.id,
+        quizDescribe: quiz.quizProblemDescribe,
+        type: quiz.quizType,
+        imgUrl: quizImgUrl.key,
+        commetary: quiz.commentary,
+        questions: quiz.questions.map((item) => {
+          if (!item.spacingHint) {
+            return {
+              number: Number(item.number),
+              content: item.content,
+              isCorrect: item.isCorrect,
+            };
+          } else {
+            return {
+              number: Number(item.number),
+              content: item.content,
+              isCorrect: item.isCorrect,
+              spacingHint: item.spacingHint,
+            };
+          }
+        }),
+      };
+    });
     const newQuiz = await Quiz.create({
       owner: userId,
       quizTitle,
@@ -75,84 +76,25 @@ export const postQuiz = async (req, res, next) => {
 };
 
 export const postEdit = async (req, res) => {
-  const quizId = req.params.id;
-  const {
-    quizTitle,
-    quizDescribe,
-    themaBox,
-    quizzes,
-    imgUrlToRemove,
-    originalThumbnailUrl,
-  } = req.body;
-  const modifiedThembox = themaBox.split(",");
-  const parsedQuizzes = JSON.parse(quizzes);
-  let thumnailFile;
-  if (req.files.thumbnailFile) {
-    thumnailFile = originalThumbnailUrl;
-    // Delete Thumbnail Url
-    const params = {
-      Bucket: "aquizbuket",
-      Key: thumnailFile,
-    };
-    try {
-      s3.deleteObject(params, function (error, data) {
-        if (error) {
-          console.log("err: ", error, error.stack);
-        } else {
-          console.log(data, " 정상 삭제 되었습니다.");
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
-  }
-
-  let imgCount = 0;
-  const newQuizzes = parsedQuizzes.map((quiz, idx) => {
-    let quizImgUrl;
-    if (typeof quiz.imgUrl === "string") {
-      quizImgUrl = quiz.imgUrl;
-    } else if (quiz.imgUrl === null || quiz.imgUrl === undefined) {
-      quizImgUrl = null;
-    } else if (typeof quiz.imgUrl === "object") {
-      if (req.files.imageFiles) {
-        quizImgUrl = req.files.imageFiles[imgCount].key;
-        imgCount++;
-      }
-    } else {
-      quizImgUrl = null;
-    }
-    return {
-      id: quiz.id,
-      quizDescribe: quiz.quizProblemDescribe,
-      type: quiz.quizType,
-      imgUrl: quizImgUrl,
-      commetary: quiz.commentary,
-      quizCorrectRate: quiz.quizCorrectRate,
-      questions: quiz.questions.map((item) => {
-        if (!item.spacingHint) {
-          return {
-            number: Number(item.number),
-            content: item.content,
-            isCorrect: item.isCorrect,
-          };
-        } else {
-          return {
-            number: Number(item.number),
-            content: item.content,
-            isCorrect: item.isCorrect,
-            spacingHint: item.spacingHint,
-          };
-        }
-      }),
-    };
-  });
-  if (imgUrlToRemove) {
-    if (typeof imgUrlToRemove === "string") {
+  try {
+    const quizId = req.params.id;
+    const {
+      quizTitle,
+      quizDescribe,
+      themaBox,
+      quizzes,
+      imgUrlToRemove,
+      originalThumbnailUrl,
+    } = req.body;
+    const modifiedThembox = themaBox.split(",");
+    const parsedQuizzes = JSON.parse(quizzes);
+    let thumnailFile;
+    if (req.files.thumbnailFile) {
+      thumnailFile = originalThumbnailUrl;
+      // Delete Thumbnail Url
       const params = {
         Bucket: "aquizbuket",
-        Key: imgUrlToRemove,
+        Key: thumnailFile,
       };
       try {
         s3.deleteObject(params, function (error, data) {
@@ -166,11 +108,53 @@ export const postEdit = async (req, res) => {
         console.log(err);
         throw err;
       }
-    } else {
-      imgUrlToRemove.forEach((file) => {
+    }
+
+    let imgCount = 0;
+    const newQuizzes = parsedQuizzes.map((quiz, idx) => {
+      let quizImgUrl;
+      if (typeof quiz.imgUrl === "string") {
+        quizImgUrl = quiz.imgUrl;
+      } else if (quiz.imgUrl === null || quiz.imgUrl === undefined) {
+        quizImgUrl = null;
+      } else if (typeof quiz.imgUrl === "object") {
+        if (req.files.imageFiles) {
+          quizImgUrl = req.files.imageFiles[imgCount].key;
+          imgCount++;
+        }
+      } else {
+        quizImgUrl = null;
+      }
+      return {
+        id: quiz.id,
+        quizDescribe: quiz.quizProblemDescribe,
+        type: quiz.quizType,
+        imgUrl: quizImgUrl,
+        commetary: quiz.commentary,
+        quizCorrectRate: quiz.quizCorrectRate,
+        questions: quiz.questions.map((item) => {
+          if (!item.spacingHint) {
+            return {
+              number: Number(item.number),
+              content: item.content,
+              isCorrect: item.isCorrect,
+            };
+          } else {
+            return {
+              number: Number(item.number),
+              content: item.content,
+              isCorrect: item.isCorrect,
+              spacingHint: item.spacingHint,
+            };
+          }
+        }),
+      };
+    });
+    if (imgUrlToRemove) {
+      if (typeof imgUrlToRemove === "string") {
         const params = {
           Bucket: "aquizbuket",
-          Key: file,
+          Key: imgUrlToRemove,
         };
         try {
           s3.deleteObject(params, function (error, data) {
@@ -184,11 +168,27 @@ export const postEdit = async (req, res) => {
           console.log(err);
           throw err;
         }
-      });
+      } else {
+        imgUrlToRemove.forEach((file) => {
+          const params = {
+            Bucket: "aquizbuket",
+            Key: file,
+          };
+          try {
+            s3.deleteObject(params, function (error, data) {
+              if (error) {
+                console.log("err: ", error, error.stack);
+              } else {
+                console.log(data, " 정상 삭제 되었습니다.");
+              }
+            });
+          } catch (err) {
+            console.log(err);
+            throw err;
+          }
+        });
+      }
     }
-  }
-
-  try {
     // 업데이트 전 업데이트된 Quiz 아이디를 찾아, isEdit을 true로 바꿔준다.
     const solvedUser = await User.find({ "solvedQuizzes.solvedQuiz": quizId });
     Promise.all(
@@ -232,9 +232,10 @@ export const postEdit = async (req, res) => {
       .json({ errorMessage: "퀴즈를 업데이트 하는데 실패했습니다." });
   }
 };
+
 export const getQuizForId = async (req, res) => {
-  const quizId = req.params.id;
   try {
+    const quizId = req.params.id;
     const quiz = await Quiz.findById(quizId);
     if (quiz) {
       return res.status(200).json({ quiz });
@@ -250,8 +251,8 @@ export const getQuizForId = async (req, res) => {
   }
 };
 export const getQuiz = async (req, res) => {
-  const { page, LIMIT, order, thema, rating, keyword } = req.query;
   try {
+    const { page, LIMIT, order, thema, rating, keyword } = req.query;
     if (keyword === undefined) {
       const quiz =
         thema === undefined
@@ -409,8 +410,8 @@ export const getSolveQuiz = async (req, res) => {
 };
 
 export const getUserRequestQuizzes = async (req, res) => {
-  const { opt } = req.query;
   try {
+    const { opt } = req.query;
     const data = req.cookies.token;
     const token = data.token;
     const { secretKey } = jwtConfig;
@@ -447,11 +448,11 @@ export const getUserRequestQuizzes = async (req, res) => {
 };
 
 export const postDelete = async (req, res) => {
-  const deletedQuizId = req.params.id;
-  const token = req.cookies.token.token;
-  const { secretKey } = jwtConfig;
   // Use Token, varify user
   try {
+    const deletedQuizId = req.params.id;
+    const token = req.cookies.token.token;
+    const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const user = await User.findOne({ email: userInformation.email });
     if (!user) {
@@ -570,9 +571,12 @@ export const postDelete = async (req, res) => {
             });
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        return res
+          .status(404)
+          .json({ errorMessage: "퀴즈를 삭제하는데 문제가 발생했습니다." });
+      }
     }
-
     await Quiz.deleteOne({ _id: deletedQuizId });
     return res.status(200).json({ message: "성공적으로 퀴즈를 삭제했습니다." });
   } catch (error) {
@@ -584,9 +588,9 @@ export const postDelete = async (req, res) => {
 };
 
 export const addComment = async (req, res) => {
-  const { id } = req.params;
-  const { nickname, content } = req.body;
   try {
+    const { id } = req.params;
+    const { nickname, content } = req.body;
     const newUserComment = await UserComment.create({ nickname, content });
     const findQuiz = await Quiz.findById(id);
     findQuiz.userComment.push(newUserComment._id);
@@ -607,9 +611,9 @@ export const addComment = async (req, res) => {
 };
 
 export const getComment = async (req, res) => {
-  const quizId = req.params.id;
-  const { page, limit } = req.query;
   try {
+    const quizId = req.params.id;
+    const { page, limit } = req.query;
     const findQuiz = await Quiz.findById(quizId).populate("userComment");
     const userComment = findQuiz.userComment.sort(
       (a, b) => new Date(b.createAt) - new Date(a.createAt)
