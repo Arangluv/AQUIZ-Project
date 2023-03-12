@@ -15,6 +15,7 @@ import Edit from "./Page/MyPage/Edit";
 import EditQuiz from "./Page/EditQuiz/EditQuiz";
 import Admin from "./Admin";
 import NotFound from "./NotFound";
+import AdminQuizList from "./Page/AdminPage/AdminQuizList";
 import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
  html, body, div, span, applet, object, iframe,
@@ -87,6 +88,7 @@ function Main() {
           <Route path="login" element={<LoginPage />} />
           <Route path="join" element={<JoinPage />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="admin/quiz-list" element={<AdminQuizList />} />
           <Route path="my-page/:id" element={<MyPage />} />
           <Route path="my-page/:id/edit" element={<Edit />} />
           <Route path="/:id/quiz/create_quiz" element={<CreateQuiz />} />

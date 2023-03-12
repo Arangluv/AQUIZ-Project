@@ -455,6 +455,110 @@ export const postDelete = async (req, res) => {
     const { secretKey } = jwtConfig;
     const userInformation = jwt.verify(token, secretKey);
     const user = await User.findOne({ email: userInformation.email });
+    // Admin의 경우
+
+    if (req.query?.admin === process.env.DELETE_VERIFY) {
+      try {
+        const deleteQuiz = await Quiz.findById(deletedQuizId).populate(
+          "userComment"
+        );
+        const userComment = deleteQuiz.userComment;
+        Promise.all(
+          userComment.forEach(async (comment) => {
+            if (comment) {
+              await UserComment.findByIdAndDelete(comment._id.toString());
+            }
+          })
+        )
+          .then(() => {
+            return;
+          })
+          .catch((error) => {
+            console.log("User Comment를 삭제하는데 오류가 발생했습니다.");
+          });
+
+        const solvedUsers = await User.find({
+          "solvedQuizzes.solvedQuiz": deletedQuizId,
+        });
+
+        Promise.all(
+          solvedUsers.map(async (user) => {
+            await UserInput.deleteOne({ owner: user._id });
+            user.solvedQuizzes = user.solvedQuizzes.filter(
+              (quiz) => quiz.solvedQuiz.toString() !== deletedQuizId
+            );
+            return user.save();
+          })
+        )
+          .then(() => {
+            return;
+          })
+          .catch((error) => {
+            console.log("저장하는데 오류가 발생했습니다.");
+          });
+        const quiz = await Quiz.findOne({ _id: deletedQuizId });
+        const thumbnailUrl = quiz.thumnailUrl;
+        const quizImgUrls = quiz.quizzes.map((quiz) => {
+          if (quiz.imgUrl) {
+            return quiz.imgUrl;
+          } else {
+            return null;
+          }
+        });
+        // Delete Thumbnail Url
+        const params = {
+          Bucket: "aquizbuket",
+          Key: thumbnailUrl,
+        };
+        try {
+          s3.deleteObject(params, function (error, data) {
+            if (error) {
+              console.log("err: ", error, error.stack);
+            } else {
+              console.log(data, " 정상 삭제 되었습니다.");
+            }
+          });
+        } catch (err) {
+          console.log(err);
+          return res
+            .status(404)
+            .json({ errorMessage: "퀴즈를 삭제하는데 오류가 발생했습니다." });
+        }
+
+        // Delete Quiz Image
+        if (quizImgUrls) {
+          try {
+            quizImgUrls.forEach((file) => {
+              if (file) {
+                const params = {
+                  Bucket: "aquizbuket",
+                  Key: file,
+                };
+                s3.deleteObject(params, (error, data) => {
+                  if (error) {
+                    console.log("err: ", error, error.stack);
+                  } else {
+                    console.log(data, " 정상 삭제 되었습니다.");
+                  }
+                });
+              }
+            });
+          } catch (error) {
+            return res.status(404).json({
+              errorMessage: "퀴즈를 삭제하는데 문제가 발생했습니다.",
+            });
+          }
+        }
+        await Quiz.deleteOne({ _id: deletedQuizId });
+        return res
+          .status(200)
+          .json({ message: "성공적으로 퀴즈를 삭제했습니다." });
+      } catch (error) {
+        return res
+          .status(404)
+          .json({ errorMessage: "퀴즈를 삭제하는데 문제가 발생했습니다." });
+      }
+    }
     if (!user) {
       return res
         .status(404)

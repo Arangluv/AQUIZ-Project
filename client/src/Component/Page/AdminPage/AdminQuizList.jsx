@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import ReactHelmet from "./ReactHelmet";
-import Quiz from "./Quiz";
-import SerchArea from "./SerchAera";
-import { getQuiz } from "../api";
+import ReactHelmet from "../../ReactHelmet";
+import Quiz from "../../Quiz";
+import SerchArea from "../../SerchAera";
+import { getQuiz } from "../../../api";
 import styled from "styled-components";
-import bannerContainer from "../assets/bannerData";
+import bannerContainer from "../../../assets/bannerData";
+import URL from "../../../assets/url";
 const Test = styled.div`
   width: 100%;
   display: ${({ hasNext, isLoading }) =>
@@ -86,7 +87,7 @@ const ErrorMsg = styled.span`
     font-size: 1.5vh;
   }
 `;
-function QuizScreens() {
+function AdminQuizList() {
   const [quizList, setQuizList] = useState([]);
   const [totalQuiz, setTotalQuiz] = useState([]); // 이렇게 구현해도 될까 메모리 낭비가 심하지는 않을까?
   const [isError, setIsError] = useState(null);
@@ -203,6 +204,36 @@ function QuizScreens() {
       console.log("퀴즈를 받아오는데 에러가 발생했습니다 🔴"); // dev Option
     }
   };
+  const handleDelete = (event) => {
+    if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
+      const quizIdForDelete = event.target.dataset.quizid;
+      console.log(quizIdForDelete);
+      fetch(
+        `${URL}quizzes/delete/${quizIdForDelete}?admin=${process.env.REACT_APP_DELETE_VERIFY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            console.log("퀴즈를 성공적으로 삭제했습니다.");
+            window.location.reload();
+          } else {
+            throw new Error("퀴즈를 삭제하는데 문제가 발생했습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log("퀴즈를 삭제하는데 문제가 발생했습니다.");
+        });
+    } else {
+      return;
+    }
+  };
   return (
     <>
       <ReactHelmet
@@ -248,7 +279,9 @@ function QuizScreens() {
                       thumnailUrl={thumnailUrl}
                       quizId={_id}
                       correctRate={correctRate}
+                      handleDelete={handleDelete}
                       view={view}
+                      mode="admin"
                     />
                   );
                 })}
@@ -266,4 +299,4 @@ function QuizScreens() {
   );
 }
 
-export default QuizScreens;
+export default AdminQuizList;

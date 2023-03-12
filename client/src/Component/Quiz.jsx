@@ -248,7 +248,7 @@ function Quiz({
               </font>
               공유하기
             </Link>
-            {mode === "maked" ? (
+            {mode === "maked" || mode === "admin" ? (
               <>
                 <Link to={`/quiz/edit/${quizId}`}>
                   <font>

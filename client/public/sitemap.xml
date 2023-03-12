@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://www.aquiz.co.kr/</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/login</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/join</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/admin</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/my-page/:id</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/my-page/:id/edit</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/:id/quiz/create_quiz</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/edit/:id</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/:id</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/faq</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/contact</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/guideline</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/about</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/result/:id</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/not</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/*</loc> </url>
+</urlset>

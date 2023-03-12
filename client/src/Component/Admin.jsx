@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ReactHelmet from "./ReactHelmet";
 import { useState } from "react";
 import URL from "../assets/url";
@@ -16,6 +16,10 @@ const Container = styled.div`
     margin-bottom: 1vh;
     font-size: 1.2vw;
     font-weight: 600;
+    a {
+      position: absolute;
+      right: 1vw;
+    }
   }
 `;
 const RequestionContainer = styled.div`
@@ -135,7 +139,10 @@ function Admin() {
         title="AQUIZ, 퀴즈메이커 - 관리자 페이지"
         pageTitle="AQUIZ, 퀴즈메이커 - 관리자 페이지"
       />
-      <h3>문의 내용</h3>
+      <h3>
+        문의 내용
+        <Link to="quiz-list">퀴즈 리스트 보기</Link>
+      </h3>
       <RequestionContainer>
         {reqList.map((req) => {
           return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
+import ReactGA from "react-ga";
 const Wrapper = styled.div`
   min-height: calc(100vh - 5vh);
   padding-bottom: 8vh;
@@ -28,20 +29,35 @@ const StyledHeader = styled(Header)`
 const MainAd = styled.div`
   width: 100%;
   background-color: #ececec;
-  height: 15vh;
+  height: 22vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1vw;
   iframe {
-    height: 15vh;
+    height: 22vh;
     width: 100%;
   }
 `;
 function App() {
   const [user, setUser] = useState(null);
+  const [initialized, setInitialized] = useState(false);
+  const location = useLocation();
   // aws s3 sync ./build s3://aquizfront --profile=AQUIZ-Front
+  useEffect(() => {
+    const isProduction = process.env.NODE_ENV === "production";
+    if (isProduction) {
+      ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+      setInitialized(true);
+    }
+  }, []);
 
+  useEffect(() => {
+    if (initialized) {
+      ReactGA.set({ page: location.pathname });
+      ReactGA.pageview(location.pathname + location.search);
+    }
+  }, [initialized, location]);
   useEffect(() => {
     fetch(`${URL}api/login`, {
       method: "GET",
@@ -71,7 +87,9 @@ function App() {
     <UserInformation.Provider value={{ user, setUser }}>
       <CookiesProvider>
         <StyledHeader />
-        <MainAd>{bannerContainer[Math.floor(Math.random() * 4)]}</MainAd>
+        <MainAd>
+          {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
+        </MainAd>
         <Wrapper>
           <Outlet />
         </Wrapper>

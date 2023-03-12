@@ -144,7 +144,10 @@ export const addQuiz = async (req, res) => {
   try {
     const { quizId, inputAnswerToUser } = req.body;
     let username = null;
-    if (JSON.stringify(req.cookies) !== "{}") {
+    const isCookieNotEmpty = Object.keys(
+      JSON.parse(JSON.stringify(req.cookies))
+    ).includes("token");
+    if (isCookieNotEmpty) {
       username = req.cookies.token.username;
     }
     if (inputAnswerToUser.length === 0) {
@@ -204,6 +207,8 @@ export const addQuiz = async (req, res) => {
             }
           });
           findQuiz.meta.view += 1;
+          console.log("findQuiz.meta.view ?");
+          console.log(findQuiz.meta.view);
           findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
           findQuiz.meta.correctRate =
             findQuiz.meta.scoreSummary / findQuiz.meta.view;

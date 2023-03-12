@@ -27,6 +27,42 @@ const bannerContainer = [
     title="random-recommends"
     referrerPolicy="unsafe-url"
   ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647388&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647389&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647390&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647392&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647393&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
+  <iframe
+    src="https://ads-partners.coupang.com/widgets.html?id=647394&template=carousel&trackingCode=AF1256886&subId=&width=680&height=140"
+    width="680"
+    height="140"
+    referrerPolicy="unsafe-url"
+  ></iframe>,
 ];
 
 export default bannerContainer;

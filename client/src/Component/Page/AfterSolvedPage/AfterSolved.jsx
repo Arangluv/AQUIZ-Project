@@ -276,8 +276,18 @@ function AfterSolved() {
   const [content, setContent] = useState("");
   const [userComments, setUserComments] = useState([]);
   const [totalComments, setTotalComments] = useState(0);
+  if (!location?.state) {
+    alert("잘못된 접근입니다.");
+    navigate("/");
+  }
   // User Input Answer
-  const { inputAnswerToUser, selectedQuizId } = location.state; // SolveQuiz에서 넘어온 데이터를 받는다.
+  // const { inputAnswerToUser, selectedQuizId } = location.state; // SolveQuiz에서 넘어온 데이터를 받는다.
+  let inputAnswerToUser = null;
+  let selectedQuizId = null;
+  if (location?.state) {
+    inputAnswerToUser = location.state.inputAnswerToUser;
+    selectedQuizId = location.state.selectedQuizId;
+  }
   // loading State
   const [loading, setLoading] = useState(true);
   // Comment Page Nation

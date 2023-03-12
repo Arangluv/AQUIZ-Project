@@ -259,7 +259,7 @@ function MyPage() {
                     if (idx === 5) {
                       return (
                         <BannerAD key={idx}>
-                          {bannerContainer[Math.floor(Math.random() * 4)]}
+                          {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
                         </BannerAD>
                       );
                     }

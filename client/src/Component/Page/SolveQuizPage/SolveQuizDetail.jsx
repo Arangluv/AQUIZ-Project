@@ -7,13 +7,15 @@ import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
 import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
+  align-items: center;
 `;
 const BannerAd = styled.div`
   background-color: white;
-  width: 15%;
-  height: 120vh;
+  width: 100%;
+  height: 30vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +32,8 @@ const Outlet = styled.div`
   padding-left: 2vw;
   padding-right: 2vw;
   border-radius: 3px;
+  display: flex;
+  flex-direction: column;
   padding-top: 3vw;
   padding-bottom: 3vw;
   background-color: white;
@@ -179,7 +183,6 @@ function SolveQuizDetail({
   }
   return (
     <QuizDetailContainer>
-      <BannerAd>{bannerContainer[Math.floor(Math.random() * 4)]}</BannerAd>
       <Outlet>
         <h2>
           <span>문제 {quizNum + 1}번</span>
@@ -206,8 +209,8 @@ function SolveQuizDetail({
           </span>
         </NotionSmall>
         {questionType}
+        <BannerAd>{bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}</BannerAd>
       </Outlet>
-      <BannerAd>{bannerContainer[Math.floor(Math.random() * 4)]}</BannerAd>
     </QuizDetailContainer>
   );
 }
