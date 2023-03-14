@@ -11,6 +11,25 @@ const GuideContainer = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 6vh;
   }
+  div > a {
+    font-size: 1.5vw;
+    display: block;
+    border: 1px solid rgba(83, 127, 231, 1);
+    padding: 1.2vw 3vw;
+    margin-top: 2vw;
+    border-radius: 3px;
+    color: #537fe7;
+    transition: 0.1s ease-in-out;
+    @media screen and (max-width: 767px) {
+      font-size: 1.5vh;
+      padding: 1.2vh 3vh;
+    }
+  }
+  div > a:hover {
+    background-color: #537fe7;
+    color: white;
+    border-color: white;
+  }
 `;
 const GuideSubContainer = styled.div`
   display: flex;
@@ -47,7 +66,7 @@ const GuideSubContainer = styled.div`
       line-height: 1.5vw;
       @media screen and (max-width: 767px) {
         font-size: 1.3vh;
-        line-height: 1.5vw;
+        line-height: 1.5vh;
       }
     }
   }
@@ -122,6 +141,9 @@ function Guideline() {
             있습니다.
           </p>
         </article>
+        <div>
+          <Link to="/article">칼럼보러가기</Link>
+        </div>
       </GuideSubContainer>
     </GuideContainer>
   );

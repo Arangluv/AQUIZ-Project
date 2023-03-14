@@ -10,7 +10,7 @@ import {
   faPen,
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
-import bannerContainer from "../../../assets/bannerData";
+// import bannerContainer from "../../../assets/bannerData";
 import URL from "../../../assets/url";
 const MainContainer = styled.div`
   display: flex;
@@ -530,7 +530,7 @@ function AfterSolved() {
         </button>
       </AfterSolvedContainer>
       <AdContainer>
-        {bannerContainer[Math.floor(Math.random() * 4)]}
+        {/* {bannerContainer[Math.floor(Math.random() * 4)]} */}
       </AdContainer>
       <CommunicationContainer>
         <form action="POST" onSubmit={handleSaveContent}>

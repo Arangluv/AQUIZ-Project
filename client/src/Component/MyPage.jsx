@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import Quiz from "./Quiz";
 import styled from "styled-components";
 import ReactHelmet from "./ReactHelmet";
-import bannerContainer from "../assets/bannerData";
+// import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
 const SubBar = styled.div`
   display: flex;
@@ -79,21 +79,21 @@ const SubContainer = styled.div`
     column-gap: 0.6vh;
   }
 `;
-const BannerAD = styled.div`
-  width: calc(100% - 0.3vw);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3vw;
-  height: 100%;
-  background-color: white;
-  grid-column: 2 / span 2;
-  @media screen and (max-width: 767px) {
-    grid-column: 1 / span 2;
-    grid-row: 3 / span 1;
-    font-size: 10vh;
-  }
-`;
+// const BannerAD = styled.div`
+//   width: calc(100% - 0.3vw);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 3vw;
+//   height: 100%;
+//   background-color: white;
+//   grid-column: 2 / span 2;
+//   @media screen and (max-width: 767px) {
+//     grid-column: 1 / span 2;
+//     grid-row: 3 / span 1;
+//     font-size: 10vh;
+//   }
+// `;
 function MyPage() {
   const [quizList, setQuizList] = useState([]);
   const [mode, setMode] = useState("maked");
@@ -158,9 +158,9 @@ function MyPage() {
               mainList.push(subList);
               subList = [];
             }
-            if (i % 5 === 0 && i !== 0) {
-              subList.push("AD");
-            }
+            // if (i % 5 === 0 && i !== 0) {
+            //   subList.push("AD");
+            // }
             subList.push(quizzes[i]);
             if (i === quizzes.length - 1) {
               mainList.push(subList);
@@ -172,9 +172,9 @@ function MyPage() {
               mainList.push(subList);
               subList = [];
             }
-            if (i % 5 === 0 && i !== 0) {
-              subList.push("AD");
-            }
+            // if (i % 5 === 0 && i !== 0) {
+            //   subList.push("AD");
+            // }
 
             subList.push(quizzes[i].solvedQuiz);
 
@@ -256,13 +256,13 @@ function MyPage() {
               return (
                 <SubContainer quantity={subQuiz.length} key={idx}>
                   {subQuiz.map((quiz, idx) => {
-                    if (idx === 5) {
-                      return (
-                        <BannerAD key={idx}>
-                          {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
-                        </BannerAD>
-                      );
-                    }
+                    // if (idx === 5) {
+                    //   return (
+                    //     <BannerAD key={idx}>
+                    //       {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
+                    //     </BannerAD>
+                    //   );
+                    // }
                     const { quizDescribe, quizTitle, thumnailUrl, _id, meta } =
                       quiz;
                     let correctRate, view;

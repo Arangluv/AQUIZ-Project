@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
 import styled from "styled-components";
-import bannerContainer from "../assets/bannerData";
+// import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
 import ReactGA from "react-ga";
 const Wrapper = styled.div`
@@ -26,19 +26,19 @@ const StyledHeader = styled(Header)`
     height: 5vh;
   }
 `;
-const MainAd = styled.div`
-  width: 100%;
-  background-color: #ececec;
-  height: 22vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1vw;
-  iframe {
-    height: 22vh;
-    width: 100%;
-  }
-`;
+// const MainAd = styled.div`
+//   width: 100%;
+//   background-color: #ececec;
+//   height: 22vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-bottom: 1vw;
+//   iframe {
+//     height: 22vh;
+//     width: 100%;
+//   }
+// `;
 function App() {
   const [user, setUser] = useState(null);
   const [initialized, setInitialized] = useState(false);
@@ -87,9 +87,9 @@ function App() {
     <UserInformation.Provider value={{ user, setUser }}>
       <CookiesProvider>
         <StyledHeader />
-        <MainAd>
+        {/* <MainAd>
           {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
-        </MainAd>
+        </MainAd> */}
         <Wrapper>
           <Outlet />
         </Wrapper>

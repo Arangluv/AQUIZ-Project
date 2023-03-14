@@ -17,6 +17,16 @@ import Admin from "./Admin";
 import NotFound from "./NotFound";
 import AdminQuizList from "./Page/AdminPage/AdminQuizList";
 import { createGlobalStyle } from "styled-components";
+import ArticleMainPage from "./Page/ArticlePage/ArticleMainpage";
+import ArticleFunnyQuiz from "./Page/ArticlePage/ArticleFunnyQuiz";
+import ArticleCommonUsage from "./Page/ArticlePage/ArticleCommonUsage";
+import ArticleShare from "./Page/ArticlePage/ArticleShare";
+import ArticleCaution from "./Page/ArticlePage/ArticleCaution";
+import ArticleMarketing from "./Page/ArticlePage/ArticleMarketing";
+import ArticleHelpful from "./Page/ArticlePage/ArticleHelpful";
+import ArticleImportantFactor from "./Page/ArticlePage/ArticleImprotantFactor";
+import ArticleLearning from "./Page/ArticlePage/ArticleLearning";
+
 const GlobalStyle = createGlobalStyle`
  html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -94,12 +104,26 @@ function Main() {
           <Route path="/:id/quiz/create_quiz" element={<CreateQuiz />} />
           <Route path="quiz/edit/:id" element={<EditQuiz />} />
           <Route path="quiz/:id" element={<SolveQuiz />} />
-          {/* 여기서는 id는 quiz id*/}
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/guideline" element={<Guideline />} />
           <Route path="/about" element={<About />} />
           <Route path="/result/:id" element={<AfterSolved />} />
+          <Route
+            path="/article/important-factor"
+            element={<ArticleImportantFactor />}
+          />
+          <Route path="/article/learning" element={<ArticleLearning />} />
+          <Route path="/article/helpful" element={<ArticleHelpful />} />
+          <Route path="/article/marketing" element={<ArticleMarketing />} />
+          <Route path="/article/caution" element={<ArticleCaution />} />
+          <Route path="/article/shares" element={<ArticleShare />} />
+          <Route
+            path="/article/common-usage"
+            element={<ArticleCommonUsage />}
+          />
+          <Route path="/article/make-funny" element={<ArticleFunnyQuiz />} />
+          <Route path="/article" element={<ArticleMainPage />} />
           <Route path="/not" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>

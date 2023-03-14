@@ -4,7 +4,7 @@ import SolveTypeWord from "./SolveTypeWord";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
-import bannerContainer from "../../../assets/bannerData";
+// import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,21 +12,21 @@ const QuizDetailContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const BannerAd = styled.div`
-  background-color: white;
-  width: 100%;
-  height: 30vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
-  @media screen and (max-width: 767px) {
-    height: 70vh;
-  }
-`;
+// const BannerAd = styled.div`
+//   background-color: white;
+//   width: 100%;
+//   height: 30vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   iframe {
+//     width: 100%;
+//     height: 100%;
+//   }
+//   @media screen and (max-width: 767px) {
+//     height: 70vh;
+//   }
+// `;
 const Outlet = styled.div`
   width: 70%;
   padding-left: 2vw;
@@ -209,7 +209,7 @@ function SolveQuizDetail({
           </span>
         </NotionSmall>
         {questionType}
-        <BannerAd>{bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}</BannerAd>
+        {/* <BannerAd>{bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}</BannerAd> */}
       </Outlet>
     </QuizDetailContainer>
   );

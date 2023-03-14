@@ -5,7 +5,7 @@ import Quiz from "./Quiz";
 import SerchArea from "./SerchAera";
 import { getQuiz } from "../api";
 import styled from "styled-components";
-import bannerContainer from "../assets/bannerData";
+// import bannerContainer from "../assets/bannerData";
 const Test = styled.div`
   width: 100%;
   display: ${({ hasNext, isLoading }) =>
@@ -27,31 +27,31 @@ const StyledSearchArea = styled(SerchArea)`
     margin-bottom: 1vh;
   }
 `;
-const BannerAD = styled.div`
-  width: calc(100% - 0.3vw);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3vw;
-  height: 100%;
-  background-color: white;
-  grid-column: 2 / span 2;
-  a {
-    width: 100%;
-    height: 100%;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  @media screen and (max-width: 767px) {
-    /* 모바일 */
-    grid-column: 1 / span 2;
-    grid-row: 3 / span 1;
-    /* height: 3vh; */
-    font-size: 10vh;
-  }
-`;
+// const BannerAD = styled.div`
+//   width: calc(100% - 0.3vw);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 3vw;
+//   height: 100%;
+//   background-color: white;
+//   grid-column: 2 / span 2;
+//   a {
+//     width: 100%;
+//     height: 100%;
+//     img {
+//       width: 100%;
+//       height: 100%;
+//     }
+//   }
+//   @media screen and (max-width: 767px) {
+//     /* 모바일 */
+//     grid-column: 1 / span 2;
+//     grid-row: 3 / span 1;
+//     /* height: 3vh; */
+//     font-size: 10vh;
+//   }
+// `;
 const MainContainer = styled.main`
   padding-left: 2vw;
   padding-right: 2vw;
@@ -120,14 +120,14 @@ function QuizScreens() {
           subList = [];
           count = 0;
         }
-        if (count % 5 === 0 && count !== 0) {
-          subList.push("AD");
-        }
+        // if (count % 5 === 0 && count !== 0) {
+        //   subList.push("AD");
+        // }
         subList.push(newQuizzes[i]);
         if (i === newQuizzes.length - 1) {
-          if (count === 4) {
-            subList.push("AD");
-          }
+          // if (count === 4) {
+          //   subList.push("AD");
+          // }
           mainList.push(subList);
         }
         count++;
@@ -225,17 +225,17 @@ function QuizScreens() {
             return (
               <SubContainer quantity={subQuiz.length} key={quizListIdx}>
                 {subQuiz.map((quiz, idx) => {
-                  if (idx === 5) {
-                    return (
-                      <BannerAD key={idx}>
-                        {
-                          bannerContainer[
-                            Math.floor(Math.random() * bannerContainer.length)
-                          ]
-                        }
-                      </BannerAD>
-                    );
-                  }
+                  // if (idx === 5) {
+                  //   return (
+                  //     <BannerAD key={idx}>
+                  //       {
+                  //         bannerContainer[
+                  //           Math.floor(Math.random() * bannerContainer.length)
+                  //         ]
+                  //       }
+                  //     </BannerAD>
+                  //   );
+                  // }
 
                   const { quizDescribe, quizTitle, thumnailUrl, _id, meta } =
                     quiz;
