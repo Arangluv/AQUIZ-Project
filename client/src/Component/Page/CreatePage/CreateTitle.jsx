@@ -7,13 +7,18 @@ import {
   faCheck,
   faCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 const CreateTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
 `;
 const NotionPart = styled.div`
-  background-color: rgba(123, 143, 161, 0.2);
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "rgba(123, 143, 161, 0.2);"};
+  border: 0.1vw solid
+    ${(props) => (props.isDark ? props.theme.textColor : "none")};
   border-radius: 4px;
   display: block;
   font-size: 0.8vw;
@@ -44,7 +49,7 @@ const NotionPart = styled.div`
   h4 {
     font-size: 1.1vw;
     font-weight: 600;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.8vh;
     @media screen and (max-width: 767px) {
       font-size: 1.1vh;
@@ -53,7 +58,7 @@ const NotionPart = styled.div`
   p {
     margin-top: 0.6rem;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.6);
+    color: ${(props) => props.theme.textColor};
   }
   span {
     display: block;
@@ -74,13 +79,14 @@ const TitleDescription = styled.div`
   h2 {
     display: flex;
     align-items: center;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.4vh;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
   span {
-    color: rgb(255, 139, 19);
+    color: ${(props) => props.theme.accentColor};
     font-size: 1.6vw;
     margin-right: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -88,8 +94,8 @@ const TitleDescription = styled.div`
     }
   }
   small {
-    font-size: 0.5vw;
-    color: #676a6c;
+    font-size: 0.7vw;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1vh;
     }
@@ -101,11 +107,16 @@ const UserInputTitle = styled.div`
   input {
     height: 5vh;
     border-radius: 3px;
-    border: 0.1vw solid #676a6c;
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     padding-left: 0.8vw;
     font-family: "Gowun Batang", serif;
     font-size: 0.9vw;
     margin-bottom: 2vh;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
     @media screen and (max-width: 767px) {
       height: 3vh;
       font-size: 1vh;
@@ -118,7 +129,7 @@ const UserInputTitle = styled.div`
 const Title = styled.div`
   display: flex;
   width: 100%;
-  color: #676a6c;
+  color: ${(props) => props.theme.textColor};
   font-size: 1vw;
   justify-content: space-between;
   margin-bottom: 0.8vh;
@@ -135,7 +146,7 @@ function CreateTitle({
 }) {
   const [length, setLength] = useState(0);
   const [describeLen, setDescribeLen] = useState(0);
-
+  const isDark = useRecoilValue(isDarkAtom);
   const handleChangeTitle = (event) => {
     changeTitle(event.target.value);
   };
@@ -162,7 +173,7 @@ function CreateTitle({
   }, []);
   return (
     <>
-      <NotionPart>
+      <NotionPart isDark={isDark}>
         <h4>퀴즈를 만드는 사람들에게 : </h4>
         <p>
           <span>

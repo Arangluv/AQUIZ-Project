@@ -8,7 +8,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 const StyledQuiz = styled.article`
-  border: 1px solid rgba(103, 106, 108, 0.4);
+  border: 1px solid ${(props) => props.theme.textColor};
   border-radius: 1%;
   position: relative;
   display: flex;
@@ -16,7 +16,7 @@ const StyledQuiz = styled.article`
   height: 100%;
   flex-direction: column;
   &:hover {
-    box-shadow: 0.1vw 0.1vw 0.1vw rgba(103, 106, 108, 0.5);
+    box-shadow: 0.1vw 0.1vw 0.1vw ${(props) => props.theme.textColor};
   }
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -48,7 +48,7 @@ const QuizDescrptionPart = styled.div`
   }
 `;
 const QuizTilte = styled.h4`
-  color: #095bbf;
+  color: ${(props) => props.theme.quizTextColor};
   font-weight: 600;
   font-size: 1.5vw;
   margin-bottom: 0.5vw;
@@ -59,7 +59,7 @@ const QuizTilte = styled.h4`
 const QuizShortDescrtion = styled.span`
   font-size: 1vw;
   white-space: normal;
-  color: rgba(9, 91, 191, 1);
+  color: ${(props) => props.theme.quizTextColor};
   display: block;
   padding-left: 0.4vw;
   margin-bottom: 1vw;
@@ -75,7 +75,7 @@ const QuizMetaInfo = styled.div`
   margin-bottom: 0.5vw;
   span {
     font-size: 1vw;
-    color: rgba(103, 106, 108, 1);
+    color: ${(props) => props.theme.textColor};
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -116,7 +116,7 @@ const UserParticipationArea = styled.div`
   }
   a {
     display: block;
-    background-color: white;
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 5%;
     font-size: 1vw;
     padding: 0.3vw 0.4vw;

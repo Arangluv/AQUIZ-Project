@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
-import ReactHelmet from "./ReactHelmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,8 +8,12 @@ import {
   faMarker,
   faHouseUser,
   faArrowRightToBracket,
+  faSun,
+  faMoon,
 } from "@fortawesome/free-solid-svg-icons";
 import URL from "../assets/url";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../assets/atom";
 const LogoImageContainer = styled.div`
   height: 6vh;
   width: 14vh;
@@ -58,8 +61,9 @@ const QuizContainer = styled.div`
   li:nth-child(1):hover {
     a {
       span {
-        color: #ffc93c;
+        color: ${(props) => props.theme.hoverColor};
       }
+      color: ${(props) => props.theme.hoverColor};
     }
   }
   li:nth-child(2):hover {
@@ -68,8 +72,9 @@ const QuizContainer = styled.div`
         font-size: 1.2vh;
       }
       span {
-        color: #ff78f0;
+        color: ${(props) => props.theme.accentColor};
       }
+      color: ${(props) => props.theme.hoverColor};
     }
   }
   /* #676a6c; */
@@ -77,7 +82,7 @@ const QuizContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #676a6c;
+    /* color: ${(props) => props.theme.textColor}; */
     span {
       margin-right: 0.3vw;
       font-size: 1.1vw;
@@ -87,30 +92,30 @@ const QuizContainer = styled.div`
       }
     }
   }
-  a:hover {
-    color: #ff8b13;
-  }
   /* emphasis part */
   li:nth-child(1) {
     a {
-      color: ${({ emphasis }) =>
-        emphasis === "screen" ? "#ff8b13" : "#676a6c"};
-    }
-    a {
+      color: ${(props) =>
+        props.emphasis === "screen"
+          ? props.theme.accentColor
+          : props.theme.textColor};
       span {
-        color: ${({ emphasis }) =>
-          emphasis === "screen" ? "#ffc93c" : "#676a6c"};
+        color: ${(props) =>
+          props.emphasis === "screen"
+            ? props.theme.accentColor
+            : props.theme.textColor};
       }
     }
   }
   li:nth-child(2) {
     a {
-      color: ${({ emphasis }) => (emphasis === "make" ? "#ff8b13" : "#676a6c")};
-    }
-    a {
+      color: ${(props) =>
+        props.emphasis === "make"
+          ? props.theme.accentColor
+          : props.theme.textColor};
       span {
-        color: ${({ emphasis }) =>
-          emphasis === "make" ? "#ff78f0" : "#676a6c"};
+        color: ${(props) =>
+          props.emphasis === "make" ? "#3498db" : props.theme.textColor};
       }
     }
   }
@@ -128,7 +133,6 @@ const LoginContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #676a6c;
     span {
       margin-right: 0.3vw;
       font-size: 1vw;
@@ -138,40 +142,91 @@ const LoginContainer = styled.div`
       }
     }
   }
-  a:hover {
-    color: #ff8b13;
-  }
   li:nth-child(1) {
     margin-right: 4vw;
+
+    &:hover {
+      a {
+        color: ${(props) => props.theme.accentColor};
+      }
+    }
   }
   li:nth-child(2) {
     margin-right: 8vw;
+    &:hover {
+      a {
+        color: ${(props) => props.theme.accentColor};
+      }
+    }
   }
   li:nth-child(1) {
     a {
-      color: ${({ emphasis }) => {
-        if (emphasis === "mypage") {
-          return "#ff8b13";
-        } else if (emphasis === "login") {
-          return "#205295";
+      color: ${(props) => {
+        if (props.emphasis === "mypage") {
+          return props.theme.accentColor;
+        } else if (props.emphasis === "login") {
+          return props.theme.accentColor;
         } else {
-          return "#676a6c";
+          return props.theme.textColor;
         }
       }};
     }
   }
+  li:nth-child(2) {
+    a {
+      color: ${(props) => props.theme.textColor};
+    }
+  }
 `;
-
 const LogoutButton = styled.button`
   cursor: pointer;
 `;
+const ToggleList = styled.li`
+  position: absolute;
+  left: 50%;
+  & > div {
+    cursor: pointer;
+    border: 0.1vw solid ${(props) => props.theme.textColor};
+    border-radius: 10px;
+    position: relative;
+    width: 3vw;
+    display: flex;
+    background-color: ${(props) => props.theme.textColor};
+    align-items: center;
+    padding: 0 0.3vw;
+    justify-content: ${(props) => (props.isDark ? "flex-end" : "baseline")};
+    height: 1.7vw;
+    #darkMoon {
+      position: absolute;
+      left: 0.5vw;
+      color: ${(props) => props.theme.bgColor};
+    }
+    #lightSun {
+      position: absolute;
+      right: 0.5vw;
+      color: ${(props) => props.theme.bgColor};
+      display: ${(props) => (props.isDark ? "hidden" : "block")};
+    }
+    div {
+      position: absolute;
+      width: 35%;
+      height: 70%;
+      margin-bottom: 0;
+      border-radius: 100%;
+      background-color: ${(props) => props.theme.bgColor};
+    }
+  }
+`;
 function Header({ className }) {
   const { user } = useContext(UserInformation);
+  // Toggle Lighe and Dark Mode
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const isDark = useRecoilValue(isDarkAtom);
   // Header 강조를 위한 State 선언
   const [emphasis, setEmpahsis] = useState("");
   const { pathname } = useLocation();
-
   const pathArray = pathname.split("/");
+  // Accent Handling
   useEffect(() => {
     if (pathArray[1] === "") {
       setEmpahsis("screen");
@@ -189,6 +244,7 @@ function Header({ className }) {
       setEmpahsis("");
     }
   }, [emphasis, pathname, pathArray]);
+
   const handleLogOut = () => {
     fetch(`${URL}logout`, {
       method: "GET",
@@ -207,6 +263,10 @@ function Header({ className }) {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const toggleTheme = () => {
+    setDarkAtom((pre) => !pre);
   };
 
   let _id;
@@ -232,21 +292,19 @@ function Header({ className }) {
           />
         </LogoImageContainer>
       </Link>
-
       <Nav>
         <Ul>
           <QuizContainer emphasis={emphasis}>
             <li>
-              <NavLink to="/">
+              <NavLink to="/article">
                 <span>
                   <FontAwesomeIcon icon={faLightbulb} />
                 </span>
-                퀴즈 보기
+                칼럼 보기
               </NavLink>
             </li>
             <li>
-              {/* <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}> */}
-              <NavLink to={`${_id}/quiz/create_quiz`}>
+              <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}>
                 <span>
                   <FontAwesomeIcon icon={faMarker} />
                 </span>
@@ -273,16 +331,40 @@ function Header({ className }) {
                     로그아웃
                   </LogoutButton>
                 </li>
+                <ToggleList isDark={isDark}>
+                  <div onClick={toggleTheme}>
+                    <font id="darkMoon">
+                      <FontAwesomeIcon icon={faMoon} />
+                    </font>
+                    <div></div>
+                    <font id="lightSun">
+                      <FontAwesomeIcon icon={faSun} />
+                    </font>
+                  </div>
+                </ToggleList>
               </>
             ) : (
-              <li>
-                <NavLink to="login">
-                  <span>
-                    <FontAwesomeIcon icon={faArrowRightToBracket} />
-                  </span>
-                  로그인
-                </NavLink>
-              </li>
+              <>
+                <li>
+                  <NavLink to="login">
+                    <span>
+                      <FontAwesomeIcon icon={faArrowRightToBracket} />
+                    </span>
+                    로그인
+                  </NavLink>
+                </li>
+                <ToggleList isDark={isDark}>
+                  <div onClick={toggleTheme}>
+                    <font id="darkMoon">
+                      <FontAwesomeIcon icon={faMoon} />
+                    </font>
+                    <div></div>
+                    <font id="lightSun">
+                      <FontAwesomeIcon icon={faSun} />
+                    </font>
+                  </div>
+                </ToggleList>
+              </>
             )}
           </LoginContainer>
         </Ul>

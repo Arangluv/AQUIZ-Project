@@ -4,6 +4,8 @@ import {
   faCartShopping,
   faCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 
 const CreateThumbnailContainer = styled.div`
   display: flex;
@@ -23,12 +25,13 @@ const ThumbnailDescription = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
   span {
-    color: rgb(255, 139, 19);
+    color: ${(props) => props.theme.accentColor};
     font-size: 1.6vw;
     margin-right: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -36,7 +39,8 @@ const ThumbnailDescription = styled.div`
     }
   }
   small {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
+    font-size: 0.7vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
     }
@@ -46,14 +50,15 @@ const ButtonBox = styled.div`
   margin-bottom: 1.5vh;
   button {
     margin-right: 1vw;
-    background-color: #fffbf5;
-    border: none;
+    background-color: ${(props) => props.theme.bgColor};
+    border: ${(props) =>
+      props.isDark ? `1px solid ${props.theme.textColor}` : "none"};
     border-radius: 5px;
     box-shadow: 0px 0.2vh 0.4vh rgba(0, 0, 0, 0.5);
     padding: 0.2vw;
     padding-left: 0.4vw;
     padding-right: 0.4vw;
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
     font-family: "Gowun Batang", serif;
     transition: 0.1s ease-in-out;
     font-size: 1.4vw;
@@ -65,13 +70,13 @@ const ButtonBox = styled.div`
     }
   }
   button:hover {
-    background-color: rgba(255, 139, 19, 0.6);
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;
 const ThemaContainer = styled.div`
   span {
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     display: flex;
     align-items: center;
     margin-bottom: 1vh;
@@ -94,13 +99,15 @@ const ButtonItem = styled.div`
     margin-right: 1vh;
   }
   button {
-    background-color: #fffbf5;
-    border: none;
+    background-color: ${(props) =>
+      props.isDark ? props.theme.bgColor : "white"};
+    border: ${(props) =>
+      props.isDark ? `1px solid ${props.theme.textColor}` : "none"};
     box-shadow: 0px 0.2vw 1px rgba(0, 0, 0, 0.5);
     padding: 0.2vw;
     padding-left: 0.4vw;
     padding-right: 0.4vw;
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
     font-family: "Gowun Batang", serif;
     font-size: 1.4vw;
     @media screen and (max-width: 767px) {
@@ -127,6 +134,7 @@ const ButtonItem = styled.div`
   }
 `;
 function CreateThema({ themaBox, changeThemaBox, quizThema }) {
+  const isDark = useRecoilValue(isDarkAtom);
   const handleClick = (event) => {
     event.preventDefault();
     const currentBox = event.target.innerText;
@@ -155,7 +163,7 @@ function CreateThema({ themaBox, changeThemaBox, quizThema }) {
         </h2>
         <small>어떤 테마의 퀴즈인지 선택해주세요.</small>
       </ThumbnailDescription>
-      <ButtonBox>
+      <ButtonBox isDark={isDark}>
         <button onClick={handleClick}>연예인</button>
         <button onClick={handleClick}>BJ</button>
         <button onClick={handleClick}>아이돌</button>
@@ -169,7 +177,7 @@ function CreateThema({ themaBox, changeThemaBox, quizThema }) {
         </span>
         <RederingContainer>
           {themaBox.map((item, index) => (
-            <ButtonItem key={index}>
+            <ButtonItem key={index} isDark={isDark}>
               <button value={item} onClick={handleBoxDelete}>
                 {item}
               </button>

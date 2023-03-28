@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ReactHelmet from "./ReactHelmet";
 // import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
+import GoogleAdvertise from './GoogleAdvertise';
 const SubBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -15,10 +16,10 @@ const SubBar = styled.div`
   margin-bottom: 0.8vw;
   a {
     color: #3e6d9c;
-    border: 1px solid rgba(103, 106, 108, 0.6);
+    border: 1px solid ${(props) => props.theme.bdColor};
     border-radius: 3px;
-    background-color: white;
-    padding: 0.8vw 0.6vw;
+    background-color: ${(props) => props.theme.bgColor};
+    padding: 0.4vw 0.5vw;
     font-size: 1vw;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
@@ -28,7 +29,7 @@ const SubBar = styled.div`
   }
   a:hover {
     background-color: rgba(62, 109, 156, 0.8);
-    border: 1px solid white;
+    border: 1px solid ${(props) => props.theme.bdColor};
     color: white;
   }
   a:nth-child(1) {
@@ -38,14 +39,15 @@ const SubBar = styled.div`
 const EditContainer = styled.div``;
 const OptionBox = styled.div``;
 const OptionButton = styled.button`
-  border: 0.1vw solid rgba(103, 106, 108, 0.4);
-  background-color: ${({ color }) => (color ? `#ff8b13` : `white`)};
+  border: 0.1vw solid ${(props) => props.theme.bdColor};
+  background-color: ${(props) =>
+    props.color ? props.theme.accentColor : props.theme.bgColor};
   border-radius: 0.7vw;
   font-size: 1vw;
   font-family: "Gowun Batang", serif;
   font-weight: 500;
   padding: 0.4vw 0.5vw;
-  color: #3f4244;
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 767px) {
     font-size: 1vh;
     padding: 0.4vh 0.8vh;
@@ -53,6 +55,12 @@ const OptionButton = styled.button`
   &:hover,
   &:active {
     box-shadow: 0px 0.1vw 0.3vw gray;
+  }
+  &:nth-child(1) {
+    margin-right: 0.3vw;
+    @media screen and (max-width: 767px) {
+      margin-right: 0.3vh;
+    }
   }
 `;
 const MainContainer = styled.main`
@@ -79,21 +87,46 @@ const SubContainer = styled.div`
     column-gap: 0.6vh;
   }
 `;
-// const BannerAD = styled.div`
-//   width: calc(100% - 0.3vw);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 3vw;
-//   height: 100%;
-//   background-color: white;
-//   grid-column: 2 / span 2;
-//   @media screen and (max-width: 767px) {
-//     grid-column: 1 / span 2;
-//     grid-row: 3 / span 1;
-//     font-size: 10vh;
-//   }
-// `;
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: ${(props) => props.theme.bgColor};
+  opacity: 0.5;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  img {
+    position: fixed;
+    top: 40%;
+    width: 10vw;
+    height: 10vw;
+    @media screen and (max-width: 767px) {
+      width: 10vh;
+      height: 10vh;
+    }
+  }
+`;
+const BannerAD = styled.div`
+  width: calc(100% - 0.3vw);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vw;
+  height: 100%;
+  background-color: white;
+  grid-column: 2 / span 2;
+  @media screen and (max-width: 767px) {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 1;
+    font-size: 10vh;
+  }
+`;
 function MyPage() {
   const [quizList, setQuizList] = useState([]);
   const [mode, setMode] = useState("maked");
@@ -105,7 +138,8 @@ function MyPage() {
   const navigate = useNavigate();
   // Check Admin
   const [isAdmin, setIsAdmin] = useState(false);
-  // Url Params Check
+  // Delete Lodaing
+  const [isDelete, setIsDelete] = useState(false);
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(userId)) {
@@ -158,9 +192,9 @@ function MyPage() {
               mainList.push(subList);
               subList = [];
             }
-            // if (i % 5 === 0 && i !== 0) {
-            //   subList.push("AD");
-            // }
+            if (i % 5 === 0 && i !== 0) {
+              subList.push("AD");
+            }
             subList.push(quizzes[i]);
             if (i === quizzes.length - 1) {
               mainList.push(subList);
@@ -172,9 +206,9 @@ function MyPage() {
               mainList.push(subList);
               subList = [];
             }
-            // if (i % 5 === 0 && i !== 0) {
-            //   subList.push("AD");
-            // }
+            if (i % 5 === 0 && i !== 0) {
+              subList.push("AD");
+            }
 
             subList.push(quizzes[i].solvedQuiz);
 
@@ -204,6 +238,7 @@ function MyPage() {
   };
   const handleDelete = (event) => {
     if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
+      setIsDelete(true);
       const quizIdForDelete = event.target.dataset.quizid;
       fetch(`${URL}quizzes/delete/${quizIdForDelete}`, {
         method: "POST",
@@ -216,12 +251,14 @@ function MyPage() {
           if (response.ok) {
             console.log("퀴즈를 성공적으로 삭제했습니다.");
             window.location.reload();
+            setIsDelete(false);
           } else {
             throw new Error("퀴즈를 삭제하는데 문제가 발생했습니다.");
           }
         })
         .catch((error) => {
           console.log(error);
+          setIsDelete(false);
           console.log("퀴즈를 삭제하는데 문제가 발생했습니다.");
         });
     } else {
@@ -256,13 +293,18 @@ function MyPage() {
               return (
                 <SubContainer quantity={subQuiz.length} key={idx}>
                   {subQuiz.map((quiz, idx) => {
-                    // if (idx === 5) {
-                    //   return (
-                    //     <BannerAD key={idx}>
-                    //       {bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}
-                    //     </BannerAD>
-                    //   );
-                    // }
+                    if (idx === 5) {
+                      return (
+                        <BannerAD key={idx}>
+                          <GoogleAdvertise
+                            client="ca-pub-3501932649640285"
+                            slot="4427930012"
+                            format="auto"
+                            responsive="true"
+                          />
+                        </BannerAD>
+                      );
+                    }
                     const { quizDescribe, quizTitle, thumnailUrl, _id, meta } =
                       quiz;
                     let correctRate, view;
@@ -301,6 +343,11 @@ function MyPage() {
                 </SubContainer>
               );
             })}
+        {isDelete ? (
+          <Background>
+            <img src="/loading.gif" alt="스피너 이미지" />
+          </Background>
+        ) : null}
       </MainContainer>
     </>
   );

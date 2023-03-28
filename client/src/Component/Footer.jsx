@@ -6,7 +6,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   position: absolute;
   transform: translateY(-100%);
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   padding-top: 1vw;
 
   height: 5vh;
@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
   small {
     text-align: center;
     font-size: 0.8vh;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     opacity: 0.9;
   }
   @media (max-width: 500px) {
@@ -36,11 +36,11 @@ const StyledNav = styled.nav`
     margin-left: 3vw;
     margin-right: 3vw;
     a {
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       opacity: 0.8;
     }
     a:hover {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
 `;

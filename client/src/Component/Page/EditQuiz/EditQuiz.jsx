@@ -24,7 +24,7 @@ const EditFormContainer = styled.form`
   align-items: center;
   margin-top: 1vw;
   padding-bottom: 1vw;
-  background-color: rgb(255, 242, 242);
+  background-color: ${(props) => props.theme.createQuizTheme};
   width: 80%;
   border-radius: 0.8vw;
 `;
@@ -65,10 +65,11 @@ const QuizPublishContainer = styled.div`
     padding-top: 0.7vw;
     padding-bottom: 0.7vw;
     font-size: 1.6vw;
-    border: 1px solid rgb(117, 204, 79);
+    border: 1px solid #44bd32;
     border-radius: 5px;
     background-color: white;
-    color: rgb(117, 204, 79);
+    color: #44bd32;
+    transition: 0.2s ease-in-out;
     @media screen and (max-width: 767px) {
       padding: 0.7vh 0;
       font-size: 1.3vh;
@@ -78,7 +79,7 @@ const QuizPublishContainer = styled.div`
     }
   }
   input[type="submit"]:hover {
-    background-color: rgba(117, 204, 79, 0.7);
+    background-color: #44bd32;
     box-shadow: 0.1rem 0.1rem 0.3rem gray;
     color: white;
   }
@@ -161,6 +162,31 @@ const WarningContainer = styled.div`
     }
   }
 `;
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: ${(props) => props.theme.bgColor};
+  opacity: 0.6;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  img {
+    position: fixed;
+    top: 40%;
+    width: 10vw;
+    height: 10vw;
+    @media screen and (max-width: 767px) {
+      width: 10vh;
+      height: 10vh;
+    }
+  }
+`;
 function EditQuiz() {
   const quizId = useParams().id;
   const navigate = useNavigate();
@@ -195,7 +221,8 @@ function EditQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
-
+  console.log("quizTitle");
+  console.log(quizTitle);
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -252,6 +279,7 @@ function EditQuiz() {
         setIsLoading(false);
       });
   }, []);
+
   useEffect(() => {
     if (!isLoading) {
       const newUrl = quizzes.map((quiz) => {
@@ -263,6 +291,7 @@ function EditQuiz() {
       setExistingUrl(newUrl);
     }
   }, [isLoading]);
+
   const userDataValidation = (quizzes) => {
     const errorMessage = [];
     if (quizTitle === "") {
@@ -439,6 +468,7 @@ function EditQuiz() {
   };
   const handleSubmitForModify = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     if (quizNumber === quizzes.length) {
       // 사용자가 새로운 문제를 만들지 않았거나, 삭제했다.
       const errorMessage = userDataValidation(quizzes);
@@ -502,11 +532,13 @@ function EditQuiz() {
       } else {
         console.log("에러메세지가 존재!");
         console.log(errorMessage);
+        setIsLoading(false);
         setInputValid([...errorMessage]);
         return;
       }
     } else {
       // 사용자가 새로운 문제를 만들었다.
+      setIsLoading(true);
       setQuizzes((pre) => {
         const prevQuizzes = [...pre];
         const newQuizzes = [
@@ -578,6 +610,7 @@ function EditQuiz() {
             });
         } else {
           console.log(errorMessage);
+          setIsLoading(false);
           setInputValid([...errorMessage]);
           return prevQuizzes;
         }
@@ -760,6 +793,11 @@ function EditQuiz() {
             </p>
           </WarningContainer>
         </ErrorBox>
+      ) : null}
+      {isLoading ? (
+        <Background>
+          <img src="/loading.gif" alt="스피너 이미지" />
+        </Background>
       ) : null}
     </Div>
   );

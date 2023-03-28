@@ -3,8 +3,8 @@ import AfterSolveTypeMulti from "./AfterSolveTypeMulti";
 import AfterSolveTypeWord from "./AfterSolveTypeWord";
 import styled from "styled-components";
 const SolvedDetailContainer = styled.div`
-  border: 1px solid rgba(103, 106, 108, 0.3);
-  background-color: white;
+  border: 1px solid ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgColor};
   border-radius: 3px;
   padding: 0.8vw 0.8vw;
   margin-top: 1vw;
@@ -15,7 +15,7 @@ const SolvedDetailContainer = styled.div`
   }
   h2 {
     margin-bottom: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1.3vw;
     @media screen and (max-width: 767px) {
       font-size: 2vh;
@@ -43,11 +43,12 @@ const SolvedDetailContainer = styled.div`
     font-size: 1vw;
     display: block;
     margin-bottom: 1vw;
-    color: rgba(103, 106, 108, 1);
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.3vh;
     }
     span {
+      margin-left: 0.4vw;
       color: ${({ quizCorrectRate }) => {
         if (Number(quizCorrectRate) > 0.8) {
           return "#03C988 ";
@@ -57,6 +58,9 @@ const SolvedDetailContainer = styled.div`
           return "#D61355";
         }
       }};
+      @media screen and (max-width: 767px) {
+        margin-left: 0.4vh;
+      }
     }
   }
 `;

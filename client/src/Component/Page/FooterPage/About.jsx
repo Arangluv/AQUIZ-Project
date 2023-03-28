@@ -17,8 +17,8 @@ const AboutSubContainer = styled.div`
   width: 70%;
   padding: 3vw;
   border-radius: 3px;
-  border: 1px solid rgba(103, 106, 108, 0.3);
-  background-color: white;
+  border: 1px solid ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgColor};
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 767px) {
@@ -27,7 +27,7 @@ const AboutSubContainer = styled.div`
   article {
     padding: 1vw;
     margin-bottom: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       padding: 2vw;
     }

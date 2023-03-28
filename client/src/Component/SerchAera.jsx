@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 const OrderButton = styled.button`
-  border: 0.1vw solid rgba(103, 106, 108, 0.4);
-  background-color: ${({ color }) => (color ? `#ff8b13` : `white`)};
+  border: 0.1vw solid ${(props) => props.theme.dbColor};
+  background-color: ${(props) =>
+    props.color ? props.theme.accentColor : props.theme.bgColor};
   border-radius: 0.7vw;
   font-size: 1vw;
   font-family: "Gowun Batang", serif;
   font-weight: 500;
   padding: 0.4vw 0.5vw;
-  color: #3f4244;
+  color: ${(props) => props.theme.textColor};
   &:hover,
   &:active {
     box-shadow: 0px 0.1vw 0.3vw gray;
@@ -20,15 +21,17 @@ const OrderButton = styled.button`
   }
 `;
 const ThemaButton = styled.button`
-  border: 0.1vw solid rgba(103, 106, 108, 0.4);
-  background-color: ${({ color, themaColor }) =>
-    themaColor.includes(color) ? `#ff8b13` : `white`};
+  border: 0.1vw solid ${(props) => props.theme.dbColor};
+  background-color: ${(props) =>
+    props.themaColor.includes(props.color)
+      ? props.theme.accentColor
+      : props.theme.bgColor};
   border-radius: 0.7vw;
   font-size: 1vw;
   font-family: "Gowun Batang", serif;
   font-weight: 500;
   padding: 0.4vw 0.5vw;
-  color: #3f4244;
+  color: ${(props) => props.theme.textColor};
   &:hover,
   &:active {
     box-shadow: 0px 0.1vw 0.3vw gray;
@@ -40,14 +43,15 @@ const ThemaButton = styled.button`
   }
 `;
 const RatingButton = styled.button`
-  border: 0.1vw solid rgba(103, 106, 108, 0.4);
-  background-color: ${({ color }) => (color ? `#ff8b13` : `white`)};
+  border: 0.1vw solid ${(props) => props.theme.dbColor};
+  background-color: ${(props) =>
+    props.color ? props.theme.accentColor : props.theme.bgColor};
   border-radius: 0.7vw;
   font-size: 1vw;
   font-family: "Gowun Batang", serif;
   font-weight: 500;
   padding: 0.4vw 0.5vw;
-  color: #3f4244;
+  color: ${(props) => props.theme.textColor};
   &:hover,
   &:active {
     box-shadow: 0px 0.1vw 0.3vw gray;
@@ -61,7 +65,6 @@ const RatingButton = styled.button`
 const OptionArea = styled.div`
   display: flex;
   width: 40%;
-  background-color: #fffbf5;
   & > div:nth-child(1) {
     display: flex;
     justify-content: center;
@@ -94,12 +97,16 @@ const StyledForm = styled.form`
   justify-content: flex-end;
   width: 60%;
   input:nth-child(1) {
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
     width: 100%;
     border-radius: 3px 0px 0px 3px;
     border-right: none;
-    border: 0.5px solid rgba(0, 0, 0, 0.3);
+    border: 0.5px solid ${(props) => props.theme.dbColor};
+    background-color: ${(props) => props.theme.bgColor};
     font-size: 1vw;
-    color: #3f4244;
+    color: ${(props) => props.theme.textColor};
     padding-left: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1.2vh;
@@ -111,9 +118,9 @@ const StyledForm = styled.form`
     font-size: 1vw;
     padding: 0.5vw 0.6vw;
     border-radius: 0px 3px 3px 0px;
-    background-color: #ff8b13;
+    background-color: ${(props) => props.theme.accentColor};
     border: none;
-    color: #3f4244;
+    color: ${(props) => props.theme.textColor};
     font-family: "Gowun Batang", serif;
     font-weight: 500;
     @media screen and (max-width: 767px) {
@@ -126,7 +133,7 @@ const StyledForm = styled.form`
   }
   input:nth-child(1):focus {
     outline: none;
-    border-color: #ff8b13;
+    border-color: ${(props) => props.theme.accentColor};
   }
   input:nth-child(2):hover {
     cursor: pointer;
@@ -158,12 +165,12 @@ function SerchArea({
   const [orderColor, setOrderColor] = useState(true);
   const [themaColor, setThemaColor] = useState([""]);
   const [ratingColor, setRationColor] = useState(true);
+  const ref = useRef();
   const toggleOrderColor = (event) => {
     setOrderColor(!orderColor);
     const order = event.target.dataset.order;
     setOrder(order);
   };
-
   const toggleThemaColor = (event) => {
     const thema = event.target.dataset.thema;
     if (themaColor.includes(thema)) {
@@ -186,7 +193,9 @@ function SerchArea({
     }
   };
   const handleSearchInput = (event) => {
-    setQuizSearchInput(event.target.value);
+    event.preventDefault();
+    const value = ref.current?.value;
+    setQuizSearchInput(value);
   };
   return (
     <div className={className}>
@@ -265,12 +274,11 @@ function SerchArea({
 
       <StyledForm onSubmit={handleSearchQuiz}>
         <input
+          ref={ref}
           type="text"
           placeholder="찾고자 하는 퀴즈 제목을 입력해주세요"
-          onChange={handleSearchInput}
-          value={quizSearchInput}
         />
-        <input type="submit" value="검색" />
+        <input onClick={handleSearchInput} type="submit" value="검색" />
       </StyledForm>
     </div>
   );

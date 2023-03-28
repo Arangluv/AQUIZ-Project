@@ -7,9 +7,9 @@ import URL from "../../../assets/url";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  margin-top: 8vh;
   width: 100%;
   @media screen and (max-width: 767px) {
     margin-top: 3vh;
@@ -23,18 +23,18 @@ const SubContainer = styled.div`
   align-items: center;
   border: 1px solid gray;
   border-radius: 3px;
-  background-color: white;
-  padding: 2vw 0;
-  color: #676a6c;
+  background-color: ${(props) => props.theme.bgColor};
+  padding: 5vw 1vw;
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 767px) {
     padding: 1vh 0;
     width: 70%;
   }
   h1 {
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 1vw;
+    margin-bottom: 3vw;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
       margin-bottom: 1vh;
@@ -59,11 +59,18 @@ const SubContainer = styled.div`
       input,
       textarea {
         margin-bottom: 0.6vw;
-        padding: 0.4vw;
+        padding: 0.6vw;
+        background-color: ${(props) => props.theme.bgColor};
+        border: 0.1vw solid ${(props) => props.theme.textColor};
+        border-radius: 3px;
+        color: ${(props) => props.theme.textColor};
+        &::placeholder {
+          color: ${(props) => props.theme.textColor};
+        }
         @media screen and (max-width: 767px) {
           margin-bottom: 0.6vh;
           font-size: 1vw;
-          padding: 0.4vh;
+          padding: 0.6vh;
         }
       }
       input:focus,

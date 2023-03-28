@@ -13,14 +13,17 @@ import {
   faLightbulb,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 const QuizFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border: 0.1vw solid black;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
   padding: 1.5vw;
   border-radius: 5px;
   margin-top: 1vw;
-  background-color: #fffbf5;
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "#fffbf5"};
   @media screen and (max-width: 767px) {
     border: 0.2vw solid black;
     margin-top: 1vh;
@@ -36,17 +39,17 @@ const ProblemNumber = styled.div`
   }
   h4 {
     font-size: 1.5vw;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
 `;
 const QuizDeleteButton = styled.button`
-  background-color: white;
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "white"};
   border: 1px solid rgba(245, 80, 80, 0.8);
   display: flex;
-  color: black;
   padding: 0.4vw 0.6vw;
   border-radius: 3px;
   font-size: 0.9vw;
@@ -82,7 +85,6 @@ const QuizDescription = styled.div`
   box-sizing: border-box;
   flex-direction: column;
   margin-bottom: 1vw;
-
   label {
     margin-bottom: 0.8vw;
     @media screen and (max-width: 767px) {
@@ -90,7 +92,7 @@ const QuizDescription = styled.div`
     }
   }
   label:nth-child(1) span {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1.1vh;
@@ -103,10 +105,12 @@ const QuizDescription = styled.div`
     }
   }
   textarea {
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     border-radius: 5px;
     height: 8vh;
     padding: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
     font-size: 1vw;
     margin-bottom: 10px;
     @media screen and (max-width: 767px) {
@@ -116,7 +120,7 @@ const QuizDescription = styled.div`
     }
   }
   textarea::placeholder {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 0.8vw;
     @media screen and (max-width: 767px) {
       font-size: 0.8vh;
@@ -140,7 +144,7 @@ const AnswerTypeBox = styled.div`
   }
   label span {
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.1vh;
     }
@@ -153,12 +157,12 @@ const AnswerTypeBox = styled.div`
   }
   select {
     -moz-appearance: none;
-    background-color: white;
-    border: 0.1vw solid #676a6c;
+    background-color: ${(props) => props.theme.bgColor};
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     border-radius: 4px;
     font-size: 1vw;
     margin-bottom: 2vw;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => props.theme.textColor};
     padding: 0.4vw 0.6vw;
     @media screen and (max-width: 767px) {
       font-size: 1.3vh;
@@ -172,16 +176,19 @@ const OptionContainer = styled.div`
     border-radius: 5px;
     height: 15vh;
     padding: 10px;
-    color: #676a6c;
-    font-size: 1vh;
+    color: ${(props) => props.theme.textColor};
+    border: 0.1vw solid ${(props) => props.theme.textColor};
+    font-size: 1vw;
     margin-bottom: 10px;
+    background-color: ${(props) => props.theme.bgColor};
     @media screen and (max-width: 767px) {
       height: 4vh;
       font-size: 1vh;
     }
   }
   textarea::placeholder {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
+
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
@@ -195,7 +202,7 @@ const OptionLabel = styled.label`
   margin-bottom: 1vw;
   span {
     display: flex;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     justify-content: space-between;
     width: 100%;
@@ -228,6 +235,7 @@ function MakeQuizForm({
   setKeyId,
   quizProblem,
 }) {
+  const isDark = useRecoilValue(isDarkAtom);
   const [length, setLength] = useState(0);
   const [type, setType] = useState("");
   const handleLength = (event) => {
@@ -309,11 +317,12 @@ function MakeQuizForm({
     <QuizFormContainer
       id={String(quizNumber) + "-quiz"}
       ref={(el) => (quizProblem.current[quizNumber - 1] = el)}
+      isDark={isDark}
     >
       <ProblemNumber>
         <h4>문제 {quizNumber}</h4>
         {quizForm.length > 1 ? (
-          <QuizDeleteButton onClick={handleQuizDelete}>
+          <QuizDeleteButton onClick={handleQuizDelete} isDark={isDark}>
             <span>
               <FontAwesomeIcon icon={faTrash} />
               <font>삭제</font>
@@ -410,13 +419,14 @@ const CreateProblemDescription = styled.div`
   h2 {
     display: flex;
     align-items: center;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.4vh;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
   span {
-    color: rgb(255, 139, 19);
+    color: ${(props) => props.theme.accentColor};
     font-size: 1.6vw;
     margin-right: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -424,10 +434,11 @@ const CreateProblemDescription = styled.div`
     }
   }
   small {
+    color: ${(props) => props.theme.textColor};
+    font-size: 0.7vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
     }
-    color: #676a6c;
   }
 `;
 const AddQuizContainer = styled.div`
@@ -440,7 +451,7 @@ const AddQuizContainer = styled.div`
     text-align: center;
     font-size: 1.7vw;
     background-color: white;
-    border: 0.15vw solid rgb(117, 204, 79);
+    border: 0.15vw solid #44bd32;
     padding: 1vw 0px;
 
     @media screen and (max-width: 767px) {
@@ -452,14 +463,14 @@ const AddQuizContainer = styled.div`
       margin-left: 1vh;
     }
     span {
-      color: rgb(117, 204, 79);
+      color: #44bd32;
     }
     transition: 0.1s ease-in-out;
   }
 
   button:hover {
-    background-color: rgba(117, 204, 79, 0.6);
-    border: 0.15vw solid rgba(117, 204, 79, 0.6);
+    background-color: #44bd32;
+    border: 0.15vw solid #44bd32;
     color: white;
     span {
       color: white;
@@ -548,7 +559,7 @@ function CreateProblem({
         );
       })}
       <AddQuizContainer>
-        {quizNumber < 10 ? (
+        {quizNumber < 20 ? (
           <button onClick={addQuiz}>
             <span>
               <FontAwesomeIcon icon={faPenToSquare} />
@@ -556,7 +567,7 @@ function CreateProblem({
             </span>
           </button>
         ) : (
-          <MaxProblemAlert>최대 10문제 까지 만들 수 있습니다.</MaxProblemAlert>
+          <MaxProblemAlert>최대 20문제 까지 만들 수 있습니다.</MaxProblemAlert>
         )}
       </AddQuizContainer>
     </CreateProblemContainer>

@@ -9,7 +9,7 @@ const UserInputPart = styled.fieldset`
   display: flex;
   flex-direction: column;
   span {
-    color: rgba(103, 106, 108, 1);
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.4vw;
     margin-top: 0.2vw;
     font-size: 1.1vw;
@@ -21,11 +21,15 @@ const UserInputPart = styled.fieldset`
   input {
     margin-bottom: 1vw;
     padding: 0.6vw 0.4vw;
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
     font-family: "Gowun Batang", serif;
-    border: 0.1vw solid rgba(103, 106, 108, 1);
+    border: 0.1vw solid ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 3px;
     font-size: 1.2vw;
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
     @media screen and (max-width: 767px) {
       font-size: 1.4vh;
       padding: 0.3vh 0.8vh;

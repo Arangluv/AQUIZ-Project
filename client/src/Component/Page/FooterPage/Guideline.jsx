@@ -11,7 +11,7 @@ const GuideContainer = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 6vh;
   }
-  div > a {
+  /* div > a {
     font-size: 1.5vw;
     display: block;
     border: 1px solid rgba(83, 127, 231, 1);
@@ -29,7 +29,7 @@ const GuideContainer = styled.div`
     background-color: #537fe7;
     color: white;
     border-color: white;
-  }
+  } */
 `;
 const GuideSubContainer = styled.div`
   display: flex;
@@ -37,8 +37,8 @@ const GuideSubContainer = styled.div`
   width: 70%;
   padding: 3vw;
   border-radius: 3px;
-  border: 1px solid rgba(103, 106, 108, 0.3);
-  background-color: white;
+  border: 1px solid ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgColor};
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 767px) {
@@ -47,7 +47,7 @@ const GuideSubContainer = styled.div`
   article {
     padding: 1vw;
     margin-bottom: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       padding: 2vw;
     }
@@ -141,9 +141,9 @@ function Guideline() {
             있습니다.
           </p>
         </article>
-        <div>
+        {/* <div>
           <Link to="/article">칼럼보러가기</Link>
-        </div>
+        </div> */}
       </GuideSubContainer>
     </GuideContainer>
   );

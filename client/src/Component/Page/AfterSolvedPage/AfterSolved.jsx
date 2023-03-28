@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 // import bannerContainer from "../../../assets/bannerData";
 import URL from "../../../assets/url";
+import GoogleAdvertise from "../../GoogleAdvertise";
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,20 +21,19 @@ const MainContainer = styled.div`
 `;
 const AfterSolvedContainer = styled.div`
   padding: 2vw 1vw;
-  border: 1px solid red;
   width: 80%;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(103, 106, 108, 0.6);
+  border: 1px solid ${(props) => props.theme.textColor};
   border-radius: 3px;
   h1 {
     font-size: 1.3vw;
     margin-top: 1vw;
     font-weight: 600;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.3vh;
       margin-bottom: 0.5vh;
@@ -44,9 +44,9 @@ const AfterSolvedContainer = styled.div`
     margin-top: 0.5vw;
     font-size: 1.5vw;
     padding: 1vw 0;
-    color: #205295;
-    border: 0.1vw solid #205295;
-    background-color: white;
+    color: ${(props) => props.theme.nextBntColor};
+    border: 0.1vw solid ${(props) => props.theme.nextBntColor};
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 3px;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
@@ -63,15 +63,16 @@ const AfterSolvedContainer = styled.div`
   }
 `;
 const AdContainer = styled.div`
-  width: 100%;
+  width: calc(80% + 1.6vw);
   display: flex;
   justify-content: center;
+  border: 1px solid ${(props) => props.theme.textColor};
   align-items: center;
   margin-top: 1vw;
   height: 20vh;
   iframe {
     height: 20vh;
-    width: 100%;
+    width: calc(80% + 1.6vh);
     @media screen and (max-width: 767px) {
       height: 16vh;
     }
@@ -85,9 +86,9 @@ const CommunicationContainer = styled.div`
   margin-top: 1vw;
   width: calc(80% + 1.6vw);
   padding: 1vw 0;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   border-radius: 3px;
-  border: 1px solid rgba(103, 106, 108, 0.8);
+  border: 1px solid ${(props) => props.theme.textColor};
   min-height: 10vh;
   height: auto;
   @media screen and (max-width: 767px) {
@@ -119,7 +120,7 @@ const CommunicationContainer = styled.div`
       }
       span {
         font-size: 1.2vw;
-        color: #676a6c;
+        color: ${(props) => props.theme.textColor};
         @media screen and (max-width: 767px) {
           font-size: 1.2vh;
         }
@@ -129,7 +130,13 @@ const CommunicationContainer = styled.div`
       width: 60%;
       margin-bottom: 1vw;
       padding: 0.6vw 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
+      background-color: ${(props) => props.theme.bgColor};
+      border: 0.1vw solid ${(props) => props.theme.textColor};
+      border-radius: 3px;
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         -webkit-appearance: none;
         -webkit-border-radius: 2px;
@@ -142,9 +149,15 @@ const CommunicationContainer = styled.div`
     textarea {
       width: 60%;
       padding: 0.6vw 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
+      background-color: ${(props) => props.theme.bgColor};
       min-height: 10vh;
       margin-bottom: 1vw;
+      border: 0.1vw solid ${(props) => props.theme.textColor};
+      border-radius: 3px;
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         padding: 0.4vh 0.6vh;
         font-size: 1vh;
@@ -155,9 +168,9 @@ const CommunicationContainer = styled.div`
     }
     input[type="submit"] {
       width: calc(60% + 1.6vw);
-      background-color: white;
-      border: 0.1vw solid #205295;
-      color: #205295;
+      background-color: ${(props) => props.theme.bgColor};
+      border: 0.1vw solid ${(props) => props.theme.nextBntColor};
+      color: ${(props) => props.theme.nextBntColor};
       font-size: 1.2vw;
       padding: 1vw 0;
       margin-bottom: 0.6vw;
@@ -179,8 +192,8 @@ const CommunicationContainer = styled.div`
   button:last-child {
     width: calc(60% + 1.6vw);
     background-color: white;
-    border: 0.1vw solid #205295;
-    color: #205295;
+    border: 0.1vw solid ${(props) => props.theme.nextBntColor};
+    color: ${(props) => props.theme.nextBntColor};
     padding: 0.5vw 0;
     border-radius: 3px;
     transition: 0.1s ease-in-out;
@@ -212,7 +225,7 @@ const Board = styled.div`
   }
   span {
     font-size: 1.2vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     text-align: center;
     width: 100%;
     display: flex;
@@ -236,13 +249,16 @@ const ContentDetail = styled.div`
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  border: 0.1vw solid #676a6c;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
   border-radius: 3px;
   padding: 0.8vw 0.6vw;
   margin-bottom: 0.2vw;
   @media screen and (max-width: 767px) {
     padding: 0.8vh 0.6vh;
     margin-bottom: 0.2vh;
+  }
+  div p {
+    color: ${(props) => props.theme.textColor};
   }
 `;
 const UserInfo = styled.div`
@@ -253,7 +269,7 @@ const UserInfo = styled.div`
     margin-bottom: 0.5vh;
   }
   span {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-weight: 600;
     font-size: 1vw;
     margin-right: 0.8vw;
@@ -262,7 +278,7 @@ const UserInfo = styled.div`
     }
   }
   font {
-    color: rgba(103, 106, 108, 0.8);
+    color: ${(props) => props.theme.textColor};
   }
 `;
 function AfterSolved() {
@@ -530,7 +546,12 @@ function AfterSolved() {
         </button>
       </AfterSolvedContainer>
       <AdContainer>
-        {/* {bannerContainer[Math.floor(Math.random() * 4)]} */}
+        <GoogleAdvertise
+          client="ca-pub-3501932649640285"
+          slot="4427930012"
+          format="auto"
+          responsive="true"
+        />
       </AdContainer>
       <CommunicationContainer>
         <form action="POST" onSubmit={handleSaveContent}>

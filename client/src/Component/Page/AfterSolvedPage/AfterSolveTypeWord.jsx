@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 const IsCorrectContainer = styled.div`
   margin-top: 1vw;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 1vw 1vw;
   align-items: center;
-  border: 1px solid #676a6c;
+  border: 1px solid ${(props) => props.theme.textColor};
   border-radius: 5px;
   border-color: ${({ isCorrect }) => (isCorrect ? "#AACB73" : "#F55050")};
   @media screen and (max-width: 767px) {
@@ -27,7 +26,7 @@ const IsCorrectContainer = styled.div`
     }
   }
   p {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 0.8vw;
     @media screen and (max-width: 767px) {
       font-size: 1.3vh;
@@ -40,10 +39,11 @@ const WordTypeLabel = styled.label`
   flex-direction: column;
   input {
     margin-bottom: 1vw;
-    border: 1px solid rgba(103, 106, 108, 0.7);
+    border: 1px solid ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 3px;
-    padding: 0.5vw 0.5vw;
-    color: #676a6c;
+    padding: 0.6vw 0.8vw;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.4vh;
       padding: 0.3vh 0.8vh;
@@ -54,7 +54,7 @@ const WordTypeLabel = styled.label`
   }
   span {
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-weight: 600;
 
     margin-top: 1vw;

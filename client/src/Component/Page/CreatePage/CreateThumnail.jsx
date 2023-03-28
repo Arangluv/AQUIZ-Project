@@ -8,6 +8,8 @@ import {
   faFileArrowUp,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 const CreateThumbnailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,12 +29,13 @@ const ThumbnailDescription = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 0.4vh;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
   span {
-    color: rgb(255, 139, 19);
+    color: ${(props) => props.theme.accentColor};
     font-size: 1.6vw;
     margin-right: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -40,7 +43,8 @@ const ThumbnailDescription = styled.div`
     }
   }
   small {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
+    font-size: 0.7vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
     }
@@ -48,7 +52,9 @@ const ThumbnailDescription = styled.div`
 `;
 const ThumbnailSection = styled.div`
   width: 100%;
-  border: 1px solid rgba(103, 106, 108, 0.2);
+  border: 1px solid
+    ${(props) =>
+      props.isDark ? props.theme.textColor : "rgba(103, 106, 108, 0.2)"};
   height: 60vh;
   border-radius: 1vw;
   margin-bottom: 1vh;
@@ -130,6 +136,7 @@ function CreateThumail({
   setInitThumbnailUrl,
 }) {
   const [preview, setPreview] = useState(initThumbnailUrl || "");
+  const isDark = useRecoilValue(isDarkAtom);
   const fileNode = useRef();
   const handleFile = (event) => {
     changeThumnail(event.target.files[0]);
@@ -178,7 +185,7 @@ function CreateThumail({
           사용됩니다.
         </small>
       </ThumbnailDescription>
-      <ThumbnailSection>
+      <ThumbnailSection isDark={isDark}>
         {thumnailFile ? (
           preview ? (
             <ThumbnailImage src={preview} alt="preview입니다." />

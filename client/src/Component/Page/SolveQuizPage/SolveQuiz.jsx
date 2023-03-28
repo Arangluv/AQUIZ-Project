@@ -28,6 +28,7 @@ function SolveQuiz() {
   const location = useLocation();
   const [initialized, setInitialized] = useState(false);
   let findQuizzes = null;
+
   useEffect(() => {
     const isProduction = process.env.NODE_ENV === "production";
     if (isProduction) {

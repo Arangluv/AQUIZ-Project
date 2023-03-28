@@ -4,12 +4,12 @@
 <url> <loc>https://www.aquiz.co.kr/</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/login</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/join</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/admin</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/my-page/:id</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/my-page/:id/edit</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/:id/quiz/create_quiz</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/quiz/edit/:id</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/quiz/:id</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/640ad125a3c942156ede0268</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/640d9f0085963458bbe9cec9</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/640eb9d911c3a7edc144411c</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/640eff5f11c3a7edc146c969</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/640f12f511c3a7edc147bc9a</loc> </url>
+<url> <loc>https://www.aquiz.co.kr/quiz/641166c811c3a7edc173549f</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/faq</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/contact</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/article/important-factor</loc> </url>
@@ -23,7 +23,4 @@
 <url> <loc>https://www.aquiz.co.kr/article</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/guideline</loc> </url>
 <url> <loc>https://www.aquiz.co.kr/about</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/result/:id</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/not</loc> </url>
-<url> <loc>https://www.aquiz.co.kr/*</loc> </url>
 </urlset>

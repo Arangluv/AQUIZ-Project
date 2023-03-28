@@ -15,7 +15,6 @@ const EditFormBox = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 4vw 6vw;
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -26,20 +25,26 @@ const EditFormBox = styled.form`
     width: 100%;
     input {
       width: 20vw;
-      padding: 0.4vw 0.6vw;
-      color: rgba(103, 106, 108, 1);
+      padding: 0.6vw 0.8vw;
+      color: ${(props) => props.theme.textColor};
+      background-color: ${(props) => props.theme.bgColor};
+      border: 1px solid ${(props) => props.theme.textColor};
+      border-radius: 3px;
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
     }
     @media screen and (max-width: 767px) {
       margin-bottom: 2vh;
       input {
         width: 20vh;
-        padding: 0.4vh 0.6vh;
+        padding: 0.5vh 0.7vh;
       }
     }
   }
   label:nth-child(1) input {
-    background-color: rgba(103, 106, 108, 0.1);
-    border: none;
+    background-color: ${(props) => props.theme.bgColor};
+    border: 1px solid ${(props) => props.theme.textColor};
   }
   label:nth-child(1) input:focus {
     outline-style: none;
@@ -55,8 +60,9 @@ const EditFormBox = styled.form`
     font-family: "Gowun Batang", serif;
     border-radius: 3px;
     font-weight: 600;
-    border: 1px solid #3e6d9c;
-    color: #3e6d9c;
+    border: 1px solid ${(props) => props.theme.nextBntColor};
+    color: ${(props) => props.theme.nextBntColor};
+    background-color: ${(props) => props.theme.bgColor};
     font-size: 1.3vw;
     padding: 0.4vw 0.6vw;
     width: 80%;
@@ -81,7 +87,7 @@ const FontContainer = styled.div`
   align-items: center;
   width: 50%;
   font-size: 1.4vw;
-  color: rgba(103, 106, 108, 1);
+  color: ${(props) => props.theme.textColor};
   font {
     margin-left: 0.5vw;
     margin-right: 1vw;

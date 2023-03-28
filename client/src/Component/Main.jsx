@@ -1,5 +1,11 @@
-import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { ThemeProvider } from "styled-components";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../assets/atom";
+import { darkTheme, lightTheme } from "../assets/theme";
+import App from "./App";
 import QuizScreens from "./QuizScreens";
 import LoginPage from "./LoginPage";
 import CreateQuiz from "./CreateQuiz";
@@ -63,14 +69,15 @@ body {
   height: 100%;
   font-family: 'Gowun Batang', serif;
   /* background-color: rgba(236, 236, 236, 0.5); */
-  background-color: #fffbf5;
+  background-color: ${(props) => props.theme.bgColor};
+  transition: .2s ease-in-out;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 html {
   font-size: 10px;
-}
-a {
-  text-decoration: none;
-  color: black;
 }
 ol, ul {
 	list-style: none;
@@ -89,45 +96,54 @@ table {
 }
 `;
 function Main() {
+  const qureyClient = new QueryClient();
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<QuizScreens />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="join" element={<JoinPage />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="admin/quiz-list" element={<AdminQuizList />} />
-          <Route path="my-page/:id" element={<MyPage />} />
-          <Route path="my-page/:id/edit" element={<Edit />} />
-          <Route path="/:id/quiz/create_quiz" element={<CreateQuiz />} />
-          <Route path="quiz/edit/:id" element={<EditQuiz />} />
-          <Route path="quiz/:id" element={<SolveQuiz />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/guideline" element={<Guideline />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/result/:id" element={<AfterSolved />} />
-          <Route
-            path="/article/important-factor"
-            element={<ArticleImportantFactor />}
-          />
-          <Route path="/article/learning" element={<ArticleLearning />} />
-          <Route path="/article/helpful" element={<ArticleHelpful />} />
-          <Route path="/article/marketing" element={<ArticleMarketing />} />
-          <Route path="/article/caution" element={<ArticleCaution />} />
-          <Route path="/article/shares" element={<ArticleShare />} />
-          <Route
-            path="/article/common-usage"
-            element={<ArticleCommonUsage />}
-          />
-          <Route path="/article/make-funny" element={<ArticleFunnyQuiz />} />
-          <Route path="/article" element={<ArticleMainPage />} />
-          <Route path="/not" element={<NotFound />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <QueryClientProvider client={qureyClient}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+          <GlobalStyle />
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route index element={<QuizScreens />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="join" element={<JoinPage />} />
+              <Route path="admin" element={<Admin />} />
+              <Route path="admin/quiz-list" element={<AdminQuizList />} />
+              <Route path="my-page/:id" element={<MyPage />} />
+              <Route path="my-page/:id/edit" element={<Edit />} />
+              <Route path="/:id/quiz/create_quiz" element={<CreateQuiz />} />
+              <Route path="quiz/edit/:id" element={<EditQuiz />} />
+              <Route path="quiz/:id" element={<SolveQuiz />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/guideline" element={<Guideline />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/result/:id" element={<AfterSolved />} />
+              <Route
+                path="/article/important-factor"
+                element={<ArticleImportantFactor />}
+              />
+              <Route path="/article/learning" element={<ArticleLearning />} />
+              <Route path="/article/helpful" element={<ArticleHelpful />} />
+              <Route path="/article/marketing" element={<ArticleMarketing />} />
+              <Route path="/article/caution" element={<ArticleCaution />} />
+              <Route path="/article/shares" element={<ArticleShare />} />
+              <Route
+                path="/article/common-usage"
+                element={<ArticleCommonUsage />}
+              />
+              <Route
+                path="/article/make-funny"
+                element={<ArticleFunnyQuiz />}
+              />
+              <Route path="/article" element={<ArticleMainPage />} />
+              <Route path="/not" element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 const AnswerContainer = styled.div`
   label {
-    border: 1px solid #676a6c;
+    border: 1px solid ${(props) => props.theme.textColor};
     border-radius: 3px;
     margin-bottom: 0.3vw;
-    background-color: white;
+    background-color: ${(props) => props.theme.bgColor};
     padding: 0.5vw 0.4vw;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@ const AnswerContainer = styled.div`
       display: flex;
       align-items: center;
       padding: 0.2vw 0.3vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       font-size: 1vw;
       width: 100%;
       @media screen and (max-width: 767px) {

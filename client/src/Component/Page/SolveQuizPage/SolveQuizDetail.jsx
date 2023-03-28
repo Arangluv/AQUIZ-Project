@@ -4,6 +4,7 @@ import SolveTypeWord from "./SolveTypeWord";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
+import GoogleAdvertise from '../../GoogleAdvertise';
 // import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
@@ -12,21 +13,21 @@ const QuizDetailContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-// const BannerAd = styled.div`
-//   background-color: white;
-//   width: 100%;
-//   height: 30vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   iframe {
-//     width: 100%;
-//     height: 100%;
-//   }
-//   @media screen and (max-width: 767px) {
-//     height: 70vh;
-//   }
-// `;
+const BannerAd = styled.div`
+  background-color: white;
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  @media screen and (max-width: 767px) {
+    height: 70vh;
+  }
+`;
 const Outlet = styled.div`
   width: 70%;
   padding-left: 2vw;
@@ -36,8 +37,8 @@ const Outlet = styled.div`
   flex-direction: column;
   padding-top: 3vw;
   padding-bottom: 3vw;
-  background-color: white;
-  border: 1px solid rgba(103, 106, 108, 0.6);
+  background-color: ${(props) => props.theme.bgColor};
+  border: 1px solid ${(props) => props.theme.textColor};
   margin: 0 3vw;
   @media screen and (max-width: 767px) {
     padding-top: 3vh;
@@ -47,7 +48,7 @@ const Outlet = styled.div`
   h2 {
     span {
       font-size: 1.5vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       display: block;
       margin-bottom: 2vw;
       @media screen and (max-width: 767px) {
@@ -60,7 +61,7 @@ const Outlet = styled.div`
 `;
 const QuizDescription = styled.p`
   font-size: 1.2vw;
-  color: rgb(103, 106, 108);
+  color: ${(props) => props.theme.textColor};
   display: flex;
   flex-direction: column;
   margin-bottom: 2vw;
@@ -81,7 +82,7 @@ const QuizDescription = styled.p`
     }
   }
   span:nth-child(2) {
-    border: 1px solid rgba(103, 106, 10, 0.2);
+    border: 1px solid ${(props) => props.theme.textColor};
     border-radius: 3px;
     padding: 1vw 2vw;
     @media screen and (max-width: 767px) {
@@ -117,7 +118,7 @@ const NotionSmall = styled.small`
   display: block;
   margin-bottom: 0.5vw;
   font-size: 1.2vw;
-  color: rgba(103, 106, 108, 0.9);
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 767px) {
     font-size: 1.5vh;
   }
@@ -209,7 +210,14 @@ function SolveQuizDetail({
           </span>
         </NotionSmall>
         {questionType}
-        {/* <BannerAd>{bannerContainer[Math.floor(Math.random() * bannerContainer.length)]}</BannerAd> */}
+        <BannerAd>
+          <GoogleAdvertise
+            client="ca-pub-3501932649640285"
+            slot="4427930012"
+            format="auto"
+            responsive="true"
+          />
+        </BannerAd>
       </Outlet>
     </QuizDetailContainer>
   );

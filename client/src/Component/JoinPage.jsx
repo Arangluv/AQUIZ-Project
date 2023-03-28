@@ -20,7 +20,7 @@ const JoinDescription = styled.div`
   }
   h3 {
     font-size: 2.5vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 1.2vw;
     @media screen and (max-width: 767px) {
       font-size: 2.5vh;
@@ -30,7 +30,7 @@ const JoinDescription = styled.div`
   span {
     display: block;
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.5vw;
     @media screen and (max-width: 767px) {
       font-size: 1.2vh;
@@ -44,7 +44,7 @@ const JoinFormBox = styled.form`
   align-items: center;
   label:nth-child(1) {
     padding-bottom: 0.3vw;
-    border-bottom: 1px solid #676a6c;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 2vw;
@@ -57,7 +57,7 @@ const JoinFormBox = styled.form`
       font-size: 2.5vw;
       display: block;
       margin-right: 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         width: 2.5vh;
         font-size: 2.5vh;
@@ -66,9 +66,14 @@ const JoinFormBox = styled.form`
     }
     input {
       width: 16vw;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
+      color: ${(props) => props.theme.textColor};
       height: 5h;
       border: none;
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 16vh;
       }
@@ -76,18 +81,18 @@ const JoinFormBox = styled.form`
   }
   //.parent:hover > .child
   label:nth-child(1):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.accentColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
 
   label:nth-child(2) {
     padding-bottom: 0.3vw;
-    border-bottom: 1px solid #676a6c;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 2vw;
@@ -100,7 +105,7 @@ const JoinFormBox = styled.form`
       font-size: 2.5vw;
       display: block;
       margin-right: 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         width: 2.5vh;
         font-size: 2.5vh;
@@ -109,26 +114,31 @@ const JoinFormBox = styled.form`
     }
     input {
       width: 16vw;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
+      color: ${(props) => props.theme.textColor};
       height: 5vh;
       border: none;
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 16vh;
       }
     }
   }
   label:nth-child(2):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.accentColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
   label:nth-child(3) {
     padding-bottom: 0.3vw;
-    border-bottom: 1px solid #676a6c;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 2vw;
@@ -141,7 +151,7 @@ const JoinFormBox = styled.form`
       font-size: 2.5vw;
       display: block;
       margin-right: 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         width: 2.5vh;
         font-size: 2.5vh;
@@ -150,26 +160,31 @@ const JoinFormBox = styled.form`
     }
     input {
       width: 16vw;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
       height: 5h;
       border: none;
+      color: ${(props) => props.theme.textColor};
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 16vh;
       }
     }
   }
   label:nth-child(3):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.accentColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
   label:nth-child(4) {
     padding-bottom: 0.3vw;
-    border-bottom: 1px solid #676a6c;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 3vw;
@@ -182,7 +197,7 @@ const JoinFormBox = styled.form`
       font-size: 2.5vw;
       display: block;
       margin-right: 0.8vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         width: 2.5vh;
         font-size: 2.5vh;
@@ -191,21 +206,26 @@ const JoinFormBox = styled.form`
     }
     input {
       width: 16vw;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
       height: 5h;
       border: none;
+      color: ${(props) => props.theme.textColor};
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 16vh;
       }
     }
   }
   label:nth-child(4):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.accentColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
   input[type="submit"] {
@@ -213,9 +233,9 @@ const JoinFormBox = styled.form`
     display: block;
     font-size: 1.3vw;
     padding: 1vw 0;
-    background-color: rgba(255, 139, 19, 0.8);
+    background-color: ${(props) => props.theme.accentColor};
     border: none;
-    color: rgba(255, 255, 255, 0.9);
+    color: ${(props) => props.theme.textColor};
     border-radius: 5px;
     transition: 0.1s ease-in-out;
     @media screen and (max-width: 767px) {
@@ -229,6 +249,7 @@ const JoinFormBox = styled.form`
   input[type="submit"]:hover {
     background-color: #f2cd5c;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
   }
 `;
 const ErrorMsg = styled.span`
@@ -240,9 +261,36 @@ const ErrorMsg = styled.span`
     margin-bottom: 1.3vh;
   }
 `;
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: ${(props) => props.theme.bgColor};
+  opacity: 0.6;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  img {
+    position: fixed;
+    top: 30%;
+    width: 10vw;
+    height: 10vw;
+    @media screen and (max-width: 767px) {
+      width: 10vh;
+      height: 10vh;
+    }
+  }
+`;
 function JoinPage() {
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`${URL}api/tokenInspect`, {
       method: "GET",
@@ -255,13 +303,14 @@ function JoinPage() {
       return;
     });
   }, []);
+
   const onSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmit(true);
     const email = event.target.email.value;
     const username = event.target.username.value;
     const passward1 = event.target.password1.value;
     const passward2 = event.target.password2.value;
-
     fetch(`${URL}join`, {
       method: "POST",
       headers: {
@@ -286,6 +335,7 @@ function JoinPage() {
       })
       .catch((error) => {
         setErrorMsg(error.message);
+        setIsSubmit(false);
         console.log(error);
         console.log("------");
       });
@@ -357,6 +407,11 @@ function JoinPage() {
           <input type="submit" value="회원가입하기" required />
         </JoinFormBox>
       </JoinContainer>
+      {isSubmit ? (
+        <Background>
+          <img src="/loading.gif" alt="스피너 이미지" />
+        </Background>
+      ) : null}
     </>
   );
 }

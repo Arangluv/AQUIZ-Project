@@ -1,12 +1,14 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../assets/atom";
+import ReactHelmet from "./ReactHelmet";
+import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 import CreateTitle from "./Page/CreatePage/CreateTitle";
 import CreateThema from "./Page/CreatePage/CreateThema";
 import CreateThumail from "./Page/CreatePage/CreateThumnail";
 import CreateProblem from "./Page/CreatePage/CreateProblem";
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import ReactHelmet from "./ReactHelmet";
-import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUpload,
@@ -20,8 +22,9 @@ const Div = styled.div`
 `;
 const QuizPublishContainer = styled.div`
   display: flex;
-  border: 0.1vw solid rgba(103, 106, 108, 0.6);
-  background-color: #fffbf5;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "white"};
   border-radius: 5px;
   flex-direction: column;
   padding-top: 2vh;
@@ -39,11 +42,11 @@ const QuizPublishContainer = styled.div`
   h2 {
     font-size: 2vw;
     margin-bottom: 2vh;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-weight: 600;
     span {
       margin-right: 10px;
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
@@ -55,10 +58,12 @@ const QuizPublishContainer = styled.div`
     padding-top: 0.7vw;
     padding-bottom: 0.7vw;
     font-size: 1.6vw;
-    border: 0.1vw solid rgb(117, 204, 79);
+    border: 0.1vw solid #44bd32;
     border-radius: 3px;
-    background-color: white;
-    color: rgb(117, 204, 79);
+    background-color: ${(props) =>
+      props.isDark ? props.theme.bgColor : "white"};
+    color: #44bd32;
+    transition: 0.2s ease-in-out;
     @media screen and (max-width: 767px) {
       padding: 0.7vh 0;
       font-size: 1.3vh;
@@ -68,7 +73,7 @@ const QuizPublishContainer = styled.div`
     }
   }
   input[type="submit"]:hover {
-    background-color: rgba(117, 204, 79, 0.7);
+    background-color: #44bd32;
     box-shadow: 0.1rem 0.1rem 0.3rem gray;
     color: white;
   }
@@ -79,7 +84,10 @@ const CreateFormContainer = styled.form`
   align-items: center;
   margin-top: 1vw;
   padding-bottom: 2vw;
-  background-color: rgb(255, 242, 242);
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : props.theme.createQuizTheme};
+  border: 0.1vw solid
+    ${(props) => (props.isDark ? props.theme.textColor : "none")};
   width: 80%;
   border-radius: 0.8vw;
 `;
@@ -194,6 +202,30 @@ const WarningContainer = styled.div`
     }
   }
 `;
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #ffffffb7;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  img {
+    position: fixed;
+    top: 40%;
+    width: 10vw;
+    height: 10vw;
+    @media screen and (max-width: 767px) {
+      width: 10vh;
+      height: 10vh;
+    }
+  }
+`;
 function CreateQuiz() {
   // get User id and cookies
   const userId = useParams().id;
@@ -222,6 +254,10 @@ function CreateQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
+  // Submit Controller
+  const [isSubmit, setIsSubmit] = useState(false);
+  // isDark setting
+  const isDark = useRecoilValue(isDarkAtom);
 
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
@@ -432,6 +468,7 @@ function CreateQuiz() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsSubmit(true);
     if (quizNumber === quizzes.length) {
       const errorMessage = userDataValidation(quizzes);
       if (errorMessage.length === 0) {
@@ -478,6 +515,7 @@ function CreateQuiz() {
         console.log("에러메세지가 존재!");
         console.log(errorMessage);
         setInputValid([...errorMessage]);
+        setIsSubmit(false);
         return;
       }
     } else {
@@ -537,6 +575,7 @@ function CreateQuiz() {
         } else {
           console.log("에러 발생!");
           console.log(errorMessage);
+          setIsSubmit(false);
           setInputValid([...errorMessage]);
           return prevQuizzes;
         }
@@ -598,6 +637,7 @@ function CreateQuiz() {
         method="POST"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
+        isDark={isDark}
       >
         <CreateTitle
           changeTitle={setQuizTitle}
@@ -639,7 +679,7 @@ function CreateQuiz() {
           setKeyId={setKeyId}
           quizProblem={quizProblem}
         />
-        <QuizPublishContainer>
+        <QuizPublishContainer isDark={isDark}>
           <h2>
             <span>
               <FontAwesomeIcon icon={faUpload} />
@@ -716,6 +756,11 @@ function CreateQuiz() {
             </p>
           </WarningContainer>
         </ErrorBox>
+      ) : null}
+      {isSubmit ? (
+        <Background>
+          <img src="/loading.gif" alt="스피너 이미지" />
+        </Background>
       ) : null}
     </Div>
   );

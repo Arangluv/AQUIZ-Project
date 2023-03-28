@@ -26,7 +26,7 @@ const LoginFormBox = styled.form`
   }
   label:nth-child(1) {
     padding-bottom: 0.14vw;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 2vw;
@@ -39,7 +39,7 @@ const LoginFormBox = styled.form`
       width: 2vw;
       display: block;
       margin-right: 1vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         font-size: 2vh;
         width: 2vh;
@@ -50,7 +50,12 @@ const LoginFormBox = styled.form`
       width: 16vw;
       height: 5h;
       border: none;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
+      color: ${(props) => props.theme.textColor};
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 13vh;
         font-size: 1.2vh;
@@ -58,18 +63,18 @@ const LoginFormBox = styled.form`
     }
   }
   label:nth-child(1):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
 
   label:nth-child(2) {
     padding-bottom: 0.3vw;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     display: flex;
     text-align: center;
     margin-bottom: 2vw;
@@ -82,7 +87,7 @@ const LoginFormBox = styled.form`
       font-size: 2vw;
       display: block;
       margin-right: 1vw;
-      color: #676a6c;
+      color: ${(props) => props.theme.textColor};
       @media screen and (max-width: 767px) {
         font-size: 2vh;
         width: 2vh;
@@ -93,7 +98,12 @@ const LoginFormBox = styled.form`
       width: 16vw;
       height: 5h;
       border: none;
-      background-color: #fffbf5;
+      background-color: ${(props) => props.theme.bgColor};
+      transition: background-color 0.2s ease-in-out;
+      color: ${(props) => props.theme.textColor};
+      &::placeholder {
+        color: ${(props) => props.theme.textColor};
+      }
       @media screen and (max-width: 767px) {
         width: 13vh;
         font-size: 1.2vh;
@@ -101,19 +111,19 @@ const LoginFormBox = styled.form`
     }
   }
   label:nth-child(2):focus-within {
-    border-bottom: 1px solid #ff8b13;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
     input {
       outline: none;
     }
     span {
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
   }
   input[type="submit"] {
     width: 19vw;
     display: block;
     height: 5vh;
-    background-color: rgba(255, 139, 19, 0.8);
+    background-color: ${(props) => props.theme.accentColor};
     border: none;
     color: rgba(255, 255, 255, 0.9);
     border-radius: 3px;
@@ -144,7 +154,7 @@ const LoginDescription = styled.div`
   }
   h3 {
     font-size: 2vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 2vw;
     @media screen and (max-width: 767px) {
       font-size: 2vh;
@@ -153,7 +163,7 @@ const LoginDescription = styled.div`
   }
   span {
     display: block;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     margin-bottom: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -171,7 +181,7 @@ const JoinContainer = styled.div`
     margin-top: 0.5vh;
   }
   small {
-    opacity: 0.6;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 1vw;
     font-size: 1.2vw;
     display: block;
@@ -185,16 +195,16 @@ const JoinContainer = styled.div`
   }
   span {
     font-size: 1.5vw;
-    border: 1px solid #205295;
+    border: 1px solid ${(props) => props.theme.accentColor};
     border-radius: 3px;
-    background-color: white;
+    background-color: ${(props) => props.theme.bgColor};
     display: block;
     width: 19vw;
     text-align: center;
     padding: 0.6vw 0;
     transition: 0.1s ease-in-out;
     a {
-      color: #205295;
+      color: ${(props) => props.theme.accentColor};
     }
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
@@ -206,7 +216,7 @@ const JoinContainer = styled.div`
     a {
       color: white;
     }
-    background-color: #205295;
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;
 const LoginErrorBox = styled.div`
@@ -221,8 +231,34 @@ const LoginErrorBox = styled.div`
     font-size: 1.1vh;
   }
 `;
+const Background = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: ${(props) => props.theme.bgColor};
+  opacity: 0.6;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  img {
+    position: fixed;
+    top: 30%;
+    width: 10vw;
+    height: 10vw;
+    @media screen and (max-width: 767px) {
+      width: 10vh;
+      height: 10vh;
+    }
+  }
+`;
 function LoginForm() {
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     fetch(`${URL}api/tokenInspect`, {
@@ -238,9 +274,9 @@ function LoginForm() {
   }, [URL, navigate]);
   const onSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmit(true);
     const email = event.target.email.value;
     const password = event.target.password.value;
-
     fetch(`${URL}login`, {
       method: "POST",
       headers: {
@@ -264,6 +300,7 @@ function LoginForm() {
       })
       .catch((error) => {
         console.log(error.message);
+        setIsSubmit(false);
         setErrorMsg(error.message);
       });
   };
@@ -327,6 +364,11 @@ function LoginForm() {
           </span>
         </JoinContainer>
       </LoginContainer>
+      {isSubmit ? (
+        <Background>
+          <img src="/loading.gif" alt="스피너 이미지" />
+        </Background>
+      ) : null}
     </>
   );
 }

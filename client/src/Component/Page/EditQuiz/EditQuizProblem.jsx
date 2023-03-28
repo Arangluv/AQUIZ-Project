@@ -477,8 +477,8 @@ const AddQuizContainer = styled.div`
     text-align: center;
     font-size: 1.7vw;
     background-color: white;
-    color: rgb(117, 204, 79);
-    border: 0.15vw solid rgb(117, 204, 79);
+    color: #44bd32;
+    border: 0.15vw solid #44bd32;
     padding: 1vw 0px;
     @media screen and (max-width: 767px) {
       /* all: initial; */
@@ -489,13 +489,13 @@ const AddQuizContainer = styled.div`
       margin-left: 1vh;
     }
     span {
-      color: rgb(117, 204, 79);
+      color: #44bd32;
     }
     transition: 0.1s ease-in-out;
   }
   button:hover {
-    background-color: rgba(117, 204, 79, 0.6);
-    border: 0.15vw solid rgba(117, 204, 79, 0.6);
+    background-color: #44bd32;
+    border: 0.15vw solid #44bd32;
     color: white;
     span {
       color: white;
@@ -590,10 +590,10 @@ function EditQuizProblem({
         );
       })}
       <AddQuizContainer>
-        {quizNumber < 10 ? (
+        {quizNumber < 20 ? (
           <button onClick={addQuiz}>다음 질문 만들기</button>
         ) : (
-          <span>최대 10문제 까지 만들 수 있습니다.</span>
+          <span>최대 20문제 까지 만들 수 있습니다.</span>
         )}
       </AddQuizContainer>
     </EditProblemContainer>

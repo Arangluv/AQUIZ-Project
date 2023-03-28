@@ -49,6 +49,9 @@ const ArticleSubContainer = styled.div`
       font-weight: 600;
       font-size: 1.5vw;
       color: #676a6c;
+      @media screen and (max-width: 767px) {
+        font-size: 1.5vh;
+      }
     }
   }
   a:hover {

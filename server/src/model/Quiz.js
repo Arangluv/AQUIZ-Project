@@ -29,6 +29,7 @@ const quizSchema = new mongoose.Schema({
   ],
   meta: {
     view: { type: Number, default: 0 },
+    subView: { type: Number, default: 0 },
     quizThema: [{ type: String, required: true }],
     correctRate: { type: Number, default: 0 },
     scoreSummary: { type: Number, default: 0 },

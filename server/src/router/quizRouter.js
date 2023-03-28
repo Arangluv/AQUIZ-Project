@@ -8,6 +8,7 @@ import {
   postEdit,
   addComment,
   getComment,
+  allQuiz,
 } from "../controller/quizController";
 import multer from "multer";
 import aws from "aws-sdk";
@@ -59,4 +60,5 @@ quizRouter.route("/delete/:id([0-9a-f]{24})").post(postDelete);
 quizRouter.route("/edit/:id([0-9a-f]{24})").get(getQuizForId);
 quizRouter.route("/add-comment/:id([0-9a-f]{24})").post(addComment);
 quizRouter.route("/getComment/:id([0-9a-f]{24})").get(getComment);
+quizRouter.route("/allQuiz").get(allQuiz);
 export default quizRouter;

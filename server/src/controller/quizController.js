@@ -215,7 +215,14 @@ export const postEdit = async (req, res) => {
       await Quiz.findByIdAndUpdate(quizId, {
         quizTitle,
         quizDescribe,
-        meta: { quizThema: modifiedThembox, view, correctRate, isEdit: true },
+        meta: {
+          quizThema: modifiedThembox,
+          view,
+          subView: 0,
+          correctRate: 0,
+          scoreSummary: 0,
+          isEdit: true,
+        },
         thumnailUrl: req.files.thumbnailFile
           ? req.files.thumbnailFile[0].key
           : originalThumbnailUrl,
@@ -253,20 +260,22 @@ export const getQuizForId = async (req, res) => {
 export const getQuiz = async (req, res) => {
   try {
     const { page, LIMIT, order, thema, rating, keyword } = req.query;
+    console.log("Rating ? ");
+    console.log(rating);
     if (keyword === undefined) {
       const quiz =
         thema === undefined
           ? await Quiz.find({})
               .sort({
-                "meta.correctRate": rating === "high" ? -1 : 1,
                 "meta.view": order === "solved" ? -1 : 1,
+                "meta.correctRate": rating === "high" ? -1 : 1,
               })
               .skip(parseInt(page * 6))
               .limit(LIMIT)
           : await Quiz.find({ "meta.quizThema": { $in: thema } })
               .sort({
-                "meta.correctRate": rating === "high" ? -1 : 1,
                 "meta.view": order === "solved" ? -1 : 1,
+                "meta.correctRate": rating === "high" ? -1 : 1,
               })
               .skip(parseInt(page * 6))
               .limit(LIMIT);
@@ -276,8 +285,8 @@ export const getQuiz = async (req, res) => {
         const quiz = await Quiz.find({
           quizTitle: { $regex: keyword, $options: "i" },
         }).sort({
-          "meta.correctRate": rating === "high" ? -1 : 1,
           "meta.view": order === "solved" ? -1 : 1,
+          "meta.correctRate": rating === "high" ? -1 : 1,
         });
         if (!quiz) {
           return res
@@ -456,7 +465,6 @@ export const postDelete = async (req, res) => {
     const userInformation = jwt.verify(token, secretKey);
     const user = await User.findOne({ email: userInformation.email });
     // Admin의 경우
-
     if (req.query?.admin === process.env.DELETE_VERIFY) {
       try {
         const deleteQuiz = await Quiz.findById(deletedQuizId).populate(
@@ -559,6 +567,7 @@ export const postDelete = async (req, res) => {
           .json({ errorMessage: "퀴즈를 삭제하는데 문제가 발생했습니다." });
       }
     }
+    // 일반 유저인 경우
     if (!user) {
       return res
         .status(404)
@@ -729,5 +738,16 @@ export const getComment = async (req, res) => {
     return res
       .status(200)
       .json({ errorMessage: "댓글을 불러오는데 실패했습니다." });
+  }
+};
+
+export const allQuiz = async (req, res) => {
+  try {
+    const quiz = await Quiz.find({});
+    return res.status(200).json({ data: quiz });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ errorMsg: "모든 퀴즈를 제공하는데 오류가 발생했습니다." });
   }
 };

@@ -15,7 +15,7 @@ function ReactHelmet({ description, title, pageTitle, image }) {
         property="og:site_name"
         content="AQUIZ, 어퀴즈 - 퀴즈 메이커 | 나만의 퀴즈를 만들자"
       />
-      {/* 트위터 Part */}
+      {/* 트위터 Part  */}
       <meta
         name="twitter:card"
         content={`AQUIZ - ${pageTitle} #AQUIZ #나만의퀴즈만들기 #내퀴즈만들기`}
