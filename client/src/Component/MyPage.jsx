@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ReactHelmet from "./ReactHelmet";
 // import bannerContainer from "../assets/bannerData";
 import URL from "../assets/url";
-import GoogleAdvertise from './GoogleAdvertise';
+import GoogleAdvertise from "./GoogleAdvertise";
 const SubBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -121,10 +121,17 @@ const BannerAD = styled.div`
   height: 100%;
   background-color: white;
   grid-column: 2 / span 2;
+  background-color: ${(props) => props.theme.bgColor};
+  border: 0.1vw solid ${(props) => props.theme.textColor};
   @media screen and (max-width: 767px) {
     grid-column: 1 / span 2;
     grid-row: 3 / span 1;
     font-size: 10vh;
+  }
+  ins {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 `;
 function MyPage() {

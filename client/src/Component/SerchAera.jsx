@@ -158,9 +158,7 @@ function SerchArea({
   loading,
   setThema,
   setRating,
-  quizSearchInput,
   setQuizSearchInput,
-  handleSearchQuiz,
 }) {
   const [orderColor, setOrderColor] = useState(true);
   const [themaColor, setThemaColor] = useState([""]);
@@ -271,8 +269,7 @@ function SerchArea({
           </CorrectRateSelectBox>
         </div>
       </OptionArea>
-
-      <StyledForm onSubmit={handleSearchQuiz}>
+      <StyledForm>
         <input
           ref={ref}
           type="text"

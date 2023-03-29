@@ -70,7 +70,7 @@ const AdContainer = styled.div`
   align-items: center;
   margin-top: 1vw;
   height: 20vh;
-  iframe {
+  ins {
     height: 20vh;
     width: calc(80% + 1.6vh);
     @media screen and (max-width: 767px) {

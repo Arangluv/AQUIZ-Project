@@ -37,21 +37,19 @@ const BannerAD = styled.div`
   align-items: center;
   font-size: 3vw;
   height: 100%;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
+  border: 0.1vw solid ${(props) => props.theme.textColor};
   grid-column: 2 / span 2;
-  a {
+  ins {
+    display: block;
     width: 100%;
     height: 100%;
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
+
   @media screen and (max-width: 767px) {
     /* 모바일 */
     grid-column: 1 / span 2;
     grid-row: 3 / span 1;
-    /* height: 3vh; */
     font-size: 10vh;
   }
 `;
@@ -89,6 +87,7 @@ const ErrorMsg = styled.span`
     font-size: 1.5vh;
   }
 `;
+
 function QuizScreens() {
   const [quizList, setQuizList] = useState([]);
   const [totalQuiz, setTotalQuiz] = useState([]); // 이렇게 구현해도 될까 메모리 낭비가 심하지는 않을까?
@@ -101,37 +100,24 @@ function QuizScreens() {
   const [thema, setThema] = useState([]);
   const [rating, setRating] = useState("high");
   const [ref, inView] = useInView();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   // Search State
   const [quizSearchInput, setQuizSearchInput] = useState("");
-  const { isLoading, data, error } = useQuery(
-    ["getQuiz", inView, page, LIMIT, order, thema, rating, quizSearchInput],
-    () => {
-      if (!inView) {
-        return;
-      }
-      if (!quizSearchInput) {
-        console.log("쿼리 내부에서는 page?");
-        console.log(page);
-        return getQuiz(page, LIMIT, order, thema, rating);
-      } else {
-        return getQuiz(page, LIMIT, order, thema, rating, quizSearchInput);
-      }
-    }
-  );
-
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-    if (!inView && !nextPage) {
-      return;
-    }
+  const handleLoad = async () => {
+    setIsLoading(true);
     if (quizSearchInput) {
       try {
-        const quizzes = data;
-        console.log(quizzes);
-        setNextPage(quizzes?.length === 6);
-        if (quizzes?.length > 0) {
+        const quizzes = await getQuiz(
+          page,
+          LIMIT,
+          order,
+          thema,
+          rating,
+          quizSearchInput
+        );
+        setNextPage(quizzes.length === 6);
+        if (quizzes.length > 0) {
           setPage((pre) => pre + 1);
         }
         const newQuizzes = [...quizzes];
@@ -159,14 +145,19 @@ function QuizScreens() {
         }
         setQuizList([...mainList]);
         setTotalQuiz([...newQuizzes]);
-        setPage(0);
-        setNextPage(true);
       } catch (error) {
         console.log("퀴즈를 받아오는데 에러가 발생했습니다 🔴"); // dev Option
       }
     } else {
       try {
-        const quizzes = data;
+        const quizzes = await getQuiz(
+          page,
+          LIMIT,
+          order,
+          thema,
+          rating,
+          quizSearchInput
+        );
         setNextPage(quizzes.length === 6);
         if (quizzes.length > 0) {
           setPage((pre) => pre + 1);
@@ -198,54 +189,19 @@ function QuizScreens() {
         setTotalQuiz([...newQuizzes]);
       } catch (e) {
         console.log("퀴즈를 받아오는데 에러가 발생했습니다 🔴"); // dev Option
+        setError(e);
       }
     }
-  }, [data, isLoading, inView, quizSearchInput]);
+  };
 
-  // const handleLoad = async () => {
-  //   try {
-  //     const quizzes = data;
-  //     setNextPage(quizzes.length === 6);
-  //     if (quizzes.length > 0) {
-  //       setPage((pre) => pre + 1);
-  //     }
-  //     const newQuizzes = [...totalQuiz, ...quizzes];
-  //     const mainList = [];
-  //     let subList = [];
-  //     let count = 0;
-  //     for (let i = 0; i < newQuizzes.length; i++) {
-  //       // 데이터를 4개 단위로 sub list에 넣음
-  //       if (count % 6 === 0 && count !== 0) {
-  //         mainList.push(subList);
-  //         subList = [];
-  //         count = 0;
-  //       }
-  //       // if (count % 5 === 0 && count !== 0) {
-  //       //   subList.push("AD");
-  //       // }
-  //       subList.push(newQuizzes[i]);
-  //       if (i === newQuizzes.length - 1) {
-  //         // if (count === 4) {
-  //         //   subList.push("AD");
-  //         // }
-  //         mainList.push(subList);
-  //       }
-  //       count++;
-  //     }
-  //     setQuizList([...mainList]);
-  //     setTotalQuiz([...newQuizzes]);
-  //   } catch (e) {
-  //     console.log("퀴즈를 받아오는데 에러가 발생했습니다 🔴"); // dev Option
-  //   }
-  // };
-
-  // useEffect(() => {
-  // if (!isLoading) {
-  //   if (inView && nextPage && quizSearchInput === "") {
-  //     handleLoad();
-  //   }
-  //   }
-  // }, [inView, order, handleLoad, isLoading, nextPage, quizSearchInput]);
+  useEffect(() => {
+    if (!isLoading) {
+      if (inView && nextPage) {
+        handleLoad();
+      }
+    }
+    setIsLoading(false);
+  }, [inView, order, nextPage, quizSearchInput]);
 
   useEffect(() => {
     setQuizList([]);
@@ -253,44 +209,7 @@ function QuizScreens() {
     setPage(0);
     setNextPage(true);
   }, [order, rating, thema, quizSearchInput]);
-  const handleSearchQuiz = async () => {};
-  // try {
-  //   const quizzes = data;
-  //   setNextPage(quizzes.length === 6);
-  //   if (quizzes.length > 0) {
-  //     setPage((pre) => pre + 1);
-  //   }
-  //   const newQuizzes = [...quizzes];
-  //   const mainList = [];
-  //   let subList = [];
-  //   let count = 0;
-  //   for (let i = 0; i < newQuizzes.length; i++) {
-  //     // 데이터를 4개 단위로 sub list에 넣음
-  //     if (count % 6 === 0 && count !== 0) {
-  //       mainList.push(subList);
-  //       subList = [];
-  //       count = 0;
-  //     }
-  //     if (count % 5 === 0 && count !== 0) {
-  //       subList.push("AD");
-  //     }
-  //     subList.push(newQuizzes[i]);
-  //     if (i === newQuizzes.length - 1) {
-  //       if (count === 4) {
-  //         subList.push("AD");
-  //       }
-  //       mainList.push(subList);
-  //     }
-  //     count++;
-  //   }
-  //   setQuizList([...mainList]);
-  //   setTotalQuiz([...newQuizzes]);
-  //   setPage(0);
-  //   setNextPage(true);
-  // } catch (error) {
-  //   console.log("퀴즈를 받아오는데 에러가 발생했습니다 🔴"); // dev Option
-  // }
-  // };
+
   return (
     <>
       <ReactHelmet
@@ -305,7 +224,6 @@ function QuizScreens() {
         setRating={setRating}
         quizSearchInput={quizSearchInput}
         setQuizSearchInput={setQuizSearchInput}
-        handleSearchQuiz={handleSearchQuiz}
       />
       <MainContainer>
         {!error ? (

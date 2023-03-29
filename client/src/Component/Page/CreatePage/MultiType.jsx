@@ -9,7 +9,7 @@ const MultiTypeContainer = styled.div`
 const QuizLabel = styled.label`
   margin-bottom: 1vh;
   font {
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 0.9vh;
@@ -22,12 +22,12 @@ const QusetionContainer = styled.div`
 `;
 const Question = styled.div`
   position: relative;
-  border: 1px solid rgba(103, 106, 108, 0.7);
+  border: 1px solid ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   border-radius: 3px;
   margin-bottom: 1vh;
-  background: rgba(255, 242, 242, 0.8);
+  background: ${(props) => props.theme.bgColor};
   @media screen and (max-width: 767px) {
     border: 0.2vw solid rgba(103, 106, 108, 0.7);
     margin-bottom: 0.8vh;
@@ -36,9 +36,13 @@ const Question = styled.div`
     width: 100%;
     padding: 0.6vw 0.8vw;
     border: none;
-    border-left: 1px solid rgba(103, 106, 108, 0.7);
+    border-left: 1px solid ${(props) => props.theme.textColor};
     font-size: 1vw;
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
     @media screen and (max-width: 767px) {
       border-left: 0.1vw solid rgba(103, 106, 108, 0.9);
       padding: 0.6vh 0.8vh;
@@ -90,6 +94,9 @@ const OptionContainer = styled.div`
   margin-bottom: 2vh;
   @media (max-width: 500px) {
     margin-bottom: 1vh;
+  }
+  & > span {
+    color: rgba(245, 80, 80, 0.8);
   }
   button {
     display: flex;

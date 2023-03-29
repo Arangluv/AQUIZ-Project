@@ -4,12 +4,12 @@ import SolveTypeWord from "./SolveTypeWord";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
-import GoogleAdvertise from '../../GoogleAdvertise';
+import GoogleAdvertise from "../../GoogleAdvertise";
 // import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
+  position: relative;
   justify-content: center;
   align-items: center;
 `;
@@ -138,6 +138,7 @@ const NotionSmall = styled.small`
     }
   }
 `;
+
 function SolveQuizDetail({
   imgUrl,
   type,

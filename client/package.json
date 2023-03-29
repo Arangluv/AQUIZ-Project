@@ -33,23 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sitemap": "babel-node src/sitemapGenerator.js",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "include": [
-      "/",
-      "/article",
-      "/login",
-      "/join",
-      "/faq",
-      "/guideline",
-      "/about",
-      "/contact",
-      "/article/common-usage",
-      "/article/make-funny"
-    ]
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

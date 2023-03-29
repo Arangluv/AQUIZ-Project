@@ -30,13 +30,16 @@ const StyledHeader = styled(Header)`
 `;
 const MainAd = styled.div`
   width: 100%;
-  background-color: #ececec;
+  background-color: ${(props) => props.theme.bgColor};
   height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1vw;
-  iframe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ins {
     height: 20vh;
     width: 100%;
   }

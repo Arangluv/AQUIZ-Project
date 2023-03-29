@@ -8,7 +8,7 @@ const WordTypeContainer = styled.div`
 const QuizLabel = styled.label`
   margin-bottom: 1vh;
   font {
-    color: rgba(0, 0, 0, 0.8);
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 0.9vh;
@@ -20,7 +20,7 @@ const QusetionContainer = styled.div`
   flex-direction: column;
   small {
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.5vw;
     margin-top: 1vw;
 
@@ -39,9 +39,16 @@ const QusetionContainer = styled.div`
     }
   }
   input[type="text"] {
-    padding: 0.6vw 0.8vw;
-    color: #676a6c;
+    padding: 0.8vw 1vw;
+    color: ${(props) => props.theme.textColor};
     height: 1vh;
+    background-color: ${(props) => props.theme.bgColor};
+    border: 0.1vw solid ${(props) => props.theme.textColor};
+    border-radius: 3px;
+    margin-top: 0.5vw;
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
     @media screen and (max-width: 767px) {
       padding: 0.8vh 0.6vh;
       font-size: 1vh;
@@ -58,7 +65,7 @@ const QusetionContainer = styled.div`
   }
 `;
 const SpaceHint = styled.span`
-  color: rgba(0, 0, 0, 0.8);
+  color: ${(props) => props.theme.textColor};
   font-size: 1.2vw;
   margin-bottom: 2vh;
   @media screen and (max-width: 767px) {

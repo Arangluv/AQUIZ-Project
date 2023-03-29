@@ -296,11 +296,11 @@ function Header({ className }) {
         <Ul>
           <QuizContainer emphasis={emphasis}>
             <li>
-              <NavLink to="/article">
+              <NavLink to="/">
                 <span>
                   <FontAwesomeIcon icon={faLightbulb} />
                 </span>
-                칼럼 보기
+                퀴즈 보기
               </NavLink>
             </li>
             <li>
