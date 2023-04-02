@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { UserInformation } from "../Content/UserInformation";
 import styled from "styled-components";
@@ -271,6 +271,8 @@ function Header({ className }) {
   const [emphasis, setEmpahsis] = useState("");
   const { pathname } = useLocation();
   const pathArray = pathname.split("/");
+  // Ref
+  const ref = useRef();
   // Accent Handling
   useEffect(() => {
     if (pathArray[1] === "") {

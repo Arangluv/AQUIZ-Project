@@ -243,7 +243,7 @@ function MyPage() {
     setOrderColor(!orderColor);
     setMode("maked");
   };
-  const handleDelete = (event) => {
+  const handleDelete = async (event) => {
     if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
       setIsDelete(true);
       const quizIdForDelete = event.target.dataset.quizid;

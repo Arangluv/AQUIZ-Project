@@ -162,7 +162,7 @@ function SerchArea({
 }) {
   const [orderColor, setOrderColor] = useState(true);
   const [themaColor, setThemaColor] = useState([""]);
-  const [ratingColor, setRationColor] = useState(true);
+  const [ratingColor, setRatingColor] = useState("");
   const ref = useRef();
   const toggleOrderColor = (event) => {
     setOrderColor(!orderColor);
@@ -182,12 +182,13 @@ function SerchArea({
       setThema([...themaColor]);
     }
   };
-  const toggleRatingColor = () => {
-    setRationColor(!ratingColor);
-    if (ratingColor) {
-      setRating("low");
+  const toggleRatingColor = (event) => {
+    if (event.target.dataset.color === ratingColor) {
+      setRatingColor("");
+      setRating("");
     } else {
-      setRating("high");
+      setRatingColor(event.target.dataset.color);
+      setRating(event.target.dataset.color);
     }
   };
   const handleSearchInput = (event) => {
@@ -260,10 +261,18 @@ function SerchArea({
             </ThemaButton>
           </ThemaSelectBox>
           <CorrectRateSelectBox>
-            <RatingButton onClick={toggleRatingColor} color={ratingColor}>
+            <RatingButton
+              onClick={toggleRatingColor}
+              data-color="high"
+              color={ratingColor === "high"}
+            >
               정답률 높은순
             </RatingButton>
-            <RatingButton onClick={toggleRatingColor} color={!ratingColor}>
+            <RatingButton
+              onClick={toggleRatingColor}
+              data-color="low"
+              color={ratingColor === "low"}
+            >
               정답률 낮은순
             </RatingButton>
           </CorrectRateSelectBox>

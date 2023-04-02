@@ -260,33 +260,12 @@ export const getQuizForId = async (req, res) => {
 export const getQuiz = async (req, res) => {
   try {
     const { page, LIMIT, order, thema, rating, keyword } = req.query;
-    console.log("Rating ? ");
-    console.log(rating);
-    if (keyword === undefined) {
-      const quiz =
-        thema === undefined
-          ? await Quiz.find({})
-              .sort({
-                "meta.view": order === "solved" ? -1 : 1,
-                "meta.correctRate": rating === "high" ? -1 : 1,
-              })
-              .skip(parseInt(page * 6))
-              .limit(LIMIT)
-          : await Quiz.find({ "meta.quizThema": { $in: thema } })
-              .sort({
-                "meta.view": order === "solved" ? -1 : 1,
-                "meta.correctRate": rating === "high" ? -1 : 1,
-              })
-              .skip(parseInt(page * 6))
-              .limit(LIMIT);
-      return res.status(200).json(quiz);
-    } else {
+    if (keyword && rating === undefined) {
       try {
         const quiz = await Quiz.find({
           quizTitle: { $regex: keyword, $options: "i" },
         }).sort({
           "meta.view": order === "solved" ? -1 : 1,
-          "meta.correctRate": rating === "high" ? -1 : 1,
         });
         if (!quiz) {
           return res
@@ -300,6 +279,93 @@ export const getQuiz = async (req, res) => {
           .json({ errorMessage: "퀴즈를 불러오는데 실패했습니다." });
       }
     }
+    if (keyword && rating) {
+      try {
+        const quiz = await Quiz.find({
+          quizTitle: { $regex: keyword, $options: "i" },
+        }).sort({
+          "meta.correctRate": rating === "high" ? -1 : 1,
+          "meta.view": order === "solved" ? -1 : 1,
+        });
+        if (!quiz) {
+          return res
+            .status(404)
+            .json("errorMessage: 해당 제목의 퀴즈를 찾을 수 없습니다.");
+        }
+        return res.status(200).json(quiz);
+      } catch (error) {
+        return res
+          .status(404)
+          .json({ errorMessage: "퀴즈를 불러오는데 실패했습니다." });
+      }
+    }
+    if (keyword === undefined && rating === undefined) {
+      console.log("이게 실행");
+      const quiz =
+        thema === undefined
+          ? await Quiz.find({})
+              .sort(order === "solved" ? { "meta.view": -1 } : { createAt: -1 })
+              .skip(parseInt(page * 6))
+              .limit(LIMIT)
+          : await Quiz.find({ "meta.quizThema": { $in: thema } })
+              .sort({
+                "meta.view": order === "solved" ? -1 : 1,
+              })
+              .skip(parseInt(page * 6))
+              .limit(LIMIT);
+      return res.status(200).json(quiz);
+    } else if (keyword === undefined && rating) {
+      const quiz =
+        thema === undefined
+          ? await Quiz.find({})
+              .sort(
+                order === "solved"
+                  ? {
+                      "meta.correctRate": rating === "high" ? -1 : 1,
+                      "meta.view": -1,
+                    }
+                  : {
+                      "meta.correctRate": rating === "high" ? -1 : 1,
+                      createAt: -1,
+                    }
+              )
+              // .sort({
+              //   "meta.correctRate": rating === "high" ? -1 : 1,
+              //   "meta.view": order === "solved" ? -1 : 1,
+              // })
+              .skip(parseInt(page * 6))
+              .limit(LIMIT)
+          : await Quiz.find({ "meta.quizThema": { $in: thema } })
+              .sort({
+                "meta.correctRate": rating === "high" ? -1 : 1,
+                "meta.view": order === "solved" ? -1 : 1,
+              })
+              .skip(parseInt(page * 6))
+              .limit(LIMIT);
+      return res.status(200).json(quiz);
+    } else {
+      return res
+        .status(200)
+        .json({ message: "퀴즈를 로드하는데 실패했습니다." });
+    }
+    // try {
+    //   const quiz = await Quiz.find({
+    //     quizTitle: { $regex: keyword, $options: "i" },
+    //   }).sort({
+    //     "meta.view": order === "solved" ? -1 : 1,
+    //     "meta.correctRate": rating === "high" ? -1 : 1,
+    //   });
+    //   if (!quiz) {
+    //     return res
+    //       .status(404)
+    //       .json("errorMessage: 해당 제목의 퀴즈를 찾을 수 없습니다.");
+    //   }
+    //   return res.status(200).json(quiz);
+    // } catch (error) {
+    //   return res
+    //     .status(404)
+    //     .json({ errorMessage: "퀴즈를 불러오는데 실패했습니다." });
+    // }
   } catch (error) {
     return res
       .status(404)

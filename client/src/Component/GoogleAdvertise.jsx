@@ -11,6 +11,11 @@ const GoogleAdvertise = ({
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       console.log("Advertise is pushed");
+      if (!window.adsbygoogle.loaded) {
+        console.log("로드 되지않았음...");
+      } else {
+        console.log("로드됨..");
+      }
     } catch (e) {
       if (process.env.NODE_ENV !== "production")
         console.error("AdvertiseError", e);

@@ -13,14 +13,17 @@ import {
   faLightbulb,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 const QuizFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border: 0.1vw solid black;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
   padding: 1.5vw;
   border-radius: 5px;
   margin-top: 1vw;
-  background-color: #fffbf5;
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "#fffbf5"};
   @media screen and (max-width: 767px) {
     border: 0.2vw solid black;
     margin-top: 1vh;
@@ -37,14 +40,15 @@ const ProblemNumber = styled.div`
   }
   h4 {
     font-size: 1.5vw;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
 `;
 const QuizDeleteButton = styled.button`
-  background-color: white;
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "white"};
   border: 1px solid rgba(245, 80, 80, 0.8);
   color: black;
   padding: 0.4vw 0.6vw;
@@ -87,12 +91,13 @@ const QuizDescription = styled.div`
 
   label {
     margin-bottom: 0.8vw;
+
     @media screen and (max-width: 767px) {
       margin-bottom: 1vh;
     }
   }
   label:nth-child(1) span {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1.1vh;
@@ -107,10 +112,12 @@ const QuizDescription = styled.div`
   textarea {
     border-radius: 5px;
     height: 8vh;
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     padding: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     margin-bottom: 10px;
+    background-color: ${(props) => props.theme.bgColor};
     @media screen and (max-width: 767px) {
       height: 4vh;
       padding: 1vh;
@@ -118,7 +125,7 @@ const QuizDescription = styled.div`
     }
   }
   textarea::placeholder {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 0.8vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
@@ -143,7 +150,7 @@ const AnswerTypeBox = styled.div`
   }
   label span {
     font-size: 1vw;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 767px) {
       font-size: 1.1vh;
     }
@@ -156,11 +163,12 @@ const AnswerTypeBox = styled.div`
   }
   select {
     -moz-appearance: none;
-    border: 0.1px solid #676a6c;
+    background-color: ${(props) => props.theme.bgColor};
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     border-radius: 4px;
     font-size: 1vw;
     margin-bottom: 2vw;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => props.theme.textColor};
     padding: 0.4vw 0.6vw;
     @media screen and (max-width: 767px) {
       font-size: 1.3vh;
@@ -174,16 +182,18 @@ const OptionContainer = styled.div`
     border-radius: 5px;
     height: 15vh;
     padding: 10px;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
+    border: 0.1vw solid ${(props) => props.theme.textColor};
     font-size: 1vh;
     margin-bottom: 10px;
+    background-color: ${(props) => props.theme.bgColor};
     @media (max-width: 500px) {
       height: 4vh;
       font-size: 1vh;
     }
   }
   textarea::placeholder {
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;
@@ -197,7 +207,7 @@ const OptionLabel = styled.label`
   margin-bottom: 8px;
   span {
     display: flex;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-size: 1vw;
     justify-content: space-between;
     width: 100%;
@@ -232,6 +242,7 @@ function MakeQuizForm({
   setDeletedQuizUrl,
   quizProblem,
 }) {
+  const isDark = useRecoilValue(isDarkAtom);
   const quizToModify = quizzes[quizNumber - 1]; // 이 컴포넌트에 해당하는 퀴즈
   const [length, setLength] = useState(0);
   const [type, setType] = useState("");
@@ -351,11 +362,12 @@ function MakeQuizForm({
     <QuizFormContainer
       id={String(quizNumber) + "-quiz"}
       ref={(el) => (quizProblem.current[quizNumber - 1] = el)}
+      isDark={isDark}
     >
       <ProblemNumber>
         <h4>문제 {quizNumber}</h4>
         {quizForm.length > 1 ? (
-          <QuizDeleteButton onClick={handleQuizDelete}>
+          <QuizDeleteButton onClick={handleQuizDelete} isDark={isDark}>
             <span>
               <FontAwesomeIcon icon={faTrash} />
               <font>삭제</font>
@@ -449,13 +461,14 @@ const EditProblemDescription = styled.div`
   h2 {
     display: flex;
     align-items: center;
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 0.4vh;
     @media screen and (max-width: 767px) {
       font-size: 1.5vh;
     }
   }
   span {
-    color: rgb(255, 139, 19);
+    color: ${(props) => props.theme.accentColor};
     font-size: 1.6vw;
     margin-right: 0.5vw;
     @media screen and (max-width: 767px) {
@@ -465,6 +478,7 @@ const EditProblemDescription = styled.div`
   small {
     @media screen and (max-width: 767px) {
       font-size: 1vh;
+      color: ${(props) => props.theme.textColor};
     }
     color: #676a6c;
   }
@@ -500,6 +514,13 @@ const AddQuizContainer = styled.div`
     span {
       color: white;
     }
+  }
+`;
+const MaxProblemAlert = styled.span`
+  font-size: 1vw;
+  color: #f55050;
+  @media screen and (max-width: 767px) {
+    font-size: 1vh;
   }
 `;
 function EditQuizProblem({
@@ -593,7 +614,7 @@ function EditQuizProblem({
         {quizNumber < 20 ? (
           <button onClick={addQuiz}>다음 질문 만들기</button>
         ) : (
-          <span>최대 20문제 까지 만들 수 있습니다.</span>
+          <MaxProblemAlert>최대 20문제 까지 만들 수 있습니다.</MaxProblemAlert>
         )}
       </AddQuizContainer>
     </EditProblemContainer>

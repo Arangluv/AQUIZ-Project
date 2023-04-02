@@ -108,7 +108,7 @@ function QuizScreens() {
   const LIMIT = 6;
   const [order, setOrder] = useState("solved"); // Default value = solved
   const [thema, setThema] = useState([]);
-  const [rating, setRating] = useState("high");
+  const [rating, setRating] = useState("");
   const [ref, inView] = useInView();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

@@ -188,7 +188,6 @@ const OptionContainer = styled.div`
   }
   textarea::placeholder {
     color: ${(props) => props.theme.textColor};
-
     font-size: 1vw;
     @media screen and (max-width: 767px) {
       font-size: 1vh;

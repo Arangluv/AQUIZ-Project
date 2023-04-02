@@ -14,6 +14,8 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import URL from "../../../assets/url";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../../../assets/atom";
 const Div = styled.div`
   display: flex;
   justify-content: center;
@@ -24,14 +26,18 @@ const EditFormContainer = styled.form`
   align-items: center;
   margin-top: 1vw;
   padding-bottom: 1vw;
-  background-color: ${(props) => props.theme.createQuizTheme};
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : props.theme.createQuizTheme};
+  border: 0.1vw solid
+    ${(props) => (props.isDark ? props.theme.textColor : "none")};
   width: 80%;
   border-radius: 0.8vw;
 `;
 const QuizPublishContainer = styled.div`
   display: flex;
-  border: 0.1vw solid rgba(103, 106, 108, 0.6);
-  background-color: #fffbf5;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
+  background-color: ${(props) =>
+    props.isDark ? props.theme.bgColor : "white"};
   border-radius: 5px;
   flex-direction: column;
   padding-top: 2vh;
@@ -49,11 +55,11 @@ const QuizPublishContainer = styled.div`
   h2 {
     font-size: 2vw;
     margin-bottom: 2vh;
-    color: #676a6c;
+    color: ${(props) => props.theme.textColor};
     font-weight: 600;
     span {
       margin-right: 10px;
-      color: #ff8b13;
+      color: ${(props) => props.theme.accentColor};
     }
     @media (max-width: 500px) {
       font-size: 1.5vh;
@@ -67,7 +73,8 @@ const QuizPublishContainer = styled.div`
     font-size: 1.6vw;
     border: 1px solid #44bd32;
     border-radius: 5px;
-    background-color: white;
+    background-color: ${(props) =>
+      props.isDark ? props.theme.bgColor : "white"};
     color: #44bd32;
     transition: 0.2s ease-in-out;
     @media screen and (max-width: 767px) {
@@ -221,7 +228,7 @@ function EditQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
-
+  const isDark = useRecoilValue(isDarkAtom);
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {
@@ -670,6 +677,7 @@ function EditQuiz() {
         action="POST"
         encType="multipart/form-data"
         onSubmit={handleSubmitForModify}
+        isDark={isDark}
       >
         <CreateTitle
           changeTitle={setQuizTitle}
@@ -715,7 +723,7 @@ function EditQuiz() {
           setDeletedQuizUrl={setDeletedQuizUrl}
           quizProblem={quizProblem}
         />
-        <QuizPublishContainer>
+        <QuizPublishContainer isDark={isDark}>
           <h2>
             <span>
               <FontAwesomeIcon icon={faUpload} />
