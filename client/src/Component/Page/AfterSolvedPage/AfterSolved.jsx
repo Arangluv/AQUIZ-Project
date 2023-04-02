@@ -66,15 +66,25 @@ const AdContainer = styled.div`
   width: calc(80% + 1.6vw);
   display: flex;
   justify-content: center;
-  border: 1px solid ${(props) => props.theme.textColor};
   align-items: center;
   margin-top: 1vw;
-  height: 20vh;
-  ins {
+  height: 25vh;
+  border: 0.1vw solid ${(props) => props.theme.textColor};
+  @media screen and (max-width: 767px) {
     height: 20vh;
+  }
+  ins {
+    height: 25vh;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
     width: calc(80% + 1.6vh);
+    &[data-ad-status="unfilled"] {
+      display: none !important;
+    }
     @media screen and (max-width: 767px) {
-      height: 16vh;
+      height: 20vh;
     }
   }
 `;
@@ -419,7 +429,6 @@ function AfterSolved() {
             totalComments,
             view,
           } = data;
-          console.log(data);
           setTotalComments(totalComments);
           if (userComment.length === LIMIT) {
             setPage((pre) => pre + 1);
@@ -500,7 +509,6 @@ function AfterSolved() {
     )
       .then((response) => {
         if (response.ok) {
-          console.log(response);
           return response.json();
         } else {
           throw new Error("댓글을 불러오는데 실패했습니다.");
@@ -508,7 +516,6 @@ function AfterSolved() {
       })
       .then((result) => {
         const { userComment } = result;
-        console.log(result);
         if (!nextPage) {
           return;
         }
@@ -548,7 +555,7 @@ function AfterSolved() {
       <AdContainer>
         <GoogleAdvertise
           client="ca-pub-3501932649640285"
-          slot="4427930012"
+          slot="7425983661"
           format="auto"
           responsive="true"
         />

@@ -305,7 +305,7 @@ function MyPage() {
                         <BannerAD key={idx}>
                           <GoogleAdvertise
                             client="ca-pub-3501932649640285"
-                            slot="4427930012"
+                            slot="3898883766"
                             format="auto"
                             responsive="true"
                           />

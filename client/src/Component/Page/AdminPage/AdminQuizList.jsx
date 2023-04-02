@@ -207,7 +207,7 @@ function AdminQuizList() {
   const handleDelete = (event) => {
     if (window.confirm("퀴즈를 삭제하시겠습니까?")) {
       const quizIdForDelete = event.target.dataset.quizid;
-      console.log(quizIdForDelete);
+
       fetch(
         `${URL}quizzes/delete/${quizIdForDelete}?admin=${process.env.REACT_APP_DELETE_VERIFY}`,
         {

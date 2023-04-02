@@ -82,6 +82,11 @@ const QuizSubmitForm = styled.form`
 `;
 function SolveTypeWord({ questions, quizNum, onClick, quizLenth }) {
   const [answer, setAnswer] = useState();
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onClick(answer, event);
+    }
+  };
   const handleChangeInput = (event) => {
     const newAnswer = {
       num: quizNum,
@@ -101,6 +106,7 @@ function SolveTypeWord({ questions, quizNum, onClick, quizLenth }) {
           type="text"
           placeholder="정답을 입력해주세요"
           onChange={handleChangeInput}
+          onKeyDown={handleKeyDown}
           required
         />
       </UserInputPart>

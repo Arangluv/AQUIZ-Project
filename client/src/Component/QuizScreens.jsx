@@ -42,8 +42,18 @@ const BannerAD = styled.div`
   grid-column: 2 / span 2;
   ins {
     display: block;
+    height: 40vh;
     width: 100%;
-    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+    &[data-ad-status="unfilled"] {
+      display: none !important;
+    }
+    @media screen and (max-width: 767px) {
+      /* 모바일 */
+      height: 30vh;
+    }
   }
 
   @media screen and (max-width: 767px) {

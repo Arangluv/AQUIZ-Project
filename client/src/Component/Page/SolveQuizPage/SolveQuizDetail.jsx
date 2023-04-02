@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeLow } from "@fortawesome/free-solid-svg-icons";
 import GoogleAdvertise from "../../GoogleAdvertise";
+import GoogleAdvertise2 from "../../GoogleAdvertise2";
 // import bannerContainer from "../../../assets/bannerData";
 const QuizDetailContainer = styled.div`
   display: flex;
@@ -14,18 +15,30 @@ const QuizDetailContainer = styled.div`
   align-items: center;
 `;
 const BannerAd = styled.div`
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   width: 100%;
   height: 30vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
+  margin-top: 1vw;
   @media screen and (max-width: 767px) {
-    height: 70vh;
+    height: 20vh;
+    margin-top: 1vh;
+  }
+  ins {
+    width: 100%;
+    height: 30vh;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+    &[data-ad-status="unfilled"] {
+      display: none !important;
+    }
+    @media screen and (max-width: 767px) {
+      height: 20vh;
+    }
   }
 `;
 const Outlet = styled.div`
@@ -44,6 +57,7 @@ const Outlet = styled.div`
     padding-top: 3vh;
     padding-bottom: 3vh;
     width: 70%;
+    margin: 0 2vh;
   }
   h2 {
     span {
@@ -214,7 +228,8 @@ function SolveQuizDetail({
         <BannerAd>
           <GoogleAdvertise
             client="ca-pub-3501932649640285"
-            slot="4427930012"
+            slot="7872706221"
+            // slot="4427930012"
             format="auto"
             responsive="true"
           />

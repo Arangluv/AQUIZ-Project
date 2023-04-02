@@ -221,8 +221,7 @@ function EditQuiz() {
   const quizThema = useRef();
   const quizThumbnail = useRef();
   const quizProblem = useRef([]);
-  console.log("quizTitle");
-  console.log(quizTitle);
+
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(quizId)) {

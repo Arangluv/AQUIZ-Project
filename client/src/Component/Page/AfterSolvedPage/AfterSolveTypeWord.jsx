@@ -149,6 +149,7 @@ function AfterSolveTypeWord({ questions, inputAnswerToUser, commetary }) {
   const userAnswer = inputAnswerToUser.answers;
   const isQuizCorrect = questions[0].isCorrect === userAnswer;
   const [seeMore, setSeeMore] = useState(false);
+  console.log(inputAnswerToUser);
   const handleSeeMore = () => {
     setSeeMore((pre) => !pre);
   };
@@ -163,9 +164,9 @@ function AfterSolveTypeWord({ questions, inputAnswerToUser, commetary }) {
           required
           readOnly
         />
-        <span>
+        {/* <span>
           정답 : <font>{questions[0].content}</font>
-        </span>
+        </span> */}
       </WordTypeLabel>
       {isQuizCorrect ? (
         <CorrectContainer isCorrect={isQuizCorrect}>
@@ -193,7 +194,7 @@ function AfterSolveTypeWord({ questions, inputAnswerToUser, commetary }) {
       <SeeAnswerBox seeMore={seeMore}>
         <div>
           <font>정답 :</font>
-          <font>{inputAnswerToUser.answers[0]}</font>
+          <font>{questions[0].content}</font>
         </div>
         <div>
           <font>해설 :</font>

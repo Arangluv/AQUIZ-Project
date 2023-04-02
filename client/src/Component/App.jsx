@@ -18,9 +18,10 @@ const Wrapper = styled.div`
 const StyledHeader = styled(Header)`
   width: 100%;
   display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  justify-content: space-between;
   height: 6vh;
   background-color: ${(props) => props.theme.bgColor};
   transition: 0.2s ease-in-out;
@@ -29,19 +30,26 @@ const StyledHeader = styled(Header)`
   }
 `;
 const MainAd = styled.div`
-  width: 100%;
   background-color: ${(props) => props.theme.bgColor};
-  height: 20vh;
+  width: 100%;
+  height: 23vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @media screen and (max-width: 767px) {
+    height: 15vh;
+  }
   ins {
-    height: 20vh;
     width: 100%;
+    height: 23vh;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+    @media screen and (max-width: 767px) {
+      height: 15vh;
+    }
   }
 `;
 function App() {
@@ -92,14 +100,6 @@ function App() {
   return (
     <UserInformation.Provider value={{ user, setUser }}>
       <StyledHeader />
-      <MainAd>
-        <GoogleAdvertise
-          client="ca-pub-3501932649640285"
-          slot="7046903231"
-          format="auto"
-          responsive="true"
-        />
-      </MainAd>
       <Wrapper>
         <Outlet />
       </Wrapper>

@@ -14,6 +14,35 @@ import {
 import URL from "../assets/url";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../assets/atom";
+import GoogleAdvertise from "./GoogleAdvertise";
+import GoogleAdvertise2 from "./GoogleAdvertise";
+import bannerContainer from "../assets/bannerData";
+const MainAd = styled.div`
+  background-color: ${(props) => props.theme.bgColor};
+  width: 100%;
+  height: 23vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1vw;
+  @media screen and (max-width: 767px) {
+    height: 15vh;
+  }
+  ins {
+    width: 100%;
+    height: 23vh;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+    @media screen and (max-width: 767px) {
+      height: 15vh;
+    }
+    &[data-ad-status="unfilled"] {
+      display: none !important;
+    }
+  }
+`;
 const LogoImageContainer = styled.div`
   height: 6vh;
   width: 14vh;
@@ -184,6 +213,9 @@ const LogoutButton = styled.button`
 const ToggleList = styled.li`
   position: absolute;
   left: 50%;
+  @media screen and (max-width: 767px) {
+    left: ${(props) => (props.user ? "60%" : "52%")};
+  }
   & > div {
     cursor: pointer;
     border: 0.1vw solid ${(props) => props.theme.textColor};
@@ -196,16 +228,29 @@ const ToggleList = styled.li`
     padding: 0 0.3vw;
     justify-content: ${(props) => (props.isDark ? "flex-end" : "baseline")};
     height: 1.7vw;
+    @media screen and (max-width: 767px) {
+      /* 모바일 */
+      width: 3vh;
+      padding: 0.6vh 0.4vh;
+    }
     #darkMoon {
       position: absolute;
       left: 0.5vw;
       color: ${(props) => props.theme.bgColor};
+      @media screen and (max-width: 767px) {
+        /* 모바일 */
+        left: 0.5vh;
+      }
     }
     #lightSun {
       position: absolute;
       right: 0.5vw;
       color: ${(props) => props.theme.bgColor};
       display: ${(props) => (props.isDark ? "hidden" : "block")};
+      @media screen and (max-width: 767px) {
+        /* 모바일 */
+        right: 0.5vh;
+      }
     }
     div {
       position: absolute;
@@ -283,93 +328,103 @@ function Header({ className }) {
     }
   };
   return (
-    <header className={className}>
-      <Link to="/">
-        <LogoImageContainer>
-          <LogoImage
-            src="https://aquizbuket.s3.ap-northeast-2.amazonaws.com/logo/logo.png"
-            alt="로고이미지"
-          />
-        </LogoImageContainer>
-      </Link>
-      <Nav>
-        <Ul>
-          <QuizContainer emphasis={emphasis}>
-            <li>
-              <NavLink to="/">
-                <span>
-                  <FontAwesomeIcon icon={faLightbulb} />
-                </span>
-                퀴즈 보기
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}>
-                <span>
-                  <FontAwesomeIcon icon={faMarker} />
-                </span>
-                퀴즈 만들기
-              </NavLink>
-            </li>
-          </QuizContainer>
-          <LoginContainer emphasis={emphasis}>
-            {user ? (
-              <>
-                <li>
-                  <NavLink to={`my-page/${_id}`}>
-                    <span>
-                      <FontAwesomeIcon icon={faHouseUser} />
-                    </span>
-                    마이페이지
-                  </NavLink>
-                </li>
-                <li>
-                  <LogoutButton onClick={handleLogOut} as="a">
-                    <span>
-                      <FontAwesomeIcon icon={faArrowRightToBracket} />
-                    </span>
-                    로그아웃
-                  </LogoutButton>
-                </li>
-                <ToggleList isDark={isDark}>
-                  <div onClick={toggleTheme}>
-                    <font id="darkMoon">
-                      <FontAwesomeIcon icon={faMoon} />
-                    </font>
-                    <div></div>
-                    <font id="lightSun">
-                      <FontAwesomeIcon icon={faSun} />
-                    </font>
-                  </div>
-                </ToggleList>
-              </>
-            ) : (
-              <>
-                <li>
-                  <NavLink to="login">
-                    <span>
-                      <FontAwesomeIcon icon={faArrowRightToBracket} />
-                    </span>
-                    로그인
-                  </NavLink>
-                </li>
-                <ToggleList isDark={isDark}>
-                  <div onClick={toggleTheme}>
-                    <font id="darkMoon">
-                      <FontAwesomeIcon icon={faMoon} />
-                    </font>
-                    <div></div>
-                    <font id="lightSun">
-                      <FontAwesomeIcon icon={faSun} />
-                    </font>
-                  </div>
-                </ToggleList>
-              </>
-            )}
-          </LoginContainer>
-        </Ul>
-      </Nav>
-    </header>
+    <>
+      <header className={className}>
+        <Link to="/">
+          <LogoImageContainer>
+            <LogoImage
+              src="https://aquizbuket.s3.ap-northeast-2.amazonaws.com/logo/logo.png"
+              alt="로고이미지"
+            />
+          </LogoImageContainer>
+        </Link>
+        <Nav>
+          <Ul>
+            <QuizContainer emphasis={emphasis}>
+              <li>
+                <NavLink to="/">
+                  <span>
+                    <FontAwesomeIcon icon={faLightbulb} />
+                  </span>
+                  퀴즈 보기
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={`${_id}/quiz/create_quiz`} onClick={handleClick}>
+                  <span>
+                    <FontAwesomeIcon icon={faMarker} />
+                  </span>
+                  퀴즈 만들기
+                </NavLink>
+              </li>
+            </QuizContainer>
+            <LoginContainer emphasis={emphasis}>
+              {user ? (
+                <>
+                  <li>
+                    <NavLink to={`my-page/${_id}`}>
+                      <span>
+                        <FontAwesomeIcon icon={faHouseUser} />
+                      </span>
+                      마이페이지
+                    </NavLink>
+                  </li>
+                  <li>
+                    <LogoutButton onClick={handleLogOut} as="a">
+                      <span>
+                        <FontAwesomeIcon icon={faArrowRightToBracket} />
+                      </span>
+                      로그아웃
+                    </LogoutButton>
+                  </li>
+                  <ToggleList isDark={isDark}>
+                    <div onClick={toggleTheme}>
+                      <font id="darkMoon">
+                        <FontAwesomeIcon icon={faMoon} />
+                      </font>
+                      <div></div>
+                      <font id="lightSun">
+                        <FontAwesomeIcon icon={faSun} />
+                      </font>
+                    </div>
+                  </ToggleList>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink to="login">
+                      <span>
+                        <FontAwesomeIcon icon={faArrowRightToBracket} />
+                      </span>
+                      로그인
+                    </NavLink>
+                  </li>
+                  <ToggleList isDark={isDark} user={user === null}>
+                    <div onClick={toggleTheme}>
+                      <font id="darkMoon">
+                        <FontAwesomeIcon icon={faMoon} />
+                      </font>
+                      <div></div>
+                      <font id="lightSun">
+                        <FontAwesomeIcon icon={faSun} />
+                      </font>
+                    </div>
+                  </ToggleList>
+                </>
+              )}
+            </LoginContainer>
+          </Ul>
+        </Nav>
+      </header>
+      <MainAd>
+        <GoogleAdvertise2
+          client="ca-pub-3501932649640285"
+          slot="7046903231"
+          format="auto"
+          responsive="true"
+        />
+      </MainAd>
+    </>
   );
 }
 

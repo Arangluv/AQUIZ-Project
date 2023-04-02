@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const GoogleAdvertise = ({
+const GoogleAdvertise2 = ({
   className = "adsbygoogle",
   client = "",
   slot = "",
@@ -23,9 +23,9 @@ const GoogleAdvertise = ({
       className={className}
       data-ad-client={client}
       data-ad-slot={slot}
-      // data-ad-format={format}
-      // data-full-width-responsive={responsive}
+      data-ad-format={format}
+      data-full-width-responsive={responsive}
     />
   );
 };
-export default GoogleAdvertise;
+export default GoogleAdvertise2;
