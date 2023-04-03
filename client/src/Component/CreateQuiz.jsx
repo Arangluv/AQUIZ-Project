@@ -258,7 +258,8 @@ function CreateQuiz() {
   const [isSubmit, setIsSubmit] = useState(false);
   // isDark setting
   const isDark = useRecoilValue(isDarkAtom);
-
+  console.log("Quizzes : ");
+  console.log(quizzes);
   useEffect(() => {
     const regex = /([0-9a-f]{24})/;
     if (!regex.test(userId)) {
@@ -466,7 +467,7 @@ function CreateQuiz() {
     }
     return errorMessage;
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmit(true);
     if (quizNumber === quizzes.length) {
@@ -571,6 +572,7 @@ function CreateQuiz() {
               console.log(error.message); // 퀴즈를 만드는데 실패했다는 문구가 나온다.
               console.log("-----------ERROR-----------");
               console.log(error);
+              setIsSubmit(false);
             });
         } else {
           console.log("에러 발생!");

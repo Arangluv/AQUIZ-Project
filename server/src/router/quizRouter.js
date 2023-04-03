@@ -43,14 +43,14 @@ const quizRouter = express.Router();
 quizRouter.route("/create-quiz").post(
   quizFileUpload.fields([
     { name: "thumbnailFile", maxCount: 1, dest: "uploads/thumbnai" },
-    { name: "imageFiles", maxCount: 10, dest: "uploads/quizzes" },
+    { name: "imageFiles", maxCount: 20, dest: "uploads/quizzes" },
   ]),
   postQuiz
 );
 quizRouter.route("/edit/:id([0-9a-f]{24})").post(
   quizFileUpload.fields([
     { name: "thumbnailFile", maxCount: 1, dest: "uploads/thumbnai" },
-    { name: "imageFiles", maxCount: 10, dest: "uploads/quizzes" },
+    { name: "imageFiles", maxCount: 20, dest: "uploads/quizzes" },
   ]),
   postEdit
 );

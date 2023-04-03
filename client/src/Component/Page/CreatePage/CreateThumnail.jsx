@@ -133,13 +133,16 @@ function CreateThumail({
   changeThumnail,
   quizThumbnail,
   initThumbnailUrl,
-  setInitThumbnailUrl,
+  setInitThumbnailUrl = null,
 }) {
   const [preview, setPreview] = useState(initThumbnailUrl || "");
   const isDark = useRecoilValue(isDarkAtom);
   const fileNode = useRef();
   const handleFile = (event) => {
     changeThumnail(event.target.files[0]);
+    if (setInitThumbnailUrl === null) {
+      return;
+    }
     setInitThumbnailUrl("");
   };
   useEffect(() => {
