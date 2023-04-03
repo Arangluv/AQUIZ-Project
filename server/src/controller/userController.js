@@ -210,8 +210,11 @@ export const addQuiz = async (req, res) => {
           findQuiz.meta.subView += 1;
           findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
           findQuiz.meta.correctRate =
-            findQuiz.meta.scoreSummary /
-            (findQuiz.meta.subView === 0 ? 1 : findQuiz.meta.subView);
+            findQuiz.meta.scoreSummary / findQuiz.meta?.subView
+              ? findQuiz.meta.subView === 0
+                ? 1
+                : findQuiz.meta.subView
+              : findQuiz.meta.view;
           await findQuiz.save();
         }
         return res.status(200).json({ message: "add ok for unknown user" });
