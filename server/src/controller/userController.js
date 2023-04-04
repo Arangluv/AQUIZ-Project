@@ -209,11 +209,16 @@ export const addQuiz = async (req, res) => {
           findQuiz.meta.view += 1;
           findQuiz.meta.subView += 1;
           findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-          const dividedA = findQuiz.meta?.subView
-            ? findQuiz.meta.subView === 0
-              ? 1
-              : findQuiz.meta.subView
-            : findQuiz.meta.view;
+          let dividedA = 0;
+          if (findQuiz.meta.isEdit) {
+            dividedA = findQuiz.meta?.subView
+              ? findQuiz.meta.subView === 0
+                ? 1
+                : findQuiz.meta.subView
+              : findQuiz.meta.view;
+          } else {
+            dividedA = findQuiz.meta.view;
+          }
           findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
           await findQuiz.save();
         }
@@ -287,11 +292,16 @@ export const addQuiz = async (req, res) => {
         findQuiz.meta.view += 1;
         findQuiz.meta.subView += 1;
         findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-        const dividedA = findQuiz.meta?.subView
-          ? findQuiz.meta.subView === 0
-            ? 1
-            : findQuiz.meta.subView
-          : findQuiz.meta.view;
+        let dividedA = 0;
+        if (findQuiz.meta.isEdit) {
+          dividedA = findQuiz.meta?.subView
+            ? findQuiz.meta.subView === 0
+              ? 1
+              : findQuiz.meta.subView
+            : findQuiz.meta.view;
+        } else {
+          dividedA = findQuiz.meta.view;
+        }
         findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
         await findQuiz.save();
       }
@@ -351,11 +361,16 @@ export const addQuiz = async (req, res) => {
         findQuiz.meta.view += 1;
         findQuiz.meta.subView += 1;
         findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-        const dividedA = findQuiz.meta?.subView
-          ? findQuiz.meta.subView === 0
-            ? 1
-            : findQuiz.meta.subView
-          : findQuiz.meta.view;
+        let dividedA = 0;
+        if (findQuiz.meta.isEdit) {
+          dividedA = findQuiz.meta?.subView
+            ? findQuiz.meta.subView === 0
+              ? 1
+              : findQuiz.meta.subView
+            : findQuiz.meta.view;
+        } else {
+          dividedA = findQuiz.meta.view;
+        }
         findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
         await findQuiz.save();
       }
