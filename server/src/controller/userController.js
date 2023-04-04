@@ -209,12 +209,12 @@ export const addQuiz = async (req, res) => {
           findQuiz.meta.view += 1;
           findQuiz.meta.subView += 1;
           findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-          findQuiz.meta.correctRate =
-            findQuiz.meta.scoreSummary / findQuiz.meta?.subView
-              ? findQuiz.meta.subView === 0
-                ? 1
-                : findQuiz.meta.subView
-              : findQuiz.meta.view;
+          const dividedA = findQuiz.meta?.subView
+            ? findQuiz.meta.subView === 0
+              ? 1
+              : findQuiz.meta.subView
+            : findQuiz.meta.view;
+          findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
           await findQuiz.save();
         }
         return res.status(200).json({ message: "add ok for unknown user" });
@@ -245,8 +245,6 @@ export const addQuiz = async (req, res) => {
       const findQuiz = await Quiz.findById(quizId);
       if (findQuiz) {
         const { quizzes } = findQuiz;
-        console.log("FindQuiz ?");
-        console.log(findQuiz);
         let correctScore = 0;
         quizzes.forEach((quiz, idx) => {
           const targetQuestion = quiz.questions;
@@ -289,9 +287,12 @@ export const addQuiz = async (req, res) => {
         findQuiz.meta.view += 1;
         findQuiz.meta.subView += 1;
         findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-        findQuiz.meta.correctRate =
-          findQuiz.meta.scoreSummary /
-          (findQuiz.meta.subView === 0 ? 1 : findQuiz.meta.subView);
+        const dividedA = findQuiz.meta?.subView
+          ? findQuiz.meta.subView === 0
+            ? 1
+            : findQuiz.meta.subView
+          : findQuiz.meta.view;
+        findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
         await findQuiz.save();
       }
       return res.status(200).json({ message: "add ok" });
@@ -350,9 +351,12 @@ export const addQuiz = async (req, res) => {
         findQuiz.meta.view += 1;
         findQuiz.meta.subView += 1;
         findQuiz.meta.scoreSummary += (correctScore / numberOfQuizzes) * 100;
-        findQuiz.meta.correctRate =
-          findQuiz.meta.scoreSummary /
-          (findQuiz.meta.subView === 0 ? 1 : findQuiz.meta.subView);
+        const dividedA = findQuiz.meta?.subView
+          ? findQuiz.meta.subView === 0
+            ? 1
+            : findQuiz.meta.subView
+          : findQuiz.meta.view;
+        findQuiz.meta.correctRate = findQuiz.meta.scoreSummary / dividedA;
         await findQuiz.save();
       }
       return res.status(200).json({ message: "add ok" });
