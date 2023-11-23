@@ -1,12 +1,9 @@
 import mongoose from "mongoose";
 require("dotenv").config();
-mongoose.connect(
-  "mongodb+srv://ruhunsu3:ufRpv80XhNgeKPNn@aquiz-cluster.hj6milq.mongodb.net/?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGO_DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 console.log(process.env.DB_HOST);
 
 const db = mongoose.connection;

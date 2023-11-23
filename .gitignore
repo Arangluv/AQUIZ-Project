@@ -1,9 +1,15 @@
 node_modules/
 .env
 .DS_Store
-server/node_modules
-server/.env
-server/build
+
+# client ignore
 client/node_modules
 client/.env
 client/.gitignore
+
+# server ignore
+server/node_modules
+server/.env
+server/build
+server/s3.json
+server/.gitignore
