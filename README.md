@@ -1,6 +1,5 @@
 ## 프로젝트 주제 : AQUIZ - 퀴즈메이커
 ![AQUIZ LOGO](https://aquizbuket.s3.ap-northeast-2.amazonaws.com/logo/logo.png)
-**배포링크**: [AQUIZ](https://breakdance.github.io/breakdance/)
 <br />
 <br />
 ## 프로젝트 개요 및 제작배경
